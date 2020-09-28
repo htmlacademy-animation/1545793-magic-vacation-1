@@ -21,3 +21,13 @@
     transform: translate(0);
   }
 }
+
+
+@keyframes animWidth {
+  from {
+      width: 0%;
+  }
+  to {
+      width: 100%;
+  }
+}
