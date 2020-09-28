@@ -242,6 +242,25 @@
     color: inherit;
     padding: 0 0.5em 0.5em;
 
+    &::before {
+      content: "";
+      width: 0;
+      height: 2px;
+      background-color: $c-purple;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      transition: width 0.3s ease;
+    }
+    
+    &:hover {
+      &:before {
+        width: 100%;
+        right: auto;
+        left: 0;
+      }
+    }
+
     &::after {
       content: "";
       position: absolute;
@@ -275,6 +294,7 @@
     &:focus {
       color: $c-purple;
       outline: none;
+      transition: color 0.3s ease;
 
       &::after {
         opacity: 1;
