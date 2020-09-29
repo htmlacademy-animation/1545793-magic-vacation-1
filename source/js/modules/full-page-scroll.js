@@ -1,13 +1,19 @@
 import throttle from 'lodash/throttle';
 
+const STORY_PAGE_ID = 1;
+const PRIZE_PAGE_ID = 2;
+
 export default class FullPageScroll {
   constructor() {
     this.THROTTLE_TIMEOUT = 2000;
 
     this.screenElements = document.querySelectorAll(`.screen:not(.screen--result)`);
     this.menuElements = document.querySelectorAll(`.page-header__menu .js-menu-link`);
+    this.bgPrizeElement = document.querySelector(`.bg_prize`);
+    this.screenPrizesElement = document.querySelector(`.screen--prizes`);
 
     this.activeScreen = 0;
+    this.prevActiveScreen = 0;
     this.onScrollHandler = this.onScroll.bind(this);
     this.onUrlHashChengedHandler = this.onUrlHashChanged.bind(this);
   }
@@ -29,6 +35,7 @@ export default class FullPageScroll {
 
   onUrlHashChanged() {
     const newIndex = Array.from(this.screenElements).findIndex((screen) => location.hash.slice(1) === screen.id);
+    this.prevActiveScreen = this.activeScreen;
     this.activeScreen = (newIndex < 0) ? 0 : newIndex;
     this.changePageDisplay();
   }
@@ -40,12 +47,39 @@ export default class FullPageScroll {
   }
 
   changeVisibilityDisplay() {
-    this.screenElements.forEach((screen) => {
-      screen.classList.add(`screen--hidden`);
-      screen.classList.remove(`active`);
-    });
-    this.screenElements[this.activeScreen].classList.remove(`screen--hidden`);
-    this.screenElements[this.activeScreen].classList.add(`active`);
+    // this.screenElements.forEach((screen) => {
+    //   screen.classList.add(`screen--hidden`);
+    //   screen.classList.remove(`active`);
+    // });
+    // this.screenElements[this.activeScreen].classList.remove(`screen--hidden`);
+    // this.screenElements[this.activeScreen].classList.add(`active`);
+
+    // if (this.prevActiveScreen === STORY_PAGE_ID  && this.activeScreen === PRIZE_PAGE_ID) {
+    //   this.bgPrizeElement.classList.add(`active`);
+    // } else {
+    //   this.bgPrizeElement.classList.remove(`active`);
+    // }
+
+    const addActiveScreen = () => {
+      this.screenElements.forEach((screen) => {
+        screen.classList.add(`screen--hidden`);
+        screen.classList.remove(`active`);
+      });
+      this.screenElements[this.activeScreen].classList.remove(`screen--hidden`);
+      this.screenElements[this.activeScreen].classList.add(`active`);
+    };
+
+    if (this.prevActiveScreen === STORY_PAGE_ID  && this.activeScreen === PRIZE_PAGE_ID) {
+      this.bgPrizeElement.classList.add(`active`);
+      this.screenPrizesElement.classList.add(`off`);
+      setTimeout(() => {
+        addActiveScreen()
+      }, 500);
+    } else {
+      this.bgPrizeElement.classList.remove(`active`);
+      this.screenPrizesElement.classList.remove(`off`);
+      addActiveScreen();
+    }
   }
 
   changeActiveMenuItem() {
