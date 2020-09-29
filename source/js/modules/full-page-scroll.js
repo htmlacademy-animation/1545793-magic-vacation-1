@@ -2,6 +2,7 @@ import throttle from 'lodash/throttle';
 
 const STORY_PAGE_ID = 1;
 const PRIZE_PAGE_ID = 2;
+const RULES_PAGE_ID = 3;
 
 export default class FullPageScroll {
   constructor() {
@@ -11,6 +12,7 @@ export default class FullPageScroll {
     this.menuElements = document.querySelectorAll(`.page-header__menu .js-menu-link`);
     this.bgPrizeElement = document.querySelector(`.bg_prize`);
     this.screenPrizesElement = document.querySelector(`.screen--prizes`);
+    this.rules = document.querySelector('.rules__link');
 
     this.activeScreen = 0;
     this.prevActiveScreen = 0;
@@ -19,7 +21,7 @@ export default class FullPageScroll {
   }
 
   init() {
-    document.addEventListener(`wheel`, throttle(this.onScrollHandler, this.THROTTLE_TIMEOUT, {trailing: true}));
+    document.addEventListener(`wheel`, throttle(this.onScrollHandler, this.THROTTLE_TIMEOUT, { trailing: true }));
     window.addEventListener(`popstate`, this.onUrlHashChengedHandler);
 
     this.onUrlHashChanged();
@@ -69,7 +71,7 @@ export default class FullPageScroll {
       this.screenElements[this.activeScreen].classList.add(`active`);
     };
 
-    if (this.prevActiveScreen === STORY_PAGE_ID  && this.activeScreen === PRIZE_PAGE_ID) {
+    if (this.prevActiveScreen === STORY_PAGE_ID && this.activeScreen === PRIZE_PAGE_ID) {
       this.bgPrizeElement.classList.add(`active`);
       this.screenPrizesElement.classList.add(`off`);
       setTimeout(() => {
@@ -79,6 +81,10 @@ export default class FullPageScroll {
       this.bgPrizeElement.classList.remove(`active`);
       this.screenPrizesElement.classList.remove(`off`);
       addActiveScreen();
+    }
+
+    if (this.activeScreen != RULES_PAGE_ID) {
+      this.rules.classList.remove(`active`);
     }
   }
 
