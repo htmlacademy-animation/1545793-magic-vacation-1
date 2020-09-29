@@ -312,6 +312,10 @@
 
 .screen--prizes {
   background-color: $c-dark;
+
+  &.off{
+    background-color: none;
+  }
 }
 
 .screen--game {
@@ -362,4 +366,19 @@
 
 .screen--rules {
   background-color: $c-dark;
+}
+
+.bg_prize {
+  position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 0%;
+    background-color: $c-dark;
+  
+    &.active {
+      transition: height 0.5s;
+      height: 100%;
+      z-index: 1;
+    }
 }
