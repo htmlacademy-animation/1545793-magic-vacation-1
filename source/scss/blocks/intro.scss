@@ -119,7 +119,7 @@
     animation-fill-mode: forwards;
     animation-name: fadeInTop;
     animation-duration: 0.5s;
-    animation-delay: 0.5s;
+    animation-delay: 1s;
   }
 
   svg {
@@ -166,4 +166,26 @@
     margin: 0 0 0 -5px;
     font-size: 48px;
   }
+}
+
+.text__word {
+  display: inline-block;
+  margin: 0 0 -0.5em 0;
+  overflow: hidden;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+.text__word > span {
+    transform: translate3d(0, 1.25em, 0);
+    display: inline-block;
+    will-change: transform;
+}
+
+.intro__title.active .text__word span {
+  transform: translate3d(0, 0, 0);
+}
+
+.intro__date.active .text__word span {
+  transform: translate3d(0, 0, 0);
 }
