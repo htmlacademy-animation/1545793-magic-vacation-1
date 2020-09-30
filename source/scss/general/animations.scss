@@ -41,3 +41,25 @@
     transform: scale(1)
   }
 }
+
+@keyframes moveXleftBtnSlider {
+  from {
+    opacity: 0;
+    transform: translateX(130%) rotate(120deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) rotate(0deg);
+  }
+}
+
+@keyframes moveXrightBtnSlider {
+  from {
+    opacity: 0;
+    transform: translateX(-130%) rotate(-120deg);
+  }
+  to {
+    opacity: 0.5;
+    transform: translateX(0) rotate(0deg);
+  }
+}
