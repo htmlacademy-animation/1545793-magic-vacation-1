@@ -238,6 +238,20 @@
   }
 }
 
+.slider__control--prev,
+.slider__control--next {
+  animation-duration: 0.5s;
+  animation-timing-function: cubic-bezier(.7,.99,.6,1.49);
+}
+
+.slider__control--next {
+animation-name: moveXleftBtnSlider;
+}
+
+.slider__control--prev {
+animation-name: moveXrightBtnSlider;
+}
+
 .slider__pagination.swiper-pagination {
   position: absolute;
   bottom: 2.8rem;
