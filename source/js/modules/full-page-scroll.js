@@ -49,19 +49,6 @@ export default class FullPageScroll {
   }
 
   changeVisibilityDisplay() {
-    // this.screenElements.forEach((screen) => {
-    //   screen.classList.add(`screen--hidden`);
-    //   screen.classList.remove(`active`);
-    // });
-    // this.screenElements[this.activeScreen].classList.remove(`screen--hidden`);
-    // this.screenElements[this.activeScreen].classList.add(`active`);
-
-    // if (this.prevActiveScreen === STORY_PAGE_ID  && this.activeScreen === PRIZE_PAGE_ID) {
-    //   this.bgPrizeElement.classList.add(`active`);
-    // } else {
-    //   this.bgPrizeElement.classList.remove(`active`);
-    // }
-
     const addActiveScreen = () => {
       this.screenElements.forEach((screen) => {
         screen.classList.add(`screen--hidden`);
