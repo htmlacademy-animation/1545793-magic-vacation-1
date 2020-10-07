@@ -13,6 +13,7 @@ export default class FullPageScroll {
     this.bgPrizeElement = document.querySelector(`.bg_prize`);
     this.screenPrizesElement = document.querySelector(`.screen--prizes`);
     this.rules = document.querySelector('.rules__link');
+    this.svgPrizeOne = document.getElementById('svgPrizeOne');
 
     this.activeScreen = 0;
     this.prevActiveScreen = 0;
@@ -72,6 +73,10 @@ export default class FullPageScroll {
 
     if (this.activeScreen != RULES_PAGE_ID) {
       this.rules.classList.remove(`active`);
+    }
+
+    if (this.activeScreen == PRIZE_PAGE_ID) {
+      this.svgPrizeOne.src="img/primary-award-from.svg";
     }
   }
 
