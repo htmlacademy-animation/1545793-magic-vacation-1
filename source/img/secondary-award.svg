@@ -19,7 +19,7 @@
             id="cloud1anim"
             attributeName="transform"
             type="translate"
-            values="70 0; 0 0;"
+            values="70 0; 0 0"
             dur="0.4s"
             begin="3s"
             additive="sum"
@@ -27,7 +27,7 @@
             <animateTransform
             attributeName="transform"
             type="translate"
-            values="0 0; 0 -40;"
+            values="0 0; 0 -40"
             dur="0.2s"
             begin="animOpacityClouds.begin"
             additive="sum"
@@ -48,14 +48,14 @@
             <animateTransform
             attributeName="transform"
             type="translate"
-            values="100 0; 0 0;"
+            values="100 0; 0 0"
             dur="0.4s"
             begin="cloud1anim.begin"
             fill="freeze"/>
             <animateTransform
             attributeName="transform"
             type="translate"
-            values="0 0; 0 -70;"
+            values="0 0; 0 -70"
             dur="0.2s"
             begin="animOpacityClouds.begin"
             additive="sum"
@@ -162,7 +162,7 @@
         <animateTransform 
           attributeName="transform"
           type="rotate"
-          values="0 240 330; 3 240 330; -2 240 330; 1 240 330; 0 240 330;"
+          values="0 240 330; 3 240 330; -2 240 330; 1 240 330; 0 240 330"
           keyTimes="0; 0.3; 0.5; 0.7; 1"
           dur="2.5s"
           begin="cloud1anim.begin"
@@ -177,10 +177,8 @@
           attributeName="d"
           begin="cloud1anim.end + 0.5s"
           dur="0.5s"
-          values="
-          M41.13 329H319.13;
-          M147.13 328.88H283.79
-          "
+          values="M41.13 329H319.13;
+          M147.13 328.88H283.79"
           fill="freeze"/>
     </path>
 
