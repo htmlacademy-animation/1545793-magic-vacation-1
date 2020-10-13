@@ -14,6 +14,7 @@ export default class FullPageScroll {
     this.screenPrizesElement = document.querySelector(`.screen--prizes`);
     this.rules = document.querySelector('.rules__link');
     this.svgPrizeOne = document.getElementById('svgPrizeOne');
+    this.svgPrizeTwo = document.getElementById('svgPrizeTwo');
 
     this.activeScreen = 0;
     this.prevActiveScreen = 0;
@@ -77,6 +78,7 @@ export default class FullPageScroll {
 
     if (this.activeScreen == PRIZE_PAGE_ID) {
       this.svgPrizeOne.src="img/primary-award-from.svg";
+      this.svgPrizeTwo.src="img/secondary-award.svg";
     }
   }
 
