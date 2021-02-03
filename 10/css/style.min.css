@@ -1461,20 +1461,21 @@ img {
       .form__button svg {
         display: block; } }
 
-.form--result .form__field {
-  width: calc(100% - 31rem); }
-  @media (min-width: 2000px) {
-    .form--result .form__field {
-      width: calc(100% - 310px); } }
-  @media (orientation: portrait) {
-    .form--result .form__field {
-      width: calc(100% - 5rem); } }
-  @media (max-width: 1024px) and (orientation: landscape) {
-    .form--result .form__field {
-      width: calc(100% - 9rem); } }
-  @media (max-width: 768px) and (orientation: landscape) {
-    .form--result .form__field {
-      width: calc(100% - 5rem); } }
+@media (min-width: 2000px) {
+  .form--result .form__field {
+    width: calc(100% - 310px); } }
+
+@media (orientation: portrait) {
+  .form--result .form__field {
+    width: calc(100% - 5rem); } }
+
+@media (max-width: 1024px) and (orientation: landscape) {
+  .form--result .form__field {
+    width: calc(100% - 9rem); } }
+
+@media (max-width: 768px) and (orientation: landscape) {
+  .form--result .form__field {
+    width: calc(100% - 5rem); } }
 
 .game {
   flex-grow: 1;
