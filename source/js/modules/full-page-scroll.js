@@ -1,11 +1,15 @@
 import throttle from 'lodash/throttle';
+import Timer from './timer';
 
 const STORY_PAGE_ID = 1;
 const PRIZE_PAGE_ID = 2;
 const RULES_PAGE_ID = 3;
+const GAME_PAGE_ID = 4;
 
 export default class FullPageScroll {
   constructor() {
+    const gameCounter = document.querySelector(`.game__counter`).children;
+
     this.THROTTLE_TIMEOUT = 2000;
 
     this.screenElements = document.querySelectorAll(`.screen:not(.screen--result)`);
@@ -21,6 +25,8 @@ export default class FullPageScroll {
     this.prevActiveScreen = 0;
     this.onScrollHandler = this.onScroll.bind(this);
     this.onUrlHashChengedHandler = this.onUrlHashChanged.bind(this);
+
+    this.ticker = new Timer(gameCounter, 5);
   }
 
   init() {
@@ -78,9 +84,18 @@ export default class FullPageScroll {
     }
 
     if (this.activeScreen == PRIZE_PAGE_ID) {
-      this.svgPrizeOne.src="img/primary-award-from.svg";
-      this.svgPrizeTwo.src="img/secondary-award.svg";
-      this.svgPrizeThree.src="img/additional-award-to.svg";
+      this.svgPrizeOne.src = "img/primary-award-from.svg";
+      this.svgPrizeTwo.src = "img/secondary-award.svg";
+      this.svgPrizeThree.src = "img/additional-award-to.svg";
+    }
+
+    if (this.activeScreen === GAME_PAGE_ID) {
+      this.ticker.startTimer();
+    }
+
+    if (this.prevActiveScreen === GAME_PAGE_ID) {
+      this.ticker.resetTimer();
+      this.ticker.stopTimer();
     }
   }
 
