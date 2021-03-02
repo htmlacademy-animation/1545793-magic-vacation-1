@@ -1,10 +1,12 @@
 import throttle from 'lodash/throttle';
 import Timer from './timer';
+import NumbersAnimation from './numbersPrizesAnimation.js';
 
 const STORY_PAGE_ID = 1;
 const PRIZE_PAGE_ID = 2;
 const RULES_PAGE_ID = 3;
 const GAME_PAGE_ID = 4;
+let firstStartPagePrixes = true;
 
 export default class FullPageScroll {
   constructor() {
@@ -16,10 +18,10 @@ export default class FullPageScroll {
     this.menuElements = document.querySelectorAll(`.page-header__menu .js-menu-link`);
     this.bgPrizeElement = document.querySelector(`.bg_prize`);
     this.screenPrizesElement = document.querySelector(`.screen--prizes`);
-    this.rules = document.querySelector('.rules__link');
-    this.svgPrizeOne = document.getElementById('svgPrizeOne');
-    this.svgPrizeTwo = document.getElementById('svgPrizeTwo');
-    this.svgPrizeThree = document.getElementById('svgPrizeThree');
+    this.rules = document.querySelector(`.rules__link`);
+    this.svgPrizeOne = document.getElementById(`svgPrizeOne`);
+    this.svgPrizeTwo = document.getElementById(`svgPrizeTwo`);
+    this.svgPrizeThree = document.getElementById(`svgPrizeThree`);
 
     this.activeScreen = 0;
     this.prevActiveScreen = 0;
@@ -30,7 +32,7 @@ export default class FullPageScroll {
   }
 
   init() {
-    document.addEventListener(`wheel`, throttle(this.onScrollHandler, this.THROTTLE_TIMEOUT, { trailing: true }));
+    document.addEventListener(`wheel`, throttle(this.onScrollHandler, this.THROTTLE_TIMEOUT, {trailing: true}));
     window.addEventListener(`popstate`, this.onUrlHashChengedHandler);
 
     this.onUrlHashChanged();
@@ -71,7 +73,7 @@ export default class FullPageScroll {
       this.bgPrizeElement.classList.add(`active`);
       this.screenPrizesElement.classList.add(`off`);
       setTimeout(() => {
-        addActiveScreen()
+        addActiveScreen();
       }, 500);
     } else {
       this.bgPrizeElement.classList.remove(`active`);
@@ -79,14 +81,30 @@ export default class FullPageScroll {
       addActiveScreen();
     }
 
-    if (this.activeScreen != RULES_PAGE_ID) {
+    if (this.activeScreen !== RULES_PAGE_ID) {
       this.rules.classList.remove(`active`);
     }
 
-    if (this.activeScreen == PRIZE_PAGE_ID) {
-      this.svgPrizeOne.src = "img/primary-award-from.svg";
-      this.svgPrizeTwo.src = "img/secondary-award.svg";
-      this.svgPrizeThree.src = "img/additional-award-to.svg";
+    if (this.activeScreen === PRIZE_PAGE_ID) {
+
+
+      if (firstStartPagePrixes) {
+        firstStartPagePrixes = false;
+
+        this.svgPrizeOne.src = `img/primary-award-from.svg`;
+        this.svgPrizeTwo.src = `img/secondary-award.svg`;
+        this.svgPrizeThree.src = `img/additional-award-to.svg`;
+
+        new NumbersAnimation(`.prizes__desc b`, 0, 0, 1, 3).startTimer();
+
+        setTimeout(() => {
+          new NumbersAnimation(`.prizes__desc b`, 1, 0, 1, 7).startTimer();
+        }, 2500);
+
+        setTimeout(() => {
+          new NumbersAnimation(`.prizes__desc b`, 2, 11, 80, 900).startTimer();
+        }, 5300);
+      }
     }
 
     if (this.activeScreen === GAME_PAGE_ID) {

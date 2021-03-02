@@ -127,6 +127,16 @@
   }
 
   &--journeys {
+    & b {
+      width: 6.5rem;
+    }
+  
+    @media (max-width: 1024px) and (orientation: landscape) {
+      & b {
+        width: 3rem;
+      }
+    }
+
     .prizes__icon {
       position: relative;
       left: -5.9rem;
@@ -157,6 +167,16 @@
   }
 
   &--cases {
+    & b {
+      width: 5.5rem;
+    }
+  
+    @media (max-width: 1024px) and (orientation: landscape) {
+      & b {
+        width: 3rem;
+      }
+    }
+
     margin-left: 7rem;
 
     @media (min-width: $stop-scaling) {
@@ -212,6 +232,16 @@
   }
 
   &--codes {
+    & b {
+      width: 19rem;
+    }
+
+    @media (max-width: 1024px) and (orientation: landscape) {
+      & b {
+        width: 9rem;
+      }
+    }
+
     @media (max-width: $tablet) and (orientation: portrait) {
       padding-left: 0.8rem;
     }
@@ -252,10 +282,11 @@
 
 .prizes__desc {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   margin: 5.6rem 0 0 0;
   font-size: 1.8rem;
   line-height: 1.1;
+  height: 9rem;
 
   @media (min-width: $stop-scaling) {
     margin-top: 56px;
