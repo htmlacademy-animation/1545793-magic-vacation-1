@@ -1,3 +1,5 @@
+import ResultWin from './canvas/result1_canvas_animation';
+
 export default () => {
   let showResultEls = document.querySelectorAll(`.js-show-result`);
   let results = document.querySelectorAll(`.screen--result`);
@@ -18,6 +20,11 @@ export default () => {
         switch (target) {
           case `result`:
             document.querySelector(`#titleResultOpacity`).beginElement();
+            const animationResult1 = new ResultWin({
+              canvas: `#result_canvas`
+            });
+            animationResult1.startAnimation();
+
             break;
           case `result2`:
             document.querySelector(`#titleResult2Opacity`).beginElement();
