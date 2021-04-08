@@ -22,6 +22,19 @@
   }
 }
 
+.result_canvas{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: -1;
+}
+
 .result__image {
   position: absolute;
   top: 0;
@@ -72,7 +85,7 @@
     height: 120%;
     stroke-width: 0.2rem;
     stroke-linejoin: round;
-    margin-top: -50px;
+    margin-top: -30px;
   }
 }
 
