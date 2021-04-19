@@ -1,4 +1,5 @@
 import ResultWin from './canvas/result1_canvas_animation';
+import ResultFail from './canvas/result3_canvas_animation';
 
 export default () => {
   let showResultEls = document.querySelectorAll(`.js-show-result`);
@@ -31,6 +32,11 @@ export default () => {
             break;
           case `result3`:
             document.querySelector(`#titleResult3Opacity`).beginElement();
+            const animationResult3 = new ResultFail({
+              canvas: `#result3_canvas`
+            });
+            animationResult3.startAnimation();
+
             break;
         }
       });
