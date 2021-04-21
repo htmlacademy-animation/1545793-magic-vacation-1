@@ -6,10 +6,10 @@ export default class Story {
     this.height = window.innerHeight;
     this.canvasID = `screen__canvas--story`;
     this.textures = [
-      `/img/module-5/scenes-textures/scene-1.png`,
-      `/img/module-5/scenes-textures/scene-2.png`,
-      `/img/module-5/scenes-textures/scene-3.png`,
-      `/img/module-5/scenes-textures/scene-4.png`,
+      `./img/module-5/scenes-textures/scene-1.png`,
+      `./img/module-5/scenes-textures/scene-2.png`,
+      `./img/module-5/scenes-textures/scene-3.png`,
+      `./img/module-5/scenes-textures/scene-4.png`,
     ];
     this.textureWidth = 2048;
     this.textureHeight = 1024;
