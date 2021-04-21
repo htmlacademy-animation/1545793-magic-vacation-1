@@ -75,7 +75,13 @@ export default () => {
     if (storySlider) {
       storySlider.destroy();
     }
-    story.setScene(0);
+
+    document.body.addEventListener(`screenChanged`, (e) => {
+      if (e.detail.screenName === `story`) {
+        story.setScene(0);
+      }
+    });
+    
     setSlider();
   });
 
