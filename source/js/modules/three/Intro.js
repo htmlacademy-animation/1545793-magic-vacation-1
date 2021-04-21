@@ -5,7 +5,7 @@ export default class Intro {
     this.width = window.innerWidth;
     this.height = window.innerHeight;
     this.canvasID = `screen__canvas--intro`;
-    this.texture = `../../../img/module-5/scenes-textures/scene-0.png`;
+    this.texture = `/img/module-5/scenes-textures/scene-0.png`;
     this.textureWidth = 2048;
     this.textureHeight = 1024;
     this.textureRatio = this.textureWidth / this.textureHeight;
