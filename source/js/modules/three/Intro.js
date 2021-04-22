@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import bubbleRawShaderMaterial from '../three/bubbleRawShaderMaterial';
 
 export default class Intro {
   constructor() {
@@ -39,7 +40,7 @@ export default class Intro {
 
     loadManager.onLoad = () => {
       const geometry = new THREE.PlaneGeometry(1, 1);
-      const material = new THREE.MeshBasicMaterial({map: loadedTexture});
+      const material = new THREE.RawShaderMaterial(bubbleRawShaderMaterial(loadedTexture));
       const image = new THREE.Mesh(geometry, material);
 
       image.scale.x = this.textureWidth;
