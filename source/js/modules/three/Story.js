@@ -7,10 +7,10 @@ export default class Story {
     this.height = window.innerHeight;
     this.canvasID = `screen__canvas--story`;
     this.textures = [
-      `./img/module-5/scenes-textures/scene-1.png`,
-      `./img/module-5/scenes-textures/scene-2.png`,
-      `./img/module-5/scenes-textures/scene-3.png`,
-      `./img/module-5/scenes-textures/scene-4.png`,
+      { src: `./img/module-5/scenes-textures/scene-1.png`, options: { hue: 0.0 } },
+      { src: `./img/module-5/scenes-textures/scene-2.png`, options: { hue: -0.3 } },
+      { src: `./img/module-5/scenes-textures/scene-3.png`, options: { hue: 0.0 } },
+      { src: `./img/module-5/scenes-textures/scene-4.png`, options: { hue: 0.0 } },
     ];
     this.textureWidth = 2048;
     this.textureHeight = 1024;
@@ -29,7 +29,7 @@ export default class Story {
     this.canvas.width = this.width;
     this.canvas.height = this.height;
 
-    this.renderer = new THREE.WebGLRenderer({canvas: this.canvas});
+    this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
     this.renderer.setClearColor(0x5f458c, 1);
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(this.width, this.height);
@@ -41,14 +41,13 @@ export default class Story {
 
     const loadManager = new THREE.LoadingManager();
     const textureLoader = new THREE.TextureLoader(loadManager);
-    const loadedTextures = this.textures.map((texture) =>
-      textureLoader.load(texture)
-    );
+    const loadedTextures = this.textures.map((texture) => ({ src: textureLoader.load(texture.src), options: texture.options }));
 
     loadManager.onLoad = () => {
       loadedTextures.forEach((texture, positionX) => {
         const geometry = new THREE.PlaneGeometry(1, 1);
-        const material = new THREE.RawShaderMaterial(bubbleRawShaderMaterial(texture));
+
+        const material = new THREE.RawShaderMaterial(bubbleRawShaderMaterial(texture.src, texture.options));
         const image = new THREE.Mesh(geometry, material);
 
         image.scale.x = this.textureWidth;
