@@ -20,18 +20,31 @@ export default class Story {
     this.textureRatio = this.textureWidth / this.textureHeight;
     this.cameraAspect = this.width / this.height;
 
+    this.bubbleGlareOffset = 0.8;
+    this.bubbleGlareStartRadianAngle = 2;
+    this.bubbleGlareEndRadianAngle = 2.8;
+
     this.bubbles = [
       {
         radius: 150.0,
         position: [this.canvasCenter.x - this.width * 0.5, this.canvasCenter.y - this.height * 0.5],
+        glareOffset: this.bubbleGlareOffset,
+        glareAngleStart: this.bubbleGlareStartRadianAngle,
+        glareAngleEnd: this.bubbleGlareEndRadianAngle
       },
       {
         radius: 120.0,
         position: [this.canvasCenter.x - this.width * 0.18, this.canvasCenter.y],
+        glareOffset: this.bubbleGlareOffset,
+        glareAngleStart: this.bubbleGlareStartRadianAngle,
+        glareAngleEnd: this.bubbleGlareEndRadianAngle
       },
       {
         radius: 100.0,
         position: [this.canvasCenter.x, this.canvasCenter.y + this.height * 0.95],
+        glareOffset: this.bubbleGlareOffset,
+        glareAngleStart: this.bubbleGlareStartRadianAngle,
+        glareAngleEnd: this.bubbleGlareEndRadianAngle
       },
     ];
 
