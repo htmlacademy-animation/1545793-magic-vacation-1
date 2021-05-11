@@ -1,6 +1,7 @@
 import _ from './easing.js';
+import { activeScene } from '../three/Story.js';
 
-export default class Animation {
+export class Animation {
   constructor(options) {
     this.options = options;
 
@@ -108,3 +109,37 @@ export default class Animation {
     }
   }
 }
+
+export const animateWithFPS = (render, duration, fps, endCB = () => { }) => {
+  let start = null;
+  let lastFrameUpdateTime = null;
+  let timeSinceLastUpdate = null;
+
+  function loop(currentTime) {
+    if (!start) {
+      start = currentTime;
+    }
+
+    if (!lastFrameUpdateTime) {
+      lastFrameUpdateTime = currentTime;
+    }
+
+    let progress = (currentTime - start) / duration;
+    if (progress > 1) {
+      render(1);
+      endCB();
+      return;
+    }
+
+    timeSinceLastUpdate = currentTime - lastFrameUpdateTime;
+    if (timeSinceLastUpdate > fps) {
+      lastFrameUpdateTime = currentTime;
+      render(progress);
+    }
+    if (activeScene == 1) {
+      requestAnimationFrame(loop);
+    }
+  };
+
+  loop();
+};
