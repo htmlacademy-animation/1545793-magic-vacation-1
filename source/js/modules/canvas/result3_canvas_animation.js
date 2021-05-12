@@ -1,5 +1,5 @@
 import ease from '../helpers/easing';
-import Animation from '../helpers/animations';
+import {Animation} from '../helpers/animations';
 
 let windowWidth = window.innerWidth;
 let windowHeight = window.innerHeight;
