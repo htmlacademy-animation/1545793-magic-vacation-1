@@ -1,5 +1,5 @@
 import _ from './easing.js';
-import { activeScene } from '../three/Story.js';
+import {activeScene} from '../three/Story.js';
 
 export class Animation {
   constructor(options) {
@@ -136,10 +136,10 @@ export const animateWithFPS = (render, duration, fps, endCB = () => { }) => {
       lastFrameUpdateTime = currentTime;
       render(progress);
     }
-    if (activeScene == 1) {
+    if (activeScene === 1) {
       requestAnimationFrame(loop);
     }
-  };
+  }
 
   loop();
 };
