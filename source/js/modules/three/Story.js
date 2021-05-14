@@ -35,6 +35,7 @@ export class Story {
     this.textureHeight = 1024;
     this.textureRatio = this.textureWidth / this.textureHeight;
     this.cameraAspect = this.width / this.height;
+    this.position = {z: 750};
 
     this.bubbleGlareOffset = 0.8;
     this.bubbleGlareStartRadianAngle = 2;
@@ -97,6 +98,37 @@ export class Story {
     return {};
   }
 
+  setSphere() {
+    const geometry = new THREE.SphereGeometry(100, 50, 50);
+
+    const material = new THREE.MeshStandardMaterial({
+      color: 0x4169e1,
+      metalness: 0.05,
+      emissive: 0x0,
+      roughness: 0.5
+    });
+
+    return new THREE.Mesh(geometry, material);
+  }
+
+  setLights() {
+    const lightsGroup = new THREE.Group();
+
+    let directionalLight = new THREE.DirectionalLight(new THREE.Color(`rgb(255,255,255)`), 0.84);
+    directionalLight.position.set(0, this.position.z * Math.tan(-15 * THREE.Math.DEG2RAD), this.position.z);
+    lightsGroup.add(directionalLight);
+
+    let pointLight1 = new THREE.PointLight(new THREE.Color(`rgb(246,242,255)`), 0.60, 975, 2.0);
+    pointLight1.position.set(-785, -350, 710);
+    lightsGroup.add(pointLight1);
+
+    let pointLight2 = new THREE.PointLight(new THREE.Color(`rgb(245,254,255)`), 0.95, 975, 2.0);
+    pointLight2.position.set(730, 800, 985);
+    lightsGroup.add(pointLight2);
+
+    return lightsGroup;
+  }
+
   init() {
     window.addEventListener(`resize`, this.updateSize);
 
@@ -110,8 +142,8 @@ export class Story {
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(this.width, this.height);
 
-    this.camera = new THREE.PerspectiveCamera(45, this.cameraAspect, 0.1, 1200);
-    this.camera.position.z = 1200;
+    this.camera = new THREE.PerspectiveCamera(35, this.cameraAspect, 0.1, 1200);
+    this.camera.position.z = this.position.z;
 
     this.scene = new THREE.Scene();
 
@@ -134,6 +166,13 @@ export class Story {
         image.scale.x = this.textureWidth;
         image.scale.y = this.textureHeight;
         image.position.x = this.textureWidth * index;
+
+        const sphere = this.setSphere();
+        this.scene.add(sphere);
+
+        const lights = this.setLights();
+        lights.position.z = this.camera.position.z;
+        this.scene.add(lights);
 
         this.scene.add(image);
         this.render();
