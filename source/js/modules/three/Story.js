@@ -53,7 +53,7 @@ export class Story {
     this.textureHeight = 1024;
     this.textureRatio = this.textureWidth / this.textureHeight;
     this.cameraAspect = this.width / this.height;
-    this.position = {z: 750};
+    this.position = {z: 1500};
 
     this.bubbleGlareOffset = 0.8;
     this.bubbleGlareStartRadianAngle = 2;
@@ -132,19 +132,19 @@ export class Story {
   setLights() {
     const lightsGroup = new THREE.Group();
 
-    let directionalLight = new THREE.DirectionalLight(new THREE.Color(`rgb(255,255,255)`), 0.20);
+    let directionalLight = new THREE.DirectionalLight(new THREE.Color(`rgb(255,255,255)`), 0.10);
     // let directionalLight = new THREE.DirectionalLight(new THREE.Color(`rgb(173, 255,47)`), 0.20);
     directionalLight.position.set(0, this.position.z * Math.tan(-15 * THREE.Math.DEG2RAD), this.position.z);
     lightsGroup.add(directionalLight);
 
-    let pointLight1 = new THREE.PointLight(new THREE.Color(`rgb(246,242,255)`), 0.50, 3000, 0.5);
+    let pointLight1 = new THREE.PointLight(new THREE.Color(`rgb(246,242,255)`), 0.80, 3000, 0.5);
     // let pointLight1 = new THREE.PointLight(new THREE.Color(`rgb(255, 20, 147)`), 0.40, 3000, 1);
-    pointLight1.position.set(-785, -350, 710);
+    pointLight1.position.set(-785, -350, 0);
     lightsGroup.add(pointLight1);
 
-    let pointLight2 = new THREE.PointLight(new THREE.Color(`rgb(245,254,255)`), 0.50, 3000, 0.5);
+    let pointLight2 = new THREE.PointLight(new THREE.Color(`rgb(245,254,255)`), 0.30, 3000, 0.5);
     // let pointLight2 = new THREE.PointLight(new THREE.Color(`rgb(0, 255, 255)`), 0.40, 3000, 1);
-    pointLight2.position.set(730, 800, 985);
+    pointLight2.position.set(730, 400, 0);
     lightsGroup.add(pointLight2);
 
     return lightsGroup;
@@ -193,12 +193,15 @@ export class Story {
 
         const lights = this.setLights();
         lights.position.z = this.camera.position.z;
-        this.scene.add(lights);
+        // this.scene.add(lights);
 
         if (texture.scene) {
           texture.scene.position.x = this.textureWidth * index;
           this.scene.add(texture.scene);
+          lights.position.x = this.textureWidth * index;
         }
+
+        this.scene.add(lights);
 
         this.scene.add(image);
         this.render();
