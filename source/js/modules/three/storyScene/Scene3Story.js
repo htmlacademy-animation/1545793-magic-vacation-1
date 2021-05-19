@@ -29,7 +29,7 @@ class Scene3Story extends THREE.Group{
   }
 
   addRug() {
-    const rug = new Rug();
+    const rug = new Rug(this.isDark);
     const scale = 0.7;
 
     rug.scale.set(scale, scale, scale);
@@ -40,11 +40,7 @@ class Scene3Story extends THREE.Group{
 
   addChandelier() {
     const chandelier = new Chandelier(this.isDark);
-    const scale = 0.7;
-
-    // chandelier.scale.set(scale, scale, scale);
     chandelier.position.set(50, 240, 100);
-    // chandelier.rotation.copy(new THREE.Euler( 20 * THREE.Math.DEG2RAD, 0, 0), `XYZ`);
     this.add(chandelier);
   }
 }

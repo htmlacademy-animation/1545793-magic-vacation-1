@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import bubbleRawShaderMaterial from '../three/bubbleRawShaderMaterial';
+import bubbleRawShaderMaterial from './storyScene/materials/bubbleRawShaderMaterial';
 import {animateWithFPS} from '../helpers/animations.js';
 import Scene0Story from './storyScene/Scene0Story.js';
 import Scene1Story from './storyScene/Scene1Story.js';
