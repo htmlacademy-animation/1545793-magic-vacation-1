@@ -18,8 +18,9 @@ const createSvgGroup = (data, settings) => {
   for (let i = 0; i < paths.length; i++) {
     const path = paths[i];
 
-    const material = new THREE.MeshBasicMaterial({
+    const material = new THREE.MeshStandardMaterial({
       color: new THREE.Color(settings.color),
+      ...settings.reflectivity
     });
 
     const shapes = path.toShapes(false);

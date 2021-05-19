@@ -4,6 +4,7 @@ import {animateWithFPS} from '../helpers/animations.js';
 import Scene0Story from './storyScene/Scene0Story.js';
 import Scene1Story from './storyScene/Scene1Story.js';
 import Scene2Story from './storyScene/Scene2Story.js';
+import Scene3Story from './storyScene/Scene3Story.js';
 
 export let activeScene;
 let animSceneKey = false;
@@ -47,7 +48,10 @@ export class Story {
         options: {hue: 0.0},
         scene: new Scene2Story()
       },
-      {src: `./img/module-5/scenes-textures/scene-4.png`, options: {hue: 0.0}},
+      {src: `./img/module-5/scenes-textures/scene-4.png`,
+      options: {hue: 0.0},
+      scene: new Scene3Story()
+    },
     ];
     this.textureWidth = 2048;
     this.textureHeight = 1024;
