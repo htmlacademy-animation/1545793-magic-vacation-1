@@ -27,6 +27,8 @@ const intro = new Intro();
 document.body.addEventListener(`screenChanged`, (e) => {
   if (e.detail.screenName === `top`) {
     intro.init();
+  } else {
+    intro.stopAnim();
   }
 });
 

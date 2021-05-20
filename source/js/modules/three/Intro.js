@@ -2,6 +2,8 @@ import * as THREE from 'three';
 import bubbleRawShaderMaterial from './storyScene/materials/bubbleRawShaderMaterial';
 import SVGObject from '../three/svgLoader/SVGObject.js';
 import { colors, reflectivity } from '../helpers/colorsAndReflection.js';
+import ModelObject from './modelLoader/modelObject.js';
+import { loadModel } from './modelLoader/modelLoader.js';
 
 class Intro {
   constructor() {
@@ -16,6 +18,8 @@ class Intro {
 
     this.render = this.render.bind(this);
     this.updateSize = this.updateSize.bind(this);
+
+    this.isAnim = false;
   }
 
   setMaterial (options = {}) {
@@ -51,6 +55,8 @@ class Intro {
       this.initialized = true;
     }
 
+    this.isAnim = true
+
     this.animationRequest = requestAnimationFrame(this.render);
   }
 
@@ -77,6 +83,8 @@ class Intro {
     const loadedTexture = textureLoader.load(this.texture.src);
 
     this.createSvgObjs();
+
+    this.createModels();
 
     loadManager.onLoad = () => {
       const geometry = new THREE.PlaneGeometry(1, 1);
@@ -107,12 +115,57 @@ class Intro {
     this.addPlane();
   }
 
+  createModels() {
+    this.addAirplane();
+    this.addSuitcase();
+    this.addWatermelon();
+  }
+
   addPlane() {
     const plane = new THREE.PlaneGeometry(500, 500);
     const planeMesh = new THREE.Mesh(plane, this.setMaterial({ color: colors.Purple, ...reflectivity.basic, flatShading: true}));
 
     planeMesh.position.set(0, 0, 5);
     this.scene.add(planeMesh);
+  }
+
+  addAirplane() {
+    const model = new ModelObject('airplane').getObject();
+
+    loadModel(model, this.setMaterial({ color: model.color, ...model.reflectivity}), (mesh) => {
+      mesh.name = model.name;
+      const scale = 1;
+      mesh.position.set(0, 0, 0);
+      mesh.scale.set(scale, scale, scale);
+      mesh.rotation.copy(new THREE.Euler(0 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD), `XYZ`);
+      this.scene.add(mesh);
+    })
+  }
+
+  addSuitcase() {
+    const model = new ModelObject('suitcase').getObject();
+
+    loadModel(model, null, (mesh) => {
+      mesh.name = model.name;
+      const scale = 1;
+      mesh.position.set(0, 0, 0);
+      mesh.scale.set(scale, scale, scale);
+      mesh.rotation.copy(new THREE.Euler(0 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD), `XYZ`);
+      this.scene.add(mesh);
+    })
+  }
+
+  addWatermelon() {
+    const model = new ModelObject('watermelon').getObject();
+
+    loadModel(model, null, (mesh) => {
+      mesh.name = model.name;
+      const scale = 1;
+      mesh.position.set(0, 0, 10);
+      mesh.scale.set(scale, scale, scale);
+      mesh.rotation.copy(new THREE.Euler(0 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD), `XYZ`);
+      this.scene.add(mesh);
+    })
   }
 
   async loadKeyhole() {
@@ -161,6 +214,16 @@ class Intro {
 
   render() {
     this.renderer.render(this.scene, this.camera);
+
+    if (this.isAnim) {
+      requestAnimationFrame(this.render);
+    } else {
+      cancelAnimationFrame(this.render);
+    }
+  }
+
+  stopAnim(){
+    this.isAnim = false
   }
 
   updateSize() {
