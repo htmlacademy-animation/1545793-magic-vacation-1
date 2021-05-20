@@ -1,9 +1,9 @@
 import * as THREE from 'three';
-import bubbleRawShaderMaterial from '../three/bubbleRawShaderMaterial';
+import bubbleRawShaderMaterial from './storyScene/materials/bubbleRawShaderMaterial';
 import SVGObject from '../three/svgLoader/SVGObject.js';
 import { colors, reflectivity } from '../helpers/colorsAndReflection.js';
 
-export default class Intro {
+class Intro {
   constructor() {
     this.width = window.innerWidth;
     this.height = window.innerHeight;
@@ -55,7 +55,7 @@ export default class Intro {
   }
 
   prepareScene() {
-        window.addEventListener(`resize`, this.updateSize);
+    window.addEventListener(`resize`, this.updateSize);
 
     this.canvas = document.getElementById(this.canvasID);
 
@@ -178,3 +178,5 @@ export default class Intro {
     this.render();
   }
 }
+
+export default Intro
