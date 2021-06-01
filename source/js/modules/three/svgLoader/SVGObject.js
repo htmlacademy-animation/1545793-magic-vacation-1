@@ -1,14 +1,14 @@
-import svgLoader from './svgLoader';
+import svgConfig from './svgConfig.js';
 
 class SVGObject {
   constructor(name) {
     this.name = name;
   }
 
-  async getObject() {
-    const svgs = await svgLoader;
-    const svg = svgs.getObjectByName(this.name);
-
+  getObject() {
+    const svg = svgConfig.find(obj => {
+      return obj.name === this.name
+    })
     return svg;
   }
 }

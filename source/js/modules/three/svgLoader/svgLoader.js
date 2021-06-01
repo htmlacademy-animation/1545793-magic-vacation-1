@@ -1,15 +1,7 @@
 import * as THREE from 'three';
-
 import {SVGLoader} from 'three/examples/jsm/loaders/SVGLoader.js';
-import svgSettings from './svgConfig.js'
+import SVGObject from './SVGObject.js'
 
-const svgLoader = new SVGLoader();
-
-const awaitLoader = (SvgLoader, url) => {
-  return new Promise((resolve, reject) => {
-    SvgLoader.load(url, (data) => resolve(data), null, reject);
-  });
-};
 
 const createSvgGroup = (data, settings) => {
   const paths = data.paths;
@@ -43,11 +35,20 @@ const createSvgGroup = (data, settings) => {
   return group;
 };
 
-export default svgSettings.reduce(async (resultPromise, setting) => {
-  const data = await awaitLoader(svgLoader, setting.src);
-  const svgGroup = createSvgGroup(data, setting);
+export const loadSVG = (nameSvg, callback) => {
+  let svg;
+  if (!nameSvg) {
+    return;
+  }
 
-  const result = await resultPromise;
-  result.add(svgGroup);
-  return result;
-}, new THREE.Group());
+  const svgObj = new SVGObject(nameSvg).getObject();
+
+  const loadManager = new THREE.LoadingManager();
+  const loader = new SVGLoader(loadManager);
+
+  loader.load(svgObj.src, (data) => {
+    svg = createSvgGroup(data, svgObj)
+
+    callback(svg);
+  });
+};

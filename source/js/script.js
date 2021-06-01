@@ -9,7 +9,7 @@ import social from './modules/social.js';
 import FullPageScroll from './modules/full-page-scroll';
 import rules from './modules/rules.js';
 import lettersAnimation from './modules/letters-animation.js';
-import Intro from './modules/three/Intro.js';
+import IntroAndStory from './modules/three/IntroAndStory.js';
 
 mobileHeight();
 slider();
@@ -22,15 +22,21 @@ social();
 rules();
 lettersAnimation();
 
-const intro = new Intro();
+export const introAndStory = new IntroAndStory();
+// let introAndStoryIsActive = false;
+introAndStory.init();
 
-document.body.addEventListener(`screenChanged`, (e) => {
-  if (e.detail.screenName === `top`) {
-    intro.init();
-  } else {
-    intro.stopAnim();
-  }
-});
+// document.body.addEventListener(`screenChanged`, (e) => {
+//   if (e.detail.screenName === `top` || e.detail.screenName === `story`) {
+//     if (introAndStoryIsActive != true) {
+//       introAndStoryIsActive = true;
+//       introAndStory.init();
+//     }
+//   } else {
+//     introAndStoryIsActive = false;
+//     introAndStory.stopAnim();
+//   }
+// });
 
 const fullPageScroll = new FullPageScroll();
 fullPageScroll.init();
