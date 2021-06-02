@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import {OBJLoader} from 'three/examples/jsm/loaders/OBJLoader.js';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js';
+import ModelObject from '../../three/modelLoader/modelObject.js';
 
 const onComplete = (obj3d, material, callback) => {
   if (material) {
@@ -33,13 +34,15 @@ const LoadingFnByType = {
   obj: onComplete,
 };
 
-export const loadModel = (params, material, callback) => {
-  if (!params) {
+export const loadModel = (nameObj, material, callback) => {
+  if (!nameObj) {
     return;
   }
 
-  const Loader = LoaderByType[params.type];
-  const loadingFn = LoadingFnByType[params.type];
+  const modelObj = new ModelObject(nameObj).getObject()
+
+  const Loader = LoaderByType[modelObj.type];
+  const loadingFn = LoadingFnByType[modelObj.type];
   if (!Loader || !loadingFn) {
     return;
   }
@@ -47,5 +50,5 @@ export const loadModel = (params, material, callback) => {
   const loadManager = new THREE.LoadingManager();
   const loader = new Loader(loadManager);
 
-  loader.load(params.path, (model) => loadingFn(model, material, callback));
+  loader.load(modelObj.path, (model) => loadingFn(model, material, callback));
 };

@@ -1,61 +1,122 @@
 import * as THREE from 'three';
 
+import { loadModel } from '../../three/modelLoader/modelLoader.js';
+import { loadSVG } from '../../three/svgLoader/svgLoader.js';
+import { colors, reflectivity } from '../../helpers/colorsAndReflection.js';
+import Floor from './objects/Floor.js';
 import Pyramid from './objects/Pyramid.js';
 import Lantern from './objects/Lantern.js';
 
-import SVGObject from '../svgLoader/SVGObject.js';
 
 class Scene1Story extends THREE.Group{
   constructor(){
     super();
 
+    this.wall;
+    this.floor;
+
     this.constructChildren();
   }
 
   constructChildren() {
-    this.addPyramid();
-    this.addLantern();
-
+    this.addWallCornerUnit();
+    this.addFloor();
+    this.addSceneStatic();
     this.loadLeaf1();
     this.loadLeaf2();
+    this.addPyramid();
+    this.addLantern();
+    this.addSuitcase();
   }
 
-  addPyramid(){
+  setMaterial(options = {}) {
+    const { color, side, ...other } = options;
+
+    return new THREE.MeshStandardMaterial({
+      color: new THREE.Color(color),
+      side,
+      ...other
+    });
+  }
+
+  addWallCornerUnit(){
+    loadModel('wallCornerUnit', this.setMaterial({ color: colors.Blue, side: THREE.DoubleSide, ...reflectivity.basic }), (mesh) => {
+      const scale = 1;
+      mesh.position.set(0, 0, 0);
+      mesh.scale.set(scale, scale, scale);
+      mesh.rotation.copy(new THREE.Euler(0 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD));
+      this.wall = mesh;
+      this.add(mesh);
+    })
+  }
+
+  addFloor() {
+    const mesh = new Floor( {color: colors.BrightBlue, ...reflectivity.soft} );
+    const scale = 1;
+    mesh.position.set(0, 0, 0);
+    mesh.scale.set(scale, scale, scale);
+    mesh.rotation.copy(new THREE.Euler(0 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD));
+    this.add(mesh);
+  }
+
+  addSceneStatic() {
+    loadModel('scene1static', null, (mesh) => {
+      const scale = 1;
+      mesh.position.set(0, 0, 0);
+      mesh.scale.set(scale, scale, scale);
+      mesh.rotation.copy(new THREE.Euler(0 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD));
+      this.add(mesh);
+    })
+  }
+
+  loadLeaf1() {
+    loadSVG(`leaf1-storyScene1`, (svgGroup) => {
+      const scale = 2.8;
+      svgGroup.position.set(80, 350, 410);
+      svgGroup.scale.set(scale, -scale, scale);
+      svgGroup.rotation.copy(new THREE.Euler(0 * THREE.Math.DEG2RAD, 90 * THREE.Math.DEG2RAD, -10 * THREE.Math.DEG2RAD));
+      this.add(svgGroup);
+    });
+  }
+
+  loadLeaf2() {
+    loadSVG(`leaf1-storyScene1`, (svgGroup) => {
+      const scale = 1.9;
+      svgGroup.position.set(80, 120, 520);
+      svgGroup.scale.set(scale, -scale, scale);
+      svgGroup.rotation.copy(new THREE.Euler(0 * THREE.Math.DEG2RAD, 90 * THREE.Math.DEG2RAD, 35 * THREE.Math.DEG2RAD));
+      this.add(svgGroup);
+    });
+  }
+
+  addPyramid() {
     const pyramid = new Pyramid();
-    const scale = 0.7;
+    const scale = 1;
     pyramid.scale.set(scale, scale, scale);
-    pyramid.rotation.copy(new THREE.Euler( 10 * THREE.Math.DEG2RAD, 0, 0, 'XYZ' ));
-    pyramid.position.set(-15, -115, 40);
+    pyramid.rotation.copy(new THREE.Euler( 0, 45 * THREE.Math.DEG2RAD, 0, 'XYZ' ));
+    pyramid.position.set(230, 150, 260);
 
     this.add(pyramid);
   }
 
-  addLantern(){
+  addLantern() {
     const lantern = new Lantern();
-    const scale = 0.8;
+    const scale = 1;
     lantern.scale.set(scale, scale, scale);
-    lantern.rotation.copy(new THREE.Euler( 10 * THREE.Math.DEG2RAD, 20 * THREE.Math.DEG2RAD, 0, 'XYZ' ));
-    lantern.position.set(290, -220, 80);
+    lantern.rotation.copy(new THREE.Euler( 0, -25 * THREE.Math.DEG2RAD, 0, 'XYZ' ));
+    lantern.position.set(650, 50, 120);
 
     this.add(lantern);
   }
 
-  async loadLeaf1() {
-    const leaf = await new SVGObject(`leaf1-storyScene1`).getObject();
-    const scale = 1.9;
-    leaf.position.set(-210, 10, 20);
-    leaf.scale.set(scale, -scale, scale);
-    leaf.rotation.copy(new THREE.Euler(0, 10 * THREE.Math.DEG2RAD, -1 * THREE.Math.DEG2RAD), `XYZ`);
-    this.add(leaf);
-  }
-
-  async loadLeaf2() {
-    const leaf = await new SVGObject(`leaf2-storyScene1`).getObject();
-    const scale = 1.2;
-    leaf.position.set(-240, -165, 20);
-    leaf.scale.set(scale, -scale, scale);
-    leaf.rotation.copy(new THREE.Euler(0, 10 * THREE.Math.DEG2RAD, 45 * THREE.Math.DEG2RAD), `XYZ`);
-    this.add(leaf);
+  addSuitcase() {
+    loadModel('suitcase', null, (mesh) => {
+      const scale = 1;
+      mesh.position.set(300, 0, 780);
+      mesh.scale.set(scale, scale, scale);
+      mesh.rotation.copy(new THREE.Euler(0 * THREE.Math.DEG2RAD, 15 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD));
+      this.add(mesh);
+    })
   }
 }
 

@@ -23,7 +23,7 @@ class Road extends THREE.Group {
   }
 
   addBase() {
-    const points = getLathePointsForCircle(160, 3, 732);
+    const points = getLathePointsForCircle(165, 3, 737);
     const { start, length } = getLatheDegrees(this.startDeg, this.finishDeg);
 
     const base = new THREE.LatheBufferGeometry(points, 50, start, length);

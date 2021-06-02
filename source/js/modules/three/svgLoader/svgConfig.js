@@ -28,7 +28,7 @@ const svgSettings = [
   {
     name: `leaf1-storyScene1`,
     src: `./img/module-6/svg-forms/leaf.svg`,
-    depth: 3,
+    depth: 2,
     cap: 2,
     color: colors.Green,
     reflectivity: reflectivity.basic
@@ -36,7 +36,7 @@ const svgSettings = [
   {
     name: `leaf2-storyScene1`,
     src: `./img/module-6/svg-forms/leaf.svg`,
-    depth: 3,
+    depth: 2,
     cap: 2,
     color: colors.Green,
     reflectivity: reflectivity.basic

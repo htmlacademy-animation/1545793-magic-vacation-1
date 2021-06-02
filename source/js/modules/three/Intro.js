@@ -141,7 +141,7 @@ class Intro {
       const scale = 1.2;
       mesh.position.set(250, 130, 150);
       mesh.scale.set(scale, scale, scale);
-      mesh.rotation.copy(new THREE.Euler(60 * THREE.Math.DEG2RAD, 140 * THREE.Math.DEG2RAD, -15 * THREE.Math.DEG2RAD), `XYZ`);
+      mesh.rotation.copy(new THREE.Euler(60 * THREE.Math.DEG2RAD, 140 * THREE.Math.DEG2RAD, -15 * THREE.Math.DEG2RAD));
       this.scene.add(mesh);
     })
   }
@@ -154,7 +154,7 @@ class Intro {
       const scale = 0.5;
       mesh.position.set(-50, -150, 300);
       mesh.scale.set(scale, scale, scale);
-      mesh.rotation.copy(new THREE.Euler(20 * THREE.Math.DEG2RAD, -140 * THREE.Math.DEG2RAD, 20 * THREE.Math.DEG2RAD), `XYZ`);
+      mesh.rotation.copy(new THREE.Euler(20 * THREE.Math.DEG2RAD, -140 * THREE.Math.DEG2RAD, 20 * THREE.Math.DEG2RAD));
       this.scene.add(mesh);
     })
   }
@@ -167,7 +167,7 @@ class Intro {
       const scale = 1;
       mesh.position.set(-300, -150, 800);
       mesh.scale.set(scale, scale, scale);
-      mesh.rotation.copy(new THREE.Euler(20 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD, 130 * THREE.Math.DEG2RAD), `XYZ`);
+      mesh.rotation.copy(new THREE.Euler(20 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD, 130 * THREE.Math.DEG2RAD));
       this.scene.add(mesh);
     })
   }
@@ -185,7 +185,7 @@ class Intro {
     const scale = 2;
     flamingo.position.set(-480, 370, 100);
     flamingo.scale.set(-scale, -scale, scale);
-    flamingo.rotation.copy(new THREE.Euler(10 * THREE.Math.DEG2RAD, 30 * THREE.Math.DEG2RAD, 10 * THREE.Math.DEG2RAD), `XYZ`);
+    flamingo.rotation.copy(new THREE.Euler(10 * THREE.Math.DEG2RAD, 30 * THREE.Math.DEG2RAD, 10 * THREE.Math.DEG2RAD));
     this.scene.add(flamingo);
   }
 
@@ -194,7 +194,7 @@ class Intro {
     const scale = 1.4;
     leaf.position.set(660, 350, 150);
     leaf.scale.set(scale, -scale, scale);
-    leaf.rotation.copy(new THREE.Euler(10 * THREE.Math.DEG2RAD, 10 * THREE.Math.DEG2RAD, -60 * THREE.Math.DEG2RAD), `XYZ`);
+    leaf.rotation.copy(new THREE.Euler(10 * THREE.Math.DEG2RAD, 10 * THREE.Math.DEG2RAD, -60 * THREE.Math.DEG2RAD));
     this.scene.add(leaf);
   }
 
@@ -203,7 +203,7 @@ class Intro {
     const scale = 1.6;
     question.position.set(100, -330, 100);
     question.scale.set(scale, -scale, scale);
-    question.rotation.copy(new THREE.Euler(-30 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD, 20 * THREE.Math.DEG2RAD), `XYZ`);
+    question.rotation.copy(new THREE.Euler(-30 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD, 20 * THREE.Math.DEG2RAD));
     this.scene.add(question);
   }
 
@@ -212,7 +212,7 @@ class Intro {
     const scale = 1.4;
     snowflake.position.set(-450, -10, 100);
     snowflake.scale.set(scale, scale, scale);
-    snowflake.rotation.copy(new THREE.Euler(-10 * THREE.Math.DEG2RAD, 30 * THREE.Math.DEG2RAD, 10 * THREE.Math.DEG2RAD), `XYZ`);
+    snowflake.rotation.copy(new THREE.Euler(-10 * THREE.Math.DEG2RAD, 30 * THREE.Math.DEG2RAD, 10 * THREE.Math.DEG2RAD));
     this.scene.add(snowflake);
   }
 
