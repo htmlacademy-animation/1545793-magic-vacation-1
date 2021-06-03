@@ -3,11 +3,13 @@ import { setMaterial } from '../../Story.js';
 import { colors, reflectivity } from '../../../helpers/colorsAndReflection.js';
 
 class Lantern extends THREE.Group {
-  constructor() {
+  constructor(isShadow) {
     super();
 
     this.color1 = colors.Blue;
     this.color2 = colors.LightBlue;
+
+    this.isShadow = isShadow;
 
     this.cylinderMesh;
     this.sphereMesh;
@@ -26,6 +28,14 @@ class Lantern extends THREE.Group {
     this.addBox();
     this.addTrapezoid();
     this.addTrapezoidTop();
+
+    if(this.isShadow){
+      this.traverse((child) => {
+        if (child.isMesh) {
+          child.castShadow = true;
+        }
+      });
+    }
   }
 
   addBaseCylinder() {

@@ -3,11 +3,13 @@ import { setMaterial } from '../../Story.js';
 import { colors, reflectivity } from '../../../helpers/colorsAndReflection.js';
 
 class Snowman extends THREE.Group {
-  constructor() {
+  constructor(isShadow) {
     super();
 
     this.color1 = colors.SnowColor;
     this.color2 = colors.Orange;
+
+    this.isShadow = isShadow;
 
     this.sphereBigMesh;
     this.sphereSmallMesh;
@@ -20,6 +22,14 @@ class Snowman extends THREE.Group {
     this.addSphereBig();
     this.addSphereSmall();
     this.addCone();
+
+    if(this.isShadow){
+      this.traverse((child) => {
+        if (child.isMesh) {
+          child.castShadow = true;
+        }
+      });
+    }
   }
 
   addSphereBig() {

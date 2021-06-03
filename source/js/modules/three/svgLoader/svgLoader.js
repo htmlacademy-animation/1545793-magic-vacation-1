@@ -3,7 +3,7 @@ import {SVGLoader} from 'three/examples/jsm/loaders/SVGLoader.js';
 import SVGObject from './SVGObject.js'
 
 
-const createSvgGroup = (data, settings) => {
+const createSvgGroup = (data, isShadow, settings) => {
   const paths = data.paths;
   const group = new THREE.Group();
 
@@ -26,6 +26,12 @@ const createSvgGroup = (data, settings) => {
         bevelThickness: settings.cap,
       });
       const mesh = new THREE.Mesh(geometry, material);
+
+      if(isShadow){
+        mesh.castShadow = settings.castShadow;
+        mesh.receiveShadow = settings.receiveShadow;
+      }
+
       group.add(mesh);
     }
   }
@@ -35,7 +41,7 @@ const createSvgGroup = (data, settings) => {
   return group;
 };
 
-export const loadSVG = (nameSvg, callback) => {
+export const loadSVG = (nameSvg, isShadow, callback) => {
   let svg;
   if (!nameSvg) {
     return;
@@ -47,7 +53,7 @@ export const loadSVG = (nameSvg, callback) => {
   const loader = new SVGLoader(loadManager);
 
   loader.load(svgObj.src, (data) => {
-    svg = createSvgGroup(data, svgObj)
+    svg = createSvgGroup(data, isShadow, svgObj)
 
     callback(svg);
   });

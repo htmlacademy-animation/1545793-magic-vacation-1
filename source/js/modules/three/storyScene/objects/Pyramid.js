@@ -3,14 +3,24 @@ import { setMaterial } from '../../Story.js';
 import { colors, reflectivity } from '../../../helpers/colorsAndReflection.js';
 
 class Pyramid extends THREE.Group {
-  constructor() {
+  constructor(isShadow) {
     super();
+
+    this.isShadow = isShadow;
 
     this.constructChildren();
   }
 
   constructChildren() {
     this.addPyramid();
+
+    if(this.isShadow){
+      this.traverse((child) => {
+        if (child.isMesh) {
+          child.castShadow = true;
+        }
+      });
+    }
   }
 
   addPyramid() {

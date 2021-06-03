@@ -4,10 +4,11 @@ import { getLathePointsForCircle } from '../../../helpers/latheGeometry.js';
 import { colors, reflectivity } from '../../../helpers/colorsAndReflection.js';
 
 class Saturn extends THREE.Group {
-  constructor(isDark) {
+  constructor(isDark, isShadow) {
     super();
 
     this.isDark = isDark;
+    this.isShadow = isShadow;
 
     this.color1 = this.isDark ? colors.ShadowedDominantRed : colors.DominantRed
     this.color2 = this.isDark ? colors.ShadowedBrightPurple : colors.BrightPurple;
@@ -21,6 +22,14 @@ class Saturn extends THREE.Group {
   constructChildren() {
     this.addSphereBig();
     this.addRing();
+
+    if(this.isShadow){
+      this.traverse((child) => {
+        if (child.isMesh) {
+          child.castShadow = true;
+        }
+      });
+    }
   }
 
   addSphereBig() {

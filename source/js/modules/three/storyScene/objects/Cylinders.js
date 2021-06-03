@@ -3,8 +3,10 @@ import { setMaterial } from '../../Story.js';
 import { colors, reflectivity } from '../../../helpers/colorsAndReflection.js';
 
 class Cylinders extends THREE.Group {
-  constructor() {
+  constructor(isShadow) {
     super();
+
+    this.isShadow = isShadow;
 
     this.angle = 15;
     this.step = 15;
@@ -23,6 +25,14 @@ class Cylinders extends THREE.Group {
       this.cylinderMesh.position.set(posX, 0, posZ);
       this.angle += this.step;
       this.add(this.cylinderMesh);
+    }
+
+    if(this.isShadow){
+      this.traverse((child) => {
+        if (child.isMesh) {
+          child.castShadow = true;
+        }
+      });
     }
 
   }

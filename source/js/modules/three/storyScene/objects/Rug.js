@@ -12,8 +12,6 @@ class Rug extends THREE.Group {
     this.colorBase = this.isDark ? colors.ShadowedLightPurple : colors.LightPurple;
     this.colorStripe = this.isDark ? colors.ShadowedAdditionalPurple : colors.AdditionalPurple;
 
-    this.rugMesh;
-
     this.startDeg = 16;
     this.finishDeg = 74;
 
@@ -33,9 +31,9 @@ class Rug extends THREE.Group {
       baseColor: {value: new THREE.Color(this.colorBase)},
       stripeColor: {value: new THREE.Color(this.colorStripe)}
     }));
-    this.rugMesh = new THREE.Mesh(base, material);
-
-    this.add(this.rugMesh);
+    const rugMesh = new THREE.Mesh(base, material);
+    rugMesh.receiveShadow = true,
+    this.add(rugMesh);
   }
 }
 

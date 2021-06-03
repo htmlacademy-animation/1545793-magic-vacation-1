@@ -32,7 +32,7 @@ class Road extends THREE.Group {
       stripeColor: {value: new THREE.Color(this.colorStripe)}
     }));
     this.roadMesh = new THREE.Mesh(base, material);
-
+    this.roadMesh.receiveShadow = true,
     this.add(this.roadMesh);
   }
 }

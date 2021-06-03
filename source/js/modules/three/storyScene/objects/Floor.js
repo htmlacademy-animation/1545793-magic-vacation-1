@@ -32,6 +32,7 @@ class Floor extends THREE.Group {
     const base = new THREE.CircleGeometry(1350, 10, start, length);
     const baseMesh = new THREE.Mesh(base, this.setMaterial(settings));
     baseMesh.rotation.copy(new THREE.Euler(90 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD));
+    baseMesh.receiveShadow = true,
     this.add(baseMesh);
   }
 }
