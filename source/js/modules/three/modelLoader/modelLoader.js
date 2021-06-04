@@ -3,11 +3,20 @@ import {OBJLoader} from 'three/examples/jsm/loaders/OBJLoader.js';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js';
 import ModelObject from '../../three/modelLoader/modelObject.js';
 
-const onComplete = (obj3d, material, callback) => {
+const onComplete = (obj3d, isShadow, settings, material, callback) => {
   if (material) {
     obj3d.traverse((child) => {
       if (child.isMesh) {
         child.material = material;
+      }
+    });
+  }
+
+  if(isShadow){
+    obj3d.traverse((child) => {
+      if (child.isMesh) {
+        child.castShadow = settings.castShadow;
+        child.receiveShadow = settings.receiveShadow;
       }
     });
   }
@@ -17,11 +26,11 @@ const onComplete = (obj3d, material, callback) => {
   }
 };
 
-const onGltfComplete = (gltf, material, callback) => {
+const onGltfComplete = (gltf, isShadow, settings, material, callback) => {
   if (!gltf.scene) {
     return;
   }
-  onComplete(gltf.scene, material, callback);
+  onComplete(gltf.scene, isShadow, settings, material, callback);
 };
 
 const LoaderByType = {
@@ -34,7 +43,7 @@ const LoadingFnByType = {
   obj: onComplete,
 };
 
-export const loadModel = (nameObj, material, callback) => {
+export const loadModel = (nameObj, isShadow, material, callback) => {
   if (!nameObj) {
     return;
   }
@@ -50,5 +59,5 @@ export const loadModel = (nameObj, material, callback) => {
   const loadManager = new THREE.LoadingManager();
   const loader = new Loader(loadManager);
 
-  loader.load(modelObj.path, (model) => loadingFn(model, material, callback));
+  loader.load(modelObj.path, (model) => loadingFn(model, isShadow, modelObj, material, callback));
 };

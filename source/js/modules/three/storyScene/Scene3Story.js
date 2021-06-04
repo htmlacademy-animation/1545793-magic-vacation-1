@@ -6,6 +6,7 @@ import { colors, reflectivity } from '../../helpers/colorsAndReflection.js';
 import Floor from './objects/Floor.js';
 import Rug from './objects/Rug.js';
 import Chandelier from './objects/Chandelier.js';
+import {isMobile} from '../IntroAndStory.js';
 
 class Scene3Story extends THREE.Group{
   constructor(){
@@ -15,6 +16,7 @@ class Scene3Story extends THREE.Group{
     this.floor;
 
     this.isDark = true;
+    this.isShadow = !isMobile;
 
     this.constructChildren();
   }
@@ -26,7 +28,8 @@ class Scene3Story extends THREE.Group{
     this.loadFlower();
     this.addRug();
     this.addChandelier();
-    this.addSuitcase();
+    // this.addSuitcase();
+    this.addSonya();
   }
 
   setMaterial(options = {}) {
@@ -40,7 +43,7 @@ class Scene3Story extends THREE.Group{
   }
 
   addWallCornerUnit(){
-    loadModel('wallCornerUnit', this.setMaterial({ color: colors.ShadowedPurple, side: THREE.DoubleSide, ...reflectivity.basic }), (mesh) => {
+    loadModel('wallCornerUnit', this.isShadow, this.setMaterial({ color: colors.ShadowedPurple, side: THREE.DoubleSide, ...reflectivity.basic }), (mesh) => {
       const scale = 1;
       mesh.position.set(0, 0, 0);
       mesh.scale.set(scale, scale, scale);
@@ -60,7 +63,7 @@ class Scene3Story extends THREE.Group{
   }
 
   addSceneStatic() {
-    loadModel('scene3static', null, (mesh) => {
+    loadModel('scene3static', this.isShadow, null, (mesh) => {
       const scale = 1;
       mesh.position.set(0, 0, 0);
       mesh.scale.set(scale, scale, scale);
@@ -70,7 +73,7 @@ class Scene3Story extends THREE.Group{
   }
 
   loadFlower() {
-    loadSVG(`flower-storyScene3`, (svgGroup) => {
+    loadSVG(`flower-storyScene3`, this.isShadow, (svgGroup) => {
       const scale = 1;
       svgGroup.position.set(60, 420, 440);
       svgGroup.scale.set(scale, -scale, scale);
@@ -90,7 +93,7 @@ class Scene3Story extends THREE.Group{
   }
 
   addChandelier() {
-    const chandelier = new Chandelier(this.isDark);
+    const chandelier = new Chandelier(this.isDark, this.isShadow);
     const scale = 1;
     chandelier.scale.set(scale, scale, scale);
     chandelier.position.set(350, 500, 200);
@@ -98,11 +101,21 @@ class Scene3Story extends THREE.Group{
   }
 
   addSuitcase() {
-    loadModel('suitcase', null, (mesh) => {
+    loadModel('suitcase', this.isShadow, null, (mesh) => {
       const scale = 1;
       mesh.position.set(300, 0, 780);
       mesh.scale.set(scale, scale, scale);
       mesh.rotation.copy(new THREE.Euler(0 * THREE.Math.DEG2RAD, 15 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD));
+      this.add(mesh);
+    })
+  }
+
+  addSonya() {
+    loadModel('sonya', this.isShadow, null, (mesh) => {
+      const scale = 1;
+      mesh.position.set(450, 150, 300);
+      mesh.scale.set(scale, scale, scale);
+      mesh.rotation.copy(new THREE.Euler(0 * THREE.Math.DEG2RAD, 10 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD));
       this.add(mesh);
     })
   }

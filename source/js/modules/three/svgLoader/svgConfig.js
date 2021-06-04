@@ -31,7 +31,8 @@ const svgSettings = [
     depth: 2,
     cap: 2,
     color: colors.Green,
-    reflectivity: reflectivity.basic
+    reflectivity: reflectivity.basic,
+    castShadow: true,
   },
   {
     name: `leaf2-storyScene1`,
@@ -39,7 +40,8 @@ const svgSettings = [
     depth: 2,
     cap: 2,
     color: colors.Green,
-    reflectivity: reflectivity.basic
+    reflectivity: reflectivity.basic,
+    castShadow: true,
   },
   {
     name: `question`,
@@ -63,6 +65,7 @@ const svgSettings = [
     depth: 4,
     cap: 2,
     color: colors.AdditionalPurple,
+    castShadow: true,
   },
   {
     name: `flower-storyScene3`,
@@ -70,6 +73,7 @@ const svgSettings = [
     depth: 4,
     cap: 2,
     color: colors.ShadowedAdditionalPurple,
+    castShadow: true,
   },
 ];
 

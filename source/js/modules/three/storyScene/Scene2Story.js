@@ -7,6 +7,7 @@ import Floor from './objects/Floor.js';
 import Snowman from './objects/Snowman.js';
 import Road from './objects/Road.js';
 import Cylinders from './objects/Cylinders.js';
+import {isMobile} from '../IntroAndStory.js';
 
 class Scene2Story extends THREE.Group{
   constructor(){
@@ -14,6 +15,8 @@ class Scene2Story extends THREE.Group{
 
     this.wall;
     this.floor;
+
+    this.isShadow = !isMobile;
 
     this.constructChildren();
   }
@@ -25,7 +28,8 @@ class Scene2Story extends THREE.Group{
     this.addSnowman();
     this.addRoad();
     this.addCylinders();
-    this.addSuitcase();
+    // this.addSuitcase();
+    this.addCompass();
   }
 
   setMaterial(options = {}) {
@@ -39,7 +43,7 @@ class Scene2Story extends THREE.Group{
   }
 
   addWallCornerUnit(){
-    loadModel('wallCornerUnit', this.setMaterial({ color: colors.SkyLightBlue, side: THREE.DoubleSide, ...reflectivity.soft }), (mesh) => {
+    loadModel('wallCornerUnit', this.isShadow, this.setMaterial({ color: colors.SkyLightBlue, side: THREE.DoubleSide, ...reflectivity.soft }), (mesh) => {
       const scale = 1;
       mesh.position.set(0, 0, 0);
       mesh.scale.set(scale, scale, scale);
@@ -59,7 +63,7 @@ class Scene2Story extends THREE.Group{
   }
 
   addSceneStatic() {
-    loadModel('scene2static', null, (mesh) => {
+    loadModel('scene2static', this.isShadow, null, (mesh) => {
       const scale = 1;
       mesh.position.set(0, 0, 0);
       mesh.scale.set(scale, scale, scale);
@@ -79,7 +83,7 @@ class Scene2Story extends THREE.Group{
   }
 
   addSnowman() {
-    const snowman = new Snowman();
+    const snowman = new Snowman(this.isShadow);
     const scale = 1;
     snowman.scale.set(scale, scale, scale);
     snowman.position.set(220, 115, 400);
@@ -87,7 +91,7 @@ class Scene2Story extends THREE.Group{
   }
 
   addCylinders() {
-    const cylinders = new Cylinders();
+    const cylinders = new Cylinders(this.isShadow);
     const scale = 1;
     cylinders.scale.set(scale, scale, scale);
     cylinders.position.set(0, 50, 0);
@@ -95,11 +99,21 @@ class Scene2Story extends THREE.Group{
   }
 
   addSuitcase() {
-    loadModel('suitcase', null, (mesh) => {
+    loadModel('suitcase', this.isShadow, null, (mesh) => {
       const scale = 1;
       mesh.position.set(300, 0, 780);
       mesh.scale.set(scale, scale, scale);
       mesh.rotation.copy(new THREE.Euler(0 * THREE.Math.DEG2RAD, 15 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD));
+      this.add(mesh);
+    })
+  }
+
+  addCompass() {
+    loadModel('compass', this.isShadow, null, (mesh) => {
+      const scale = 1;
+      mesh.position.set(0, 0, 0);
+      mesh.scale.set(scale, scale, scale);
+      mesh.rotation.copy(new THREE.Euler(0 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD));
       this.add(mesh);
     })
   }

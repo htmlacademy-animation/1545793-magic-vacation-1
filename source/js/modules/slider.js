@@ -4,8 +4,6 @@ import { introAndStory } from '../script.js';
 
 export default () => {
   let storySlider;
-  // let storyKey = false;
-  // const story = new Story();
 
   const setSlider = function () {
     if (((window.innerWidth / window.innerHeight) < 1) || window.innerWidth < 769) {
@@ -29,9 +27,6 @@ export default () => {
               introAndStory.setStory('scene3');
             }
           },
-          // resize: () => {
-          //   storySlider.update();
-          // }
         },
         observer: true,
         observeParents: true
@@ -63,27 +58,12 @@ export default () => {
               introAndStory.setStory('scene3');
             }
           },
-          // resize: () => {
-          //   storySlider.update();
-          // }
         },
         observer: true,
         observeParents: true
       });
     }
   };
-
-  // window.addEventListener(`resize`, function () {
-  //   if (storySlider) {
-  //     storySlider.destroy();
-  //   }
-
-  //   setSlider();
-
-  //   // if (storyKey) {
-  //     introAndStory.setStory('scene0');
-  //   // }
-  // });
 
   document.body.addEventListener(`screenChanged`, (e) => {
     if (e.detail.screenName === `story`) {
