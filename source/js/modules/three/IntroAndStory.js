@@ -3,6 +3,7 @@ import { OrbitControls } from '../../../../node_modules/three/examples/jsm/contr
 import SceneIntro from './introScene/SceneIntro.js';
 import SceneAllStory from './storyScene/StorySceneAll.js';
 import { loadModel } from '../three/modelLoader/modelLoader.js';
+import {tick} from '../helpers/animations.js';
 
 export const isMobile = /android|ipad|iphone|ipod/i.test(navigator.userAgent) && !window.MSStream;
 
@@ -22,9 +23,12 @@ class IntroAndStory {
     this.lights;
     this.directionalLight;
 
+    this.startTime = -1;
+
     this.isShadow = !isMobile;
 
     this.introGroupObj;
+    this.introSceneIaAnim = false;
     this.SceneAllStory;
     this.suitcase;
 
@@ -70,7 +74,7 @@ class IntroAndStory {
     this.scene.add(this.lights);
 
     this.isAnim = true;
-
+    // this.introGroupObj.anim();
     this.render();
   }
 
@@ -93,7 +97,7 @@ class IntroAndStory {
     const sceneAllStory = new SceneAllStory();
     const scale = 1;
     sceneAllStory.scale.set(scale, scale, scale);
-    sceneAllStory.position.set(0, 0, -3000);
+    sceneAllStory.position.set(0, -500, -2500);
     sceneAllStory.rotation.copy(new THREE.Euler(0 * THREE.Math.DEG2RAD, -45 * THREE.Math.DEG2RAD, 0));
     this.SceneAllStory = sceneAllStory;
     this.scene.add(sceneAllStory)
@@ -205,7 +209,7 @@ class IntroAndStory {
   setCameraStory(angle) {
     const posX = 1900 * Math.cos(angle * THREE.Math.DEG2RAD);
     const posZ = 1900 * Math.sin(angle * THREE.Math.DEG2RAD);
-    this.camera.position.set(this.SceneAllStory.position.x + posX, 600, this.SceneAllStory.position.z + posZ);
+    this.camera.position.set(this.SceneAllStory.position.x + posX, this.SceneAllStory.position.y + 600, this.SceneAllStory.position.z + posZ);
     this.controls.target.set(this.SceneAllStory.position.x, this.SceneAllStory.position.y, this.SceneAllStory.position.z);
     this.setPositionObjStorySceneRelativeCamera(this.lights, angle);
     this.directionalLight.target = this.SceneAllStory;
@@ -233,8 +237,19 @@ class IntroAndStory {
     obj.position.set(this.camera.position.x, this.camera.position.y, this.camera.position.z);
   }
 
+  animIntroScene() {
+    if(this.introGroupObj.children.length != 10){
+      return
+    } else if (this.introSceneIaAnim != true) {
+      this.introSceneIaAnim = true;
+      this.introGroupObj.startAnimimations();
+    }
+  }
+
   render() {
     this.renderer.render(this.scene, this.camera);
+
+    this.animIntroScene();
 
     if (isOrbitControl) {
       this.controls.update();
@@ -245,10 +260,6 @@ class IntroAndStory {
     } else {
       cancelAnimationFrame(this.render);
     }
-  }
-
-  stopAnim() {
-    this.isAnim = false;
   }
 
   updateSize() {

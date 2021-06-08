@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { setMaterial } from '../../Story.js';
 import { colors, reflectivity } from '../../../helpers/colorsAndReflection.js';
+import { isShadow } from '../../../helpers/isShadow.js';
 
 class Cylinders extends THREE.Group {
   constructor(isShadow) {
@@ -27,13 +28,7 @@ class Cylinders extends THREE.Group {
       this.add(this.cylinderMesh);
     }
 
-    if(this.isShadow){
-      this.traverse((child) => {
-        if (child.isMesh) {
-          child.castShadow = true;
-        }
-      });
-    }
+    isShadow(this);
 
   }
 }
