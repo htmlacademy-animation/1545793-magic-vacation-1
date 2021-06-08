@@ -1,5 +1,5 @@
 import _ from './easing.js';
-import {activeScene} from '../three/Story.js';
+import { activeScene } from '../three/Story.js';
 
 export class Animation {
   constructor(options) {
@@ -143,3 +143,79 @@ export const animateWithFPS = (render, duration, fps, endCB = () => { }) => {
 
   loop();
 };
+
+export const tick = (from, to, progress) => from + progress * (to - from);
+
+export const animateScale = (item, start, finish, duration, ease, endCB = () => { }) => {
+  let progress = 0;
+  let startTime = Date.now();
+
+  function loop(){
+
+    progress = (Date.now() - startTime) / duration;
+
+    const easing = _[`${ease}`](progress);
+  
+    const scaleX = tick(start[0], finish[0], easing);
+    const scaleY = tick(start[1], finish[1], easing);
+    const scaleZ = tick(start[2], finish[2], easing);
+  
+    const scale = [scaleX, scaleY, scaleZ];
+  
+    if (progress > 1) {
+      endCB();
+      return
+    }
+  
+    item.scale.set(...scale);
+
+    requestAnimationFrame(loop);
+  }
+
+  loop();
+}
+
+export const animateMove = (item, start, finish, duration, ease, endCB = () => { }) => {
+  let progress = 0;
+  let startTime = Date.now();
+
+  function loop(){
+
+    progress = (Date.now() - startTime) / duration;
+
+    const easing = _[`${ease}`](progress);
+  
+    const positionX = tick(start[0], finish[0], easing);
+    const positionY = tick(start[1], finish[1], easing);
+    const positionZ = tick(start[2], finish[2], easing);
+  
+    const position = [positionX, positionY, positionZ];
+  
+    if (progress > 1) {
+      endCB();
+      return
+    }
+  
+    item.position.set(...position);
+
+    requestAnimationFrame(loop);
+  }
+
+  loop();
+}
+
+export const animareFluctuation = (item, amp, period) => {
+  let progress = 0;
+  let startTime = Date.now();
+
+  function loop(){
+
+    progress = (Date.now() - startTime) * 0.0001;
+
+    item.position.y = item.position.y + amp * Math.sin((2 * Math.PI * progress) / period);
+
+    requestAnimationFrame(loop);
+  }
+
+  loop();
+}

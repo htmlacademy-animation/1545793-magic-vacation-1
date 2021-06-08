@@ -23,20 +23,7 @@ rules();
 lettersAnimation();
 
 export const introAndStory = new IntroAndStory();
-// let introAndStoryIsActive = false;
 introAndStory.init();
-
-// document.body.addEventListener(`screenChanged`, (e) => {
-//   if (e.detail.screenName === `top` || e.detail.screenName === `story`) {
-//     if (introAndStoryIsActive != true) {
-//       introAndStoryIsActive = true;
-//       introAndStory.init();
-//     }
-//   } else {
-//     introAndStoryIsActive = false;
-//     introAndStory.stopAnim();
-//   }
-// });
 
 const fullPageScroll = new FullPageScroll();
 fullPageScroll.init();

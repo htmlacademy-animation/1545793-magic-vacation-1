@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { setMaterial } from '../../Story.js';
 import { getLathePointsForCircle } from '../../../helpers/latheGeometry.js';
 import { colors, reflectivity } from '../../../helpers/colorsAndReflection.js';
+import { isShadow } from '../../../helpers/isShadow.js';
 
 class Saturn extends THREE.Group {
   constructor(isDark, isShadow) {
@@ -23,13 +24,7 @@ class Saturn extends THREE.Group {
     this.addSphereBig();
     this.addRing();
 
-    if(this.isShadow){
-      this.traverse((child) => {
-        if (child.isMesh) {
-          child.castShadow = true;
-        }
-      });
-    }
+    isShadow(this);
   }
 
   addSphereBig() {
