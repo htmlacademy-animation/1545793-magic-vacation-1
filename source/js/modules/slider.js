@@ -69,6 +69,7 @@ export default () => {
     if (e.detail.screenName === `story`) {
       if (storySlider.activeIndex === 0 || storySlider.activeIndex === 1) {
         introAndStory.setStory('scene0');
+        introAndStory.suitcaseIaAnim = true;
       } else if (storySlider.activeIndex === 2 || storySlider.activeIndex === 3) {
         introAndStory.setStory('scene1');
       } else if (storySlider.activeIndex === 4 || storySlider.activeIndex === 5) {

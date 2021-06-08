@@ -3,7 +3,7 @@ import { OrbitControls } from '../../../../node_modules/three/examples/jsm/contr
 import SceneIntro from './introScene/SceneIntro.js';
 import SceneAllStory from './storyScene/StorySceneAll.js';
 import { loadModel } from '../three/modelLoader/modelLoader.js';
-import {tick} from '../helpers/animations.js';
+import { animateScale, animateMove } from '../helpers/animations.js';
 
 export const isMobile = /android|ipad|iphone|ipod/i.test(navigator.userAgent) && !window.MSStream;
 
@@ -31,6 +31,8 @@ class IntroAndStory {
     this.introSceneIaAnim = false;
     this.SceneAllStory;
     this.suitcase;
+    this.suitcaseOnLoad = false;
+    this.suitcaseIaAnim = false;
 
     this.render = this.render.bind(this);
     this.updateSize = this.updateSize.bind(this);
@@ -74,14 +76,13 @@ class IntroAndStory {
     this.scene.add(this.lights);
 
     this.isAnim = true;
-    // this.introGroupObj.anim();
     this.render();
   }
 
   addScene() {
+    this.addSuitcase();
     this.addSceneIntro();
     this.addSceneAllStory();
-    this.addSuitcase();
   }
 
   addSceneIntro() {
@@ -107,10 +108,12 @@ class IntroAndStory {
     const suitcaseGroup = new THREE.Group();
 
     loadModel('suitcase', this.isShadow, null, (mesh) => {
-      const scale = 0.9;
+      const scale = 0;
       mesh.position.set(-350, -600, -1130);
       mesh.scale.set(scale, scale, scale);
       mesh.rotation.copy(new THREE.Euler(0 * THREE.Math.DEG2RAD, -23 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD));
+      mesh.name = 'suitcase';
+      this.suitcaseOnLoad = true;
       suitcaseGroup.add(mesh);
     })
 
@@ -121,6 +124,28 @@ class IntroAndStory {
     const suitcase = this.setSuitcase();
     this.suitcase = suitcase;
     this.scene.add(this.suitcase);
+  }
+
+  startAanimationsSuitcase(){
+    if(this.suitcaseOnLoad != true || this.suitcaseIaAnim != true){
+      return
+    } else {
+      this.animationsSuitcase();
+      this.suitcaseIaAnim = false;
+    }
+  }
+
+  animationsSuitcase(){
+    const duration = 400;
+    const suitcase = this.suitcase.getObjectByName('suitcase');
+    animateMove(suitcase, [-350, -530, -1130], [-350, -600, -1130], duration, 'easeInCubic');
+    animateScale(suitcase, [0.9, 0.9, 0.9], [0.85, 0.95, 0.9], duration, 'easeOutCubic', () => {
+      animateScale(suitcase, [0.85, 0.95, 0.9], [0.9, 0.9, 1], duration / 2, 'easeOutCubic', () => {
+        animateScale(suitcase, [0.9, 0.9, 1], [0.9, 0.95, 0.85], duration / 3, 'easeOutCubic', () => {
+          animateScale(suitcase, [0.9, 0.95, 0.85], [0.9, 0.9, 0.9], duration / 3, 'easeOutCubic');
+        });
+      });
+    });
   }
 
   setLights() {
@@ -250,6 +275,7 @@ class IntroAndStory {
     this.renderer.render(this.scene, this.camera);
 
     this.animIntroScene();
+    this.startAanimationsSuitcase();
 
     if (isOrbitControl) {
       this.controls.update();
