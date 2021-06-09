@@ -4,8 +4,8 @@ import Scene1Story from './Scene1Story.js';
 import Scene2Story from './Scene2Story.js';
 import Scene3Story from './Scene3Story.js';
 
-class StorySceneAll extends THREE.Group{
-  constructor(){
+class StorySceneAll extends THREE.Group {
+  constructor() {
     super();
 
     this.scene0Story;
@@ -52,6 +52,39 @@ class StorySceneAll extends THREE.Group{
     scene3Story.rotation.copy(new THREE.Euler(0 * THREE.Math.DEG2RAD, 270 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD));
     this.scene3Story = scene3Story;
     this.add(scene3Story)
+  }
+
+  animationsScene(activeScene) {
+    switch (activeScene) {
+      case 'scene0':
+        if (this.children[0].children.length != this.children[0].counterLoadObj) {
+          return
+        } else {
+          this.children[0].animations();
+        }
+        break;
+      case 'scene1':
+        if (this.children[1].children.length != this.children[1].counterLoadObj) {
+          return
+        } else {
+          this.children[1].animations();
+        }
+        break;
+      case 'scene2':
+        if (this.children[2].children.length != this.children[2].counterLoadObj) {
+          return
+        } else {
+          this.children[2].animations();
+        }
+        break;
+      case 'scene3':
+        if (this.children[3].children.length != this.children[3].counterLoadObj) {
+          return
+        } else {
+          this.children[3].animations();
+        }
+        break;
+    }
   }
 }
 
