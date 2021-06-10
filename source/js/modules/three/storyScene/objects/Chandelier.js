@@ -35,17 +35,18 @@ class Chandelier extends THREE.Group {
   addSphereBig() {
     const sphere = new THREE.SphereGeometry(60, 50, 50);
     this.sphereBigMesh = new THREE.Mesh(sphere, setMaterial({ color: this.color1, ...reflectivity.soft }));
-
+    this.sphereBigMesh.position.set(0, -1000, 0);
     this.add(this.sphereBigMesh);
   }
 
   addRing() {
     const points = getLathePointsForCircle((120 -80), 2, 80);
-
     const ring = new THREE.LatheBufferGeometry(points, 50);
     this.ringMesh = new THREE.Mesh(ring, setMaterial({ color: this.color2, flatShading: true, side: THREE.DoubleSide, ...reflectivity.soft }));
-    this.ringMesh.rotation.copy(new THREE.Euler(15 * THREE.Math.DEG2RAD, 0, 0));
-
+    this.ringMesh.rotation.copy(new THREE.Euler(0, 0, -10 * THREE.Math.DEG2RAD));
+    const topOffset = this.sphereBigMesh.position.y;
+    this.ringMesh.position.set(0, topOffset, 0);
+    this.ringMesh.name = 'ring';
     this.add(this.ringMesh);
   }
 

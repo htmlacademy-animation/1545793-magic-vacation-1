@@ -8,6 +8,7 @@ import Snowman from './objects/Snowman.js';
 import Road from './objects/Road.js';
 import Cylinders from './objects/Cylinders.js';
 import {isMobile} from '../IntroAndStory.js';
+import { animConpass } from '../../helpers/animations.js';
 
 class Scene2Story extends THREE.Group{
   constructor(){
@@ -16,6 +17,9 @@ class Scene2Story extends THREE.Group{
     this.wall;
     this.floor;
 
+    this.startTime = -1;
+    this.counterLoadObj = 0;
+    
     this.isShadow = !isMobile;
 
     this.constructChildren();
@@ -28,7 +32,6 @@ class Scene2Story extends THREE.Group{
     this.addSnowman();
     this.addRoad();
     this.addCylinders();
-    // this.addSuitcase();
     this.addCompass();
   }
 
@@ -43,6 +46,7 @@ class Scene2Story extends THREE.Group{
   }
 
   addWallCornerUnit(){
+    this.counterLoadObj += 1;
     loadModel('wallCornerUnit', this.isShadow, this.setMaterial({ color: colors.SkyLightBlue, side: THREE.DoubleSide, ...reflectivity.soft }), (mesh) => {
       const scale = 1;
       mesh.position.set(0, 0, 0);
@@ -54,6 +58,7 @@ class Scene2Story extends THREE.Group{
   }
 
   addFloor() {
+    this.counterLoadObj += 1;
     const mesh = new Floor( {color: colors.MountainBlue, ...reflectivity.soft} );
     const scale = 1;
     mesh.position.set(0, 0, 0);
@@ -63,6 +68,7 @@ class Scene2Story extends THREE.Group{
   }
 
   addSceneStatic() {
+    this.counterLoadObj += 1;
     loadModel('scene2static', this.isShadow, null, (mesh) => {
       const scale = 1;
       mesh.position.set(0, 0, 0);
@@ -73,6 +79,7 @@ class Scene2Story extends THREE.Group{
   }
 
   addRoad() {
+    this.counterLoadObj += 1;
     const road = new Road();
     const scale = 1;
 
@@ -83,6 +90,7 @@ class Scene2Story extends THREE.Group{
   }
 
   addSnowman() {
+    this.counterLoadObj += 1;
     const snowman = new Snowman(this.isShadow);
     const scale = 1;
     snowman.scale.set(scale, scale, scale);
@@ -91,31 +99,35 @@ class Scene2Story extends THREE.Group{
   }
 
   addCylinders() {
+    this.counterLoadObj += 1;
     const cylinders = new Cylinders(this.isShadow);
     const scale = 1;
     cylinders.scale.set(scale, scale, scale);
-    cylinders.position.set(0, 50, 0);
+    cylinders.position.set(0, 30, 0);
     this.add(cylinders);
   }
 
-  addSuitcase() {
-    loadModel('suitcase', this.isShadow, null, (mesh) => {
-      const scale = 1;
-      mesh.position.set(300, 0, 780);
-      mesh.scale.set(scale, scale, scale);
-      mesh.rotation.copy(new THREE.Euler(0 * THREE.Math.DEG2RAD, 15 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD));
-      this.add(mesh);
-    })
-  }
-
   addCompass() {
+    this.counterLoadObj += 1;
     loadModel('compass', this.isShadow, null, (mesh) => {
       const scale = 1;
       mesh.position.set(0, 0, 0);
       mesh.scale.set(scale, scale, scale);
       mesh.rotation.copy(new THREE.Euler(0 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD));
+      this.compass = mesh;
       this.add(mesh);
     })
+  }
+
+  animations() {
+    if (this.startTime < 0) {
+      this.startTime = new THREE.Clock();
+      return;
+    }
+
+    const t = this.startTime.getElapsedTime();
+
+    animConpass(t, 0.2, this.compass.getObjectByName(`ArrowCenter`));
   }
 }
 

@@ -3,7 +3,7 @@ import { OrbitControls } from '../../../../node_modules/three/examples/jsm/contr
 import SceneIntro from './introScene/SceneIntro.js';
 import SceneAllStory from './storyScene/StorySceneAll.js';
 import { loadModel } from '../three/modelLoader/modelLoader.js';
-import { animateScale, animateMove } from '../helpers/animations.js';
+import { animateScale, animateMoveY } from '../helpers/animations.js';
 
 export const isMobile = /android|ipad|iphone|ipod/i.test(navigator.userAgent) && !window.MSStream;
 
@@ -138,7 +138,7 @@ class IntroAndStory {
   animationsSuitcase(){
     const duration = 400;
     const suitcase = this.suitcase.getObjectByName('suitcase');
-    animateMove(suitcase, [-350, -530, -1130], [-350, -600, -1130], duration, 'easeInCubic');
+    animateMoveY(suitcase, -530, -600, duration, 'easeInCubic');
     animateScale(suitcase, [0.9, 0.9, 0.9], [0.85, 0.95, 0.9], duration, 'easeOutCubic', () => {
       animateScale(suitcase, [0.85, 0.95, 0.9], [0.9, 0.9, 1], duration / 2, 'easeOutCubic', () => {
         animateScale(suitcase, [0.9, 0.9, 1], [0.9, 0.95, 0.85], duration / 3, 'easeOutCubic', () => {
@@ -206,19 +206,19 @@ class IntroAndStory {
         this.suitcase.position.set(0, 0, this.camera.position.z + 1000);
         break;
       case 'scene0':
-        angle = 90;
-        this.setCameraStory(angle);
-        break;
-      case 'scene1':
         angle = 0;
         this.setCameraStory(angle);
         break;
+      case 'scene1':
+        angle = 90;
+        this.setCameraStory(angle);
+        break;
       case 'scene2':
-        angle = -90;
+        angle = 180;
         this.setCameraStory(angle);
         break;
       case 'scene3':
-        angle = 180;
+        angle = 270;
         this.setCameraStory(angle);
         break;
     }
@@ -232,8 +232,8 @@ class IntroAndStory {
   }
 
   setCameraStory(angle) {
-    const posX = 1900 * Math.cos(angle * THREE.Math.DEG2RAD);
-    const posZ = 1900 * Math.sin(angle * THREE.Math.DEG2RAD);
+    const posX = 1900 * Math.sin(angle * THREE.Math.DEG2RAD);
+    const posZ = 1900 * Math.cos(angle * THREE.Math.DEG2RAD);
     this.camera.position.set(this.SceneAllStory.position.x + posX, this.SceneAllStory.position.y + 600, this.SceneAllStory.position.z + posZ);
     this.controls.target.set(this.SceneAllStory.position.x, this.SceneAllStory.position.y, this.SceneAllStory.position.z);
     this.setPositionObjStorySceneRelativeCamera(this.lights, angle);
@@ -242,28 +242,12 @@ class IntroAndStory {
   }
 
   setPositionObjStorySceneRelativeCamera(obj, angle) {
-    let angleObj = 0;
-
-    switch (angle) {
-      case 90:
-        angleObj = 0
-        break;
-      case 0:
-        angleObj = 90
-        break;
-      case -90:
-        angleObj = 180
-        break;
-      case 180:
-        angleObj = -90
-        break;
-    }
-    obj.rotation.copy(new THREE.Euler(0 * THREE.Math.DEG2RAD, angleObj * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD));
+    obj.rotation.copy(new THREE.Euler(0 * THREE.Math.DEG2RAD, angle * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD));
     obj.position.set(this.camera.position.x, this.camera.position.y, this.camera.position.z);
   }
 
   animIntroScene() {
-    if(this.introGroupObj.children.length != 10){
+    if(this.introGroupObj.children.length != this.introGroupObj.counterLoadObj){
       return
     } else if (this.introSceneIaAnim != true) {
       this.introSceneIaAnim = true;
@@ -275,6 +259,7 @@ class IntroAndStory {
     this.renderer.render(this.scene, this.camera);
 
     this.animIntroScene();
+    this.SceneAllStory.animationsScene(this.activeScene);
     this.startAanimationsSuitcase();
 
     if (isOrbitControl) {

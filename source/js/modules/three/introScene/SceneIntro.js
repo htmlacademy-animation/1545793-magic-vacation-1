@@ -13,6 +13,8 @@ class SceneIntro extends THREE.Group {
 
     this.isShadow = !isMobile;
 
+    this.counterLoadObj = 0;
+
     this.constructChildren();
   }
 
@@ -95,6 +97,7 @@ class SceneIntro extends THREE.Group {
   }
 
   addPlane() {
+    this.counterLoadObj += 1;
     const plane = new THREE.PlaneGeometry(500, 500);
     const planeMesh = new THREE.Mesh(plane, this.setMaterial({ color: colors.Purple, ...reflectivity.basic, flatShading: true }));
 
@@ -103,6 +106,7 @@ class SceneIntro extends THREE.Group {
   }
 
   addAirplane() {
+    this.counterLoadObj += 1;
     loadModel('airplane', this.isShadow, this.setMaterial({ color: colors.White, ...reflectivity.soft }), (mesh) => {
       const scale = 1.2;
       mesh.position.set(250, 130, 150);
@@ -114,6 +118,7 @@ class SceneIntro extends THREE.Group {
   }
 
   addSuitcase() {
+    this.counterLoadObj += 1;
     loadModel('suitcase', this.isShadow, null, (mesh) => {
       const scale = 0.5;
       mesh.position.set(-50, -150, 300);
@@ -125,6 +130,7 @@ class SceneIntro extends THREE.Group {
   }
 
   addWatermelon() {
+    this.counterLoadObj += 1;
     loadModel('watermelon', this.isShadow, null, (mesh) => {
       const scale = 0;
       mesh.position.set(-300, -150, 800);
@@ -136,6 +142,7 @@ class SceneIntro extends THREE.Group {
   }
 
   loadKeyhole() {
+    this.counterLoadObj += 1;
     loadSVG(`keyhole`, this.isShadow, (svgGroup) => {
       const scale = 1.5;
       svgGroup.position.set(-1000 * scale, 1010 * scale, 10);
@@ -145,6 +152,7 @@ class SceneIntro extends THREE.Group {
   }
 
   loadFlamingo() {
+    this.counterLoadObj += 1;
     loadSVG(`flamingo`, this.isShadow, (svgGroup) => {
       const scale = 0;
       svgGroup.position.set(-480, 370, 100);
@@ -156,6 +164,7 @@ class SceneIntro extends THREE.Group {
   }
 
   loadLeaf() {
+    this.counterLoadObj += 1;
     loadSVG(`leaf`, this.isShadow, (svgGroup) => {
       const scale = 0;
       svgGroup.position.set(660, 350, 150);
@@ -167,6 +176,7 @@ class SceneIntro extends THREE.Group {
   }
 
   loadQuestion() {
+    this.counterLoadObj += 1;
     loadSVG(`question`, this.isShadow, (svgGroup) => {
       const scale = 0;
       svgGroup.position.set(100, -330, 100);
@@ -178,6 +188,7 @@ class SceneIntro extends THREE.Group {
   }
 
   loadSnowflake() {
+    this.counterLoadObj += 1;
     loadSVG(`snowflake`, this.isShadow, (svgGroup) => {
       const scale = 0;
       svgGroup.position.set(-450, -10, 100);
@@ -189,6 +200,7 @@ class SceneIntro extends THREE.Group {
   }
 
   addSaturn() {
+    this.counterLoadObj += 1;
     const saturn = new Saturn(false, this.isShadow);
     const scale = 0;
     saturn.scale.set(scale, scale, scale);
