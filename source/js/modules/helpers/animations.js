@@ -157,11 +157,7 @@ export const animateScale = (item, start, finish, duration, ease, endCB = () => 
 
     const easing = _[`${ease}`](progress);
 
-    const scaleX = tick(start[0], finish[0], easing);
-    const scaleY = tick(start[1], finish[1], easing);
-    const scaleZ = tick(start[2], finish[2], easing);
-
-    const scale = [scaleX, scaleY, scaleZ];
+    const scale = setParamsXYZ(start, finish, easing);
 
     if (progress > 1) {
       endCB();
@@ -186,11 +182,7 @@ export const animateMove = (item, start, finish, duration, ease, endCB = () => {
 
     const easing = _[`${ease}`](progress);
 
-    const positionX = tick(start[0], finish[0], easing);
-    const positionY = tick(start[1], finish[1], easing);
-    const positionZ = tick(start[2], finish[2], easing);
-
-    const position = [positionX, positionY, positionZ];
+    const position = setParamsXYZ(start, finish, easing);
 
     if (progress > 1) {
       endCB();
@@ -260,16 +252,8 @@ export const animIntroObj = (items, duration, ease, endCB = () => { }) => {
     const easing = _[`${ease}`](progress);
 
     items.forEach(item => {
-      const scaleX = tick(item.optAnim.startScale[0], item.optAnim.finishScale[0], easing);
-      const scaleY = tick(item.optAnim.startScale[1], item.optAnim.finishScale[1], easing);
-      const scaleZ = tick(item.optAnim.startScale[2], item.optAnim.finishScale[2], easing);
-
-      const positionX = tick(item.optAnim.startPosition[0], item.optAnim.finishPosition[0], easing);
-      const positionY = tick(item.optAnim.startPosition[1], item.optAnim.finishPosition[1], easing);
-      const positionZ = tick(item.optAnim.startPosition[2], item.optAnim.finishPosition[2], easing);
-
-      const scale = [scaleX, scaleY, scaleZ];
-      const position = [positionX, positionY, positionZ];
+      const scale = setParamsXYZ(item.optAnim.startScale, item.optAnim.finishScale, easing);
+      const position = setParamsXYZ(item.optAnim.startPosition, item.optAnim.finishPosition, easing);
 
       item.scale.set(...scale);
       item.position.set(...position);
@@ -324,4 +308,55 @@ export const animSonya = (t, item1, item2, item3) => {
   item1.position.y = positionY;
   item2.rotation.y = -1.3 + rotationX1
   item3.rotation.y = 1.3 - rotationX1
+}
+
+export const animSuitcaseIntro = (item, duration, ease, endCB = () => { }) => {
+  let progress = 0;
+  let startTime = Date.now();
+
+  const groupScale = item.getObjectByName(`scale`);
+  const groupRotation = item.getObjectByName(`rotation`);
+  const groupPositionXY = item.getObjectByName(`positionXY`);
+  const groupMove = item.getObjectByName(`move`);
+
+  function loop() {
+
+    progress = (Date.now() - startTime) / duration;
+
+    const easing = _[`${ease}`](progress);
+
+    const scale = setParamsXYZ(item.optAnim.startScale, item.optAnim.finishScale, easing);
+    const position = setParamsXYZ(item.optAnim.startPosition, item.optAnim.finishPosition, easing);
+    const rotation = setParamsXYZ(item.optAnim.startRotation, item.optAnim.finishRotation, easing);
+
+    const positionX = 30 * Math.sin((1.5 * Math.PI * easing) / 1.5);
+    const positionY = 170 * Math.sin((1.5 * Math.PI * easing) / 1.5);
+    const positionXY = [positionX, positionY, 0];
+
+    groupScale.scale.set(...scale);
+    groupMove.position.set(...position);
+    groupRotation.rotation.copy(new THREE.Euler(rotation[0] * THREE.Math.DEG2RAD, rotation[1] * THREE.Math.DEG2RAD, rotation[2] * THREE.Math.DEG2RAD));
+    groupPositionXY.position.set(...positionXY);
+
+    if (progress > 1) {
+      animareFluctuationIntroObj([item]);
+      endCB();
+      return
+    }
+
+    requestAnimationFrame(loop);
+  }
+
+  loop();
+}
+
+const setParamsXYZ = (start, finish, easing) => {
+  let paramsArr = [];
+
+  for (let i = 0; i <= 2; i++) {
+    const param = tick(start[i], finish[i], easing);
+    paramsArr.push(param);
+  }
+
+  return paramsArr
 }
