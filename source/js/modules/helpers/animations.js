@@ -329,14 +329,52 @@ export const animSuitcaseIntro = (item, duration, ease, endCB = () => { }) => {
     const position = setParamsXYZ(item.optAnim.startPosition, item.optAnim.finishPosition, easing);
     const rotation = setParamsXYZ(item.optAnim.startRotation, item.optAnim.finishRotation, easing);
 
-    const positionX = 30 * Math.sin((1.5 * Math.PI * easing) / 1.5);
-    const positionY = 170 * Math.sin((1.5 * Math.PI * easing) / 1.5);
+    const positionX = 30 * Math.sin(Math.PI * easing);
+    const positionY = 170 * Math.sin(Math.PI * easing);
     const positionXY = [positionX, positionY, 0];
 
     groupScale.scale.set(...scale);
     groupMove.position.set(...position);
     groupRotation.rotation.copy(new THREE.Euler(rotation[0] * THREE.Math.DEG2RAD, rotation[1] * THREE.Math.DEG2RAD, rotation[2] * THREE.Math.DEG2RAD));
     groupPositionXY.position.set(...positionXY);
+
+    if (progress > 1) {
+      animareFluctuationIntroObj([item]);
+      endCB();
+      return
+    }
+
+    requestAnimationFrame(loop);
+  }
+
+  loop();
+}
+
+export const animAirplaneIntro = (item, duration, ease, endCB = () => { }) => {
+  let progress = 0;
+  let startTime = Date.now();
+
+  const groupScale = item.getObjectByName(`scale`);
+  const groupRotationAirplane = item.getObjectByName(`rotationAirplane`);
+  const groupPositionYZ = item.getObjectByName(`positionYZ`);
+  const groupRotationAxis = item.getObjectByName(`rotationAxis`);
+  const groupMove = item.getObjectByName(`move`);
+
+  function loop() {
+
+    progress = (Date.now() - startTime) / duration;
+
+    const easing = _[`${ease}`](progress);
+
+    const scale = setParamsXYZ(item.optAnim.startScale, item.optAnim.finishScale, easing);
+    const rotationAirplane = setParamsXYZ(item.optAnim.startRotationAirplane, item.optAnim.finishRotationAirplane, easing);
+    const positionYZ = setParamsXYZ(item.optAnim.startPositionYZ, item.optAnim.finishPositionYZ, easing);
+    const rotationAxis = tick(item.optAnim.startRotationAxis, item.optAnim.finishRotationAxis, easing);
+
+    groupScale.scale.set(...scale);
+    groupRotationAirplane.rotation.copy(new THREE.Euler(rotationAirplane[0] * THREE.Math.DEG2RAD, rotationAirplane[1] * THREE.Math.DEG2RAD, rotationAirplane[2] * THREE.Math.DEG2RAD, 'YXZ'));
+    groupPositionYZ.position.set(...positionYZ);
+    groupRotationAxis.rotation.copy(new THREE.Euler(0, rotationAxis * THREE.Math.DEG2RAD, 0));
 
     if (progress > 1) {
       animareFluctuationIntroObj([item]);
