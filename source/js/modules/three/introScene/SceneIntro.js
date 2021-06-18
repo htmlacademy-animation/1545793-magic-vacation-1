@@ -4,7 +4,7 @@ import { loadSVG } from '../../three/svgLoader/svgLoader.js';
 import { colors, reflectivity } from '../../helpers/colorsAndReflection.js';
 import Saturn from '../../three/storyScene/objects/Saturn.js';
 import { isMobile } from '../IntroAndStory.js';
-import { animIntroObj } from '../../helpers/animations.js';
+import { animIntroObj, animSuitcaseIntro } from '../../helpers/animations.js';
 
 
 class SceneIntro extends THREE.Group {
@@ -41,6 +41,17 @@ class SceneIntro extends THREE.Group {
   }
 
   setOptAnimObj(){
+    this.suitcase.optAnim = {
+      startScale: [0, 0, 0],
+      finishScale: [0.5, 0.5, 0.5],
+      startPosition: [0, 0, 100],
+      finishPosition: [-70, -170, 400],
+      startRotation: [-100, 0, 0],
+      finishRotation: [20, -50, -10],
+      amp: -0.35,
+      period: 0.35
+    }
+
     this.flamingo.optAnim = {
       startScale: [0, 0, 0],
       finishScale: [-2, -2, 2],
@@ -101,7 +112,7 @@ class SceneIntro extends THREE.Group {
     const plane = new THREE.PlaneGeometry(500, 500);
     const planeMesh = new THREE.Mesh(plane, this.setMaterial({ color: colors.Purple, ...reflectivity.basic, flatShading: true }));
 
-    planeMesh.position.set(0, 0, 5);
+    planeMesh.position.set(0, 0, 20);
     this.add(planeMesh);
   }
 
@@ -120,13 +131,28 @@ class SceneIntro extends THREE.Group {
   addSuitcase() {
     this.counterLoadObj += 1;
     loadModel('suitcase', this.isShadow, null, (mesh) => {
-      const scale = 0.5;
-      mesh.position.set(-50, -150, 300);
-      mesh.scale.set(scale, scale, scale);
-      mesh.rotation.copy(new THREE.Euler(20 * THREE.Math.DEG2RAD, -140 * THREE.Math.DEG2RAD, 20 * THREE.Math.DEG2RAD));
-      this.suitcase = mesh;
-      this.add(mesh);
+      mesh.rotation.copy(new THREE.Euler(0 * THREE.Math.DEG2RAD, -90 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD));
+    
+      const groupScale = this.getGroupSuitcase('scale', mesh);
+      const groupRotation = this.getGroupSuitcase('rotation', groupScale);
+      const groupPositionXY = this.getGroupSuitcase('positionXY', groupRotation);
+      const groupMove = this.getGroupSuitcase('move', groupPositionXY);
+
+      const scale = 0;
+      groupScale.scale.set(scale, scale, scale);
+      groupMove.position.set(0, 0, 50);
+      groupRotation.rotation.copy(new THREE.Euler(-100 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD));
+
+      this.suitcase = groupMove;
+      this.add(this.suitcase);
     })
+  }
+
+  getGroupSuitcase(name, child) {
+    const group = new THREE.Group();
+    group.name = name;
+    group.add(child);
+    return group;
   }
 
   addWatermelon() {
@@ -214,7 +240,6 @@ class SceneIntro extends THREE.Group {
     const duration = 1500;
     this.objectsArr = [
       // this.airplane,
-      // this.suitcase,
       this.watermelon,
       this.flamingo,
       this.leaf,
@@ -226,6 +251,8 @@ class SceneIntro extends THREE.Group {
     this.setOptAnimObj();
 
     animIntroObj(this.objectsArr, duration, 'easeOutCubic');
+    animSuitcaseIntro(this.suitcase, duration, 'easeOutCubic');
+
   }
 }
 
