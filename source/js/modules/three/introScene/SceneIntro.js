@@ -4,7 +4,7 @@ import { loadSVG } from '../../three/svgLoader/svgLoader.js';
 import { colors, reflectivity } from '../../helpers/colorsAndReflection.js';
 import Saturn from '../../three/storyScene/objects/Saturn.js';
 import { isMobile } from '../IntroAndStory.js';
-import { animIntroObj, animSuitcaseIntro } from '../../helpers/animations.js';
+import { animIntroObj, animSuitcaseIntro, animAirplaneIntro } from '../../helpers/animations.js';
 
 
 class SceneIntro extends THREE.Group {
@@ -40,7 +40,7 @@ class SceneIntro extends THREE.Group {
     });
   }
 
-  setOptAnimObj(){
+  setOptAnimObj() {
     this.suitcase.optAnim = {
       startScale: [0, 0, 0],
       finishScale: [0.5, 0.5, 0.5],
@@ -50,6 +50,19 @@ class SceneIntro extends THREE.Group {
       finishRotation: [20, -50, -10],
       amp: -0.35,
       period: 0.35
+    }
+
+    this.airplane.optAnim = {
+      startScale: [0, 0, 0],
+      finishScale: [1.1, 1.1, 1.1],
+      startRotationAirplane: [0, -90, -180],
+      finishRotationAirplane: [-30, -90, 30],
+      startPositionYZ: [0, 0, 0],
+      finishPositionYZ: [0, 230, -200],
+      startRotationAxis: 0,
+      finishRotationAxis: 200,
+      amp: 0.3,
+      period: 0.4
     }
 
     this.flamingo.optAnim = {
@@ -112,19 +125,33 @@ class SceneIntro extends THREE.Group {
     const plane = new THREE.PlaneGeometry(500, 500);
     const planeMesh = new THREE.Mesh(plane, this.setMaterial({ color: colors.Purple, ...reflectivity.basic, flatShading: true }));
 
-    planeMesh.position.set(0, 0, 20);
+    planeMesh.position.set(0, 0, -50);
     this.add(planeMesh);
   }
 
   addAirplane() {
     this.counterLoadObj += 1;
     loadModel('airplane', this.isShadow, this.setMaterial({ color: colors.White, ...reflectivity.soft }), (mesh) => {
-      const scale = 1.2;
-      mesh.position.set(250, 130, 150);
-      mesh.scale.set(scale, scale, scale);
-      mesh.rotation.copy(new THREE.Euler(60 * THREE.Math.DEG2RAD, 140 * THREE.Math.DEG2RAD, -15 * THREE.Math.DEG2RAD));
-      this.airplane = mesh;
-      this.add(mesh);
+
+      const groupScale = this.getGroup('scale', mesh);
+      const groupRotationAirplane = this.getGroup('rotationAirplane', groupScale);
+      const groupPositionYZ = this.getGroup('positionYZ', groupRotationAirplane);
+      const groupRotationAxis = this.getGroup('rotationAxis', groupPositionYZ);
+      const groupMove = this.getGroup('move', groupRotationAxis);
+
+
+      // const scale = 1.2;
+      // mesh.position.set(250, 130, 150);
+      // mesh.scale.set(scale, scale, scale);
+      // mesh.rotation.copy(new THREE.Euler(60 * THREE.Math.DEG2RAD, 140 * THREE.Math.DEG2RAD, -15 * THREE.Math.DEG2RAD));
+
+      const scale = 0;
+      groupScale.scale.set(scale, scale, scale);
+      groupRotationAirplane.rotation.copy(new THREE.Euler(90 * THREE.Math.DEG2RAD, -90 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD));
+      groupMove.position.set(140, -170, 0);
+
+      this.airplane = groupMove;
+      this.add(this.airplane);
     })
   }
 
@@ -132,11 +159,11 @@ class SceneIntro extends THREE.Group {
     this.counterLoadObj += 1;
     loadModel('suitcase', this.isShadow, null, (mesh) => {
       mesh.rotation.copy(new THREE.Euler(0 * THREE.Math.DEG2RAD, -90 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD));
-    
-      const groupScale = this.getGroupSuitcase('scale', mesh);
-      const groupRotation = this.getGroupSuitcase('rotation', groupScale);
-      const groupPositionXY = this.getGroupSuitcase('positionXY', groupRotation);
-      const groupMove = this.getGroupSuitcase('move', groupPositionXY);
+
+      const groupScale = this.getGroup('scale', mesh);
+      const groupRotation = this.getGroup('rotation', groupScale);
+      const groupPositionXY = this.getGroup('positionXY', groupRotation);
+      const groupMove = this.getGroup('move', groupPositionXY);
 
       const scale = 0;
       groupScale.scale.set(scale, scale, scale);
@@ -148,7 +175,7 @@ class SceneIntro extends THREE.Group {
     })
   }
 
-  getGroupSuitcase(name, child) {
+  getGroup(name, child) {
     const group = new THREE.Group();
     group.name = name;
     group.add(child);
@@ -239,7 +266,6 @@ class SceneIntro extends THREE.Group {
   startAnimimations() {
     const duration = 1500;
     this.objectsArr = [
-      // this.airplane,
       this.watermelon,
       this.flamingo,
       this.leaf,
@@ -252,7 +278,9 @@ class SceneIntro extends THREE.Group {
 
     animIntroObj(this.objectsArr, duration, 'easeOutCubic');
     animSuitcaseIntro(this.suitcase, duration, 'easeOutCubic');
-
+    setTimeout(() => {
+      animAirplaneIntro(this.airplane, duration, 'easeOutCubic');
+    }, 500);
   }
 }
 
