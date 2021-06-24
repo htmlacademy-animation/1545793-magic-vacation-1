@@ -4,7 +4,7 @@ import { loadSVG } from '../../three/svgLoader/svgLoader.js';
 import { colors, reflectivity } from '../../helpers/colorsAndReflection.js';
 import Saturn from '../../three/storyScene/objects/Saturn.js';
 import { isMobile } from '../IntroAndStory.js';
-import { animIntroObj, animSuitcaseIntro, animAirplaneIntro } from '../../helpers/animations.js';
+import { animIntroObj, animSuitcaseIntro, animAirplaneIntro, animOpacity } from '../../helpers/animations.js';
 
 
 class SceneIntro extends THREE.Group {
@@ -126,7 +126,8 @@ class SceneIntro extends THREE.Group {
     const planeMesh = new THREE.Mesh(plane, this.setMaterial({ color: colors.Purple, ...reflectivity.basic, flatShading: true }));
 
     planeMesh.position.set(0, 0, -50);
-    this.add(planeMesh);
+    this.plane = planeMesh;
+    this.add(this.plane);
   }
 
   addAirplane() {
@@ -261,6 +262,16 @@ class SceneIntro extends THREE.Group {
     saturn.rotation.copy(new THREE.Euler(0, 0, 20 * THREE.Math.DEG2RAD));
     this.saturn = saturn;
     this.add(saturn);
+  }
+
+  hidePlane(dur, delay) {
+    setTimeout(() => {
+      animOpacity(this.plane, 0, dur)
+    }, delay);
+  }
+
+  showPlane(){
+    this.plane.material.opacity = 1;
   }
 
   startAnimimations() {
