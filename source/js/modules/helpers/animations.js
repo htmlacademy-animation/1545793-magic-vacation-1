@@ -398,3 +398,28 @@ const setParamsXYZ = (start, finish, easing) => {
 
   return paramsArr
 }
+
+export const animOpacity = (item, finish, duration) => {
+  let progress = 0;
+  let startTime = Date.now();
+  const start = item.material.opacity;
+
+  item.material.transparent = true;
+
+  function loop() {
+
+    progress = (Date.now() - startTime) / duration;
+
+    const opacity = start + progress * (finish - start);
+
+    if (progress > 1) {
+      return
+    }
+
+    item.material.opacity = opacity;
+
+    requestAnimationFrame(loop);
+  }
+
+  loop();
+}
