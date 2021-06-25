@@ -6,9 +6,9 @@ class SVGObject {
   }
 
   getObject() {
-    const svg = svgConfig.find(obj => {
-      return obj.name === this.name
-    })
+    const svg = svgConfig.find((obj) => {
+      return obj.name === this.name;
+    });
     return svg;
   }
 }

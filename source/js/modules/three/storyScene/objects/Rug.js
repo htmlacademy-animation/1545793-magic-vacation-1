@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import { getLathePointsForCircle, getLatheDegrees } from '../../../helpers/latheGeometry.js';
-import { colors } from '../../../helpers/colorsAndReflection.js';
+import {getLathePointsForCircle, getLatheDegrees} from '../../../helpers/latheGeometry.js';
+import {colors} from '../../../helpers/colorsAndReflection.js';
 import rugShaderMaterial from '../materials/rugShaderMaterial.js';
 
 class Rug extends THREE.Group {
@@ -24,7 +24,7 @@ class Rug extends THREE.Group {
 
   addRug() {
     const points = getLathePointsForCircle(180, 3, 763);
-    const { start, length } = getLatheDegrees(this.startDeg, this.finishDeg);
+    const {start, length} = getLatheDegrees(this.startDeg, this.finishDeg);
 
     const base = new THREE.LatheBufferGeometry(points, 50, start, length);
     const material = new THREE.ShaderMaterial(rugShaderMaterial({
@@ -32,7 +32,7 @@ class Rug extends THREE.Group {
       stripeColor: {value: new THREE.Color(this.colorStripe)}
     }));
     const rugMesh = new THREE.Mesh(base, material);
-    rugMesh.receiveShadow = true,
+    rugMesh.receiveShadow = true;
     this.add(rugMesh);
   }
 }

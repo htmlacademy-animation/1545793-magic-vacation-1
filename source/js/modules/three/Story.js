@@ -16,7 +16,7 @@ export const setMaterial = (options = {}) => {
     color: new THREE.Color(color),
     ...other
   });
-}
+};
 
 export class Story {
   constructor() {
@@ -28,8 +28,8 @@ export class Story {
     this.canvasID = `screen__canvas--story`;
     this.textures = [
       {src: `./img/module-5/scenes-textures/scene-1.png`,
-      options: {hue: 0.0},
-      scene: new Scene0Story()},
+        options: {hue: 0.0},
+        scene: new Scene0Story()},
       {src: `./img/module-5/scenes-textures/scene-2.png`, options: {
         hue: 0.1,
         isMagnifier: true,
@@ -49,9 +49,9 @@ export class Story {
         scene: new Scene2Story()
       },
       {src: `./img/module-5/scenes-textures/scene-4.png`,
-      options: {hue: 0.0},
-      scene: new Scene3Story()
-    },
+        options: {hue: 0.0},
+        scene: new Scene3Story()
+      },
     ];
     this.textureWidth = 2048;
     this.textureHeight = 1024;
@@ -174,7 +174,7 @@ export class Story {
 
     const loadManager = new THREE.LoadingManager();
     const textureLoader = new THREE.TextureLoader(loadManager);
-    const loadedTextures = this.textures.map((texture) => ({src: textureLoader.load(texture.src), options: texture.options, scene:texture.scene }));
+    const loadedTextures = this.textures.map((texture) => ({src: textureLoader.load(texture.src), options: texture.options, scene: texture.scene}));
 
     loadManager.onLoad = () => {
       loadedTextures.forEach((texture, index) => {

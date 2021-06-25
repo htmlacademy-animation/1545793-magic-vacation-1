@@ -1,25 +1,21 @@
 import * as THREE from 'three';
 
-import { loadModel } from '../../three/modelLoader/modelLoader.js';
-import { loadSVG } from '../../three/svgLoader/svgLoader.js';
-import { colors, reflectivity } from '../../helpers/colorsAndReflection.js';
+import {loadModel} from '../../three/modelLoader/modelLoader.js';
+import {colors, reflectivity} from '../../helpers/colorsAndReflection.js';
 import Floor from './objects/Floor.js';
 import Snowman from './objects/Snowman.js';
 import Road from './objects/Road.js';
 import Cylinders from './objects/Cylinders.js';
 import {isMobile} from '../IntroAndStory.js';
-import { animConpass } from '../../helpers/animations.js';
+import {animConpass} from '../../helpers/animations.js';
 
-class Scene2Story extends THREE.Group{
-  constructor(){
+class Scene2Story extends THREE.Group {
+  constructor() {
     super();
-
-    this.wall;
-    this.floor;
 
     this.startTime = -1;
     this.counterLoadObj = 0;
-    
+
     this.isShadow = !isMobile;
 
     this.constructChildren();
@@ -36,7 +32,7 @@ class Scene2Story extends THREE.Group{
   }
 
   setMaterial(options = {}) {
-    const { color, side, ...other } = options;
+    const {color, side, ...other} = options;
 
     return new THREE.MeshStandardMaterial({
       color: new THREE.Color(color),
@@ -45,21 +41,21 @@ class Scene2Story extends THREE.Group{
     });
   }
 
-  addWallCornerUnit(){
+  addWallCornerUnit() {
     this.counterLoadObj += 1;
-    loadModel('wallCornerUnit', this.isShadow, this.setMaterial({ color: colors.SkyLightBlue, side: THREE.DoubleSide, ...reflectivity.soft }), (mesh) => {
+    loadModel(`wallCornerUnit`, this.isShadow, this.setMaterial({color: colors.SkyLightBlue, side: THREE.DoubleSide, ...reflectivity.soft}), (mesh) => {
       const scale = 1;
       mesh.position.set(0, 0, 0);
       mesh.scale.set(scale, scale, scale);
       mesh.rotation.copy(new THREE.Euler(0 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD));
       this.wall = mesh;
       this.add(mesh);
-    })
+    });
   }
 
   addFloor() {
     this.counterLoadObj += 1;
-    const mesh = new Floor( {color: colors.MountainBlue, ...reflectivity.soft} );
+    const mesh = new Floor({color: colors.MountainBlue, ...reflectivity.soft});
     const scale = 1;
     mesh.position.set(0, 0, 0);
     mesh.scale.set(scale, scale, scale);
@@ -69,13 +65,13 @@ class Scene2Story extends THREE.Group{
 
   addSceneStatic() {
     this.counterLoadObj += 1;
-    loadModel('scene2static', this.isShadow, null, (mesh) => {
+    loadModel(`scene2static`, this.isShadow, null, (mesh) => {
       const scale = 1;
       mesh.position.set(0, 0, 0);
       mesh.scale.set(scale, scale, scale);
       mesh.rotation.copy(new THREE.Euler(0 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD));
       this.add(mesh);
-    })
+    });
   }
 
   addRoad() {
@@ -109,14 +105,14 @@ class Scene2Story extends THREE.Group{
 
   addCompass() {
     this.counterLoadObj += 1;
-    loadModel('compass', this.isShadow, null, (mesh) => {
+    loadModel(`compass`, this.isShadow, null, (mesh) => {
       const scale = 1;
       mesh.position.set(0, 0, 0);
       mesh.scale.set(scale, scale, scale);
       mesh.rotation.copy(new THREE.Euler(0 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD));
       this.compass = mesh;
       this.add(mesh);
-    })
+    });
   }
 
   animations() {

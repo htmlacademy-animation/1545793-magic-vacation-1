@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import _ from './easing.js';
-import { activeScene } from '../three/Story.js';
+import {activeScene} from '../three/Story.js';
 
 export class Animation {
   constructor(options) {
@@ -161,7 +161,7 @@ export const animateScale = (item, start, finish, duration, ease, endCB = () => 
 
     if (progress > 1) {
       endCB();
-      return
+      return;
     }
 
     item.scale.set(...scale);
@@ -170,7 +170,7 @@ export const animateScale = (item, start, finish, duration, ease, endCB = () => 
   }
 
   loop();
-}
+};
 
 export const animateMove = (item, start, finish, duration, ease, endCB = () => { }) => {
   let progress = 0;
@@ -186,7 +186,7 @@ export const animateMove = (item, start, finish, duration, ease, endCB = () => {
 
     if (progress > 1) {
       endCB();
-      return
+      return;
     }
 
     item.position.set(...position);
@@ -195,7 +195,7 @@ export const animateMove = (item, start, finish, duration, ease, endCB = () => {
   }
 
   loop();
-}
+};
 
 export const animateMoveY = (item, start, finish, duration, ease, endCB = () => { }) => {
   let progress = 0;
@@ -211,8 +211,8 @@ export const animateMoveY = (item, start, finish, duration, ease, endCB = () => 
 
     if (progress > 1) {
       endCB();
-      item.position.y = finish
-      return
+      item.position.y = finish;
+      return;
     }
 
     item.position.y = positionY;
@@ -221,7 +221,7 @@ export const animateMoveY = (item, start, finish, duration, ease, endCB = () => 
   }
 
   loop();
-}
+};
 
 export const animareFluctuationIntroObj = (items) => {
   let progress = 0;
@@ -231,15 +231,15 @@ export const animareFluctuationIntroObj = (items) => {
 
     progress = startTime.getElapsedTime() * 0.1;
 
-    items.forEach(item => {
+    items.forEach((item) => {
       item.position.y = item.position.y + item.optAnim.amp * Math.sin((2 * Math.PI * progress) / item.optAnim.period);
-    })
+    });
 
     requestAnimationFrame(loop);
   }
 
   loop();
-}
+};
 
 export const animIntroObj = (items, duration, ease, endCB = () => { }) => {
   let progress = 0;
@@ -251,7 +251,7 @@ export const animIntroObj = (items, duration, ease, endCB = () => { }) => {
 
     const easing = _[`${ease}`](progress);
 
-    items.forEach(item => {
+    items.forEach((item) => {
       const scale = setParamsXYZ(item.optAnim.startScale, item.optAnim.finishScale, easing);
       const position = setParamsXYZ(item.optAnim.startPosition, item.optAnim.finishPosition, easing);
 
@@ -262,14 +262,14 @@ export const animIntroObj = (items, duration, ease, endCB = () => { }) => {
     if (progress > 1) {
       animareFluctuationIntroObj(items);
       endCB();
-      return
+      return;
     }
 
     requestAnimationFrame(loop);
   }
 
   loop();
-}
+};
 
 export const animDogTail = (t, item) => {
 
@@ -278,7 +278,7 @@ export const animDogTail = (t, item) => {
   const amp = progress > 2 && progress < 6 ? 0.8 : 0.4;
 
   item.rotation.x = amp * Math.sin((6 * Math.PI * t));
-}
+};
 
 export const animSaturn = (t, amp, item1, item2) => {
 
@@ -287,18 +287,18 @@ export const animSaturn = (t, amp, item1, item2) => {
 
   item1.rotation.x = rotationX1;
   item2.rotation.x = rotationX2;
-}
+};
 
 export const animLeaf = (t, item, amp, speed) => {
 
   item.rotation.x = amp * Math.sin((Math.PI * _.easeOutElastic(t * speed)));
-}
+};
 
 export const animConpass = (t, amp, item) => {
   const rotationZ = amp * Math.sin((1.5 * Math.PI * t) / 2);
 
   item.rotation.z = rotationZ;
-}
+};
 
 export const animSonya = (t, item1, item2, item3) => {
   const positionY = 10 * Math.sin((2 * Math.PI * t) / 2);
@@ -306,9 +306,9 @@ export const animSonya = (t, item1, item2, item3) => {
   const rotationX1 = -0.05 * Math.sin((2 * Math.PI * t) / 2);
 
   item1.position.y = positionY;
-  item2.rotation.y = -1.3 + rotationX1
-  item3.rotation.y = 1.3 - rotationX1
-}
+  item2.rotation.y = -1.3 + rotationX1;
+  item3.rotation.y = 1.3 - rotationX1;
+};
 
 export const animSuitcaseIntro = (item, duration, ease, endCB = () => { }) => {
   let progress = 0;
@@ -341,14 +341,14 @@ export const animSuitcaseIntro = (item, duration, ease, endCB = () => { }) => {
     if (progress > 1) {
       animareFluctuationIntroObj([item]);
       endCB();
-      return
+      return;
     }
 
     requestAnimationFrame(loop);
   }
 
   loop();
-}
+};
 
 export const animAirplaneIntro = (item, duration, ease, endCB = () => { }) => {
   let progress = 0;
@@ -358,7 +358,6 @@ export const animAirplaneIntro = (item, duration, ease, endCB = () => { }) => {
   const groupRotationAirplane = item.getObjectByName(`rotationAirplane`);
   const groupPositionYZ = item.getObjectByName(`positionYZ`);
   const groupRotationAxis = item.getObjectByName(`rotationAxis`);
-  const groupMove = item.getObjectByName(`move`);
 
   function loop() {
 
@@ -372,21 +371,21 @@ export const animAirplaneIntro = (item, duration, ease, endCB = () => { }) => {
     const rotationAxis = tick(item.optAnim.startRotationAxis, item.optAnim.finishRotationAxis, easing);
 
     groupScale.scale.set(...scale);
-    groupRotationAirplane.rotation.copy(new THREE.Euler(rotationAirplane[0] * THREE.Math.DEG2RAD, rotationAirplane[1] * THREE.Math.DEG2RAD, rotationAirplane[2] * THREE.Math.DEG2RAD, 'YXZ'));
+    groupRotationAirplane.rotation.copy(new THREE.Euler(rotationAirplane[0] * THREE.Math.DEG2RAD, rotationAirplane[1] * THREE.Math.DEG2RAD, rotationAirplane[2] * THREE.Math.DEG2RAD, `YXZ`));
     groupPositionYZ.position.set(...positionYZ);
     groupRotationAxis.rotation.copy(new THREE.Euler(0, rotationAxis * THREE.Math.DEG2RAD, 0));
 
     if (progress > 1) {
       animareFluctuationIntroObj([item]);
       endCB();
-      return
+      return;
     }
 
     requestAnimationFrame(loop);
   }
 
   loop();
-}
+};
 
 const setParamsXYZ = (start, finish, easing) => {
   let paramsArr = [];
@@ -396,8 +395,8 @@ const setParamsXYZ = (start, finish, easing) => {
     paramsArr.push(param);
   }
 
-  return paramsArr
-}
+  return paramsArr;
+};
 
 export const animOpacity = (item, finish, duration) => {
   let progress = 0;
@@ -413,7 +412,7 @@ export const animOpacity = (item, finish, duration) => {
     const opacity = start + progress * (finish - start);
 
     if (progress > 1) {
-      return
+      return;
     }
 
     item.material.opacity = opacity;
@@ -422,4 +421,4 @@ export const animOpacity = (item, finish, duration) => {
   }
 
   loop();
-}
+};

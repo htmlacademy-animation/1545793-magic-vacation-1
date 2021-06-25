@@ -6,10 +6,10 @@ class ModelObject {
   }
 
   getObject() {
-    const modelObj = modelsSettings.find(obj => {
-      return obj.name === this.name
-    })
-    return modelObj
+    const modelObj = modelsSettings.find((obj) => {
+      return obj.name === this.name;
+    });
+    return modelObj;
   }
 }
 
