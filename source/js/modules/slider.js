@@ -1,5 +1,5 @@
 import Swiper from "swiper";
-import { introAndStory } from '../script.js';
+import {introAndStory} from '../script.js';
 
 
 export default () => {
@@ -18,13 +18,13 @@ export default () => {
         on: {
           slideChange: () => {
             if (storySlider.activeIndex === 0 || storySlider.activeIndex === 1) {
-              introAndStory.setStory('scene0');
+              introAndStory.setStory(`scene0`);
             } else if (storySlider.activeIndex === 2 || storySlider.activeIndex === 3) {
-              introAndStory.setStory('scene1');
+              introAndStory.setStory(`scene1`);
             } else if (storySlider.activeIndex === 4 || storySlider.activeIndex === 5) {
-              introAndStory.setStory('scene2');
+              introAndStory.setStory(`scene2`);
             } else if (storySlider.activeIndex === 6 || storySlider.activeIndex === 7) {
-              introAndStory.setStory('scene3');
+              introAndStory.setStory(`scene3`);
             }
           },
         },
@@ -49,13 +49,13 @@ export default () => {
         on: {
           slideChange: () => {
             if (storySlider.activeIndex === 0) {
-              introAndStory.setStory('scene0');
+              introAndStory.setStory(`scene0`);
             } else if (storySlider.activeIndex === 2) {
-              introAndStory.setStory('scene1');
+              introAndStory.setStory(`scene1`);
             } else if (storySlider.activeIndex === 4) {
-              introAndStory.setStory('scene2');
+              introAndStory.setStory(`scene2`);
             } else if (storySlider.activeIndex === 6) {
-              introAndStory.setStory('scene3');
+              introAndStory.setStory(`scene3`);
             }
           },
         },
@@ -68,17 +68,17 @@ export default () => {
   document.body.addEventListener(`screenChanged`, (e) => {
     if (e.detail.screenName === `story`) {
       if (storySlider.activeIndex === 0 || storySlider.activeIndex === 1) {
-        introAndStory.setStory('fromIntroToScene0');
+        introAndStory.setStory(`fromIntroToScene0`);
         introAndStory.suitcaseIaAnim = true;
       } else if (storySlider.activeIndex === 2 || storySlider.activeIndex === 3) {
-        introAndStory.setStory('scene1');
+        introAndStory.setStory(`scene1`);
       } else if (storySlider.activeIndex === 4 || storySlider.activeIndex === 5) {
-        introAndStory.setStory('scene2');
+        introAndStory.setStory(`scene2`);
       } else if (storySlider.activeIndex === 6 || storySlider.activeIndex === 7) {
-        introAndStory.setStory('scene3');
+        introAndStory.setStory(`scene3`);
       }
     } else {
-      introAndStory.setStory('intro');
+      introAndStory.setStory(`intro`);
     }
   });
 

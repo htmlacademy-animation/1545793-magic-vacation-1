@@ -1,13 +1,13 @@
 import * as THREE from 'three';
-import { setMaterial } from '../../Story.js';
-import { colors, reflectivity } from '../../../helpers/colorsAndReflection.js';
-import { isShadow } from '../../../helpers/isShadow.js';
+import {setMaterial} from '../../Story.js';
+import {colors, reflectivity} from '../../../helpers/colorsAndReflection.js';
+import {isShadow} from '../../../helpers/isShadow.js';
 
 class Pyramid extends THREE.Group {
-  constructor(isShadow) {
+  constructor(isShadowKey) {
     super();
 
-    this.isShadow = isShadow;
+    this.isShadow = isShadowKey;
 
     this.constructChildren();
   }
@@ -20,7 +20,7 @@ class Pyramid extends THREE.Group {
 
   addPyramid() {
     const cone = new THREE.ConeBufferGeometry(Math.hypot(250, 250) / 2, 280, 4);
-    const mesh = new THREE.Mesh(cone, setMaterial({ color: colors.Blue, ...reflectivity.soft, flatShading: true}));
+    const mesh = new THREE.Mesh(cone, setMaterial({color: colors.Blue, ...reflectivity.soft, flatShading: true}));
     this.add(mesh);
   }
 }

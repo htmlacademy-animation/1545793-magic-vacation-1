@@ -1,20 +1,17 @@
 import * as THREE from 'three';
 
-import { loadModel } from '../../three/modelLoader/modelLoader.js';
-import { loadSVG } from '../../three/svgLoader/svgLoader.js';
-import { colors, reflectivity } from '../../helpers/colorsAndReflection.js';
+import {loadModel} from '../../three/modelLoader/modelLoader.js';
+import {loadSVG} from '../../three/svgLoader/svgLoader.js';
+import {colors, reflectivity} from '../../helpers/colorsAndReflection.js';
 import Floor from './objects/Floor.js';
 import Rug from './objects/Rug.js';
 import Chandelier from './objects/Chandelier.js';
 import {isMobile} from '../IntroAndStory.js';
 import {animSonya} from '../../helpers/animations.js';
 
-class Scene3Story extends THREE.Group{
-  constructor(){
+class Scene3Story extends THREE.Group {
+  constructor() {
     super();
-
-    this.wall;
-    this.floor;
 
     this.startTime = -1;
     this.counterLoadObj = 0;
@@ -36,7 +33,7 @@ class Scene3Story extends THREE.Group{
   }
 
   setMaterial(options = {}) {
-    const { color, side, ...other } = options;
+    const {color, side, ...other} = options;
 
     return new THREE.MeshStandardMaterial({
       color: new THREE.Color(color),
@@ -45,21 +42,21 @@ class Scene3Story extends THREE.Group{
     });
   }
 
-  addWallCornerUnit(){
+  addWallCornerUnit() {
     this.counterLoadObj += 1;
-    loadModel('wallCornerUnit', this.isShadow, this.setMaterial({ color: colors.ShadowedPurple, side: THREE.DoubleSide, ...reflectivity.basic }), (mesh) => {
+    loadModel(`wallCornerUnit`, this.isShadow, this.setMaterial({color: colors.ShadowedPurple, side: THREE.DoubleSide, ...reflectivity.basic}), (mesh) => {
       const scale = 1;
       mesh.position.set(0, 0, 0);
       mesh.scale.set(scale, scale, scale);
       mesh.rotation.copy(new THREE.Euler(0 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD));
       this.wall = mesh;
       this.add(mesh);
-    })
+    });
   }
 
   addFloor() {
     this.counterLoadObj += 1;
-    const mesh = new Floor( {color: colors.ShadowedDarkPurple, ...reflectivity.soft} );
+    const mesh = new Floor({color: colors.ShadowedDarkPurple, ...reflectivity.soft});
     const scale = 1;
     mesh.position.set(0, 0, 0);
     mesh.scale.set(scale, scale, scale);
@@ -69,13 +66,13 @@ class Scene3Story extends THREE.Group{
 
   addSceneStatic() {
     this.counterLoadObj += 1;
-    loadModel('scene3static', this.isShadow, null, (mesh) => {
+    loadModel(`scene3static`, this.isShadow, null, (mesh) => {
       const scale = 1;
       mesh.position.set(0, 0, 0);
       mesh.scale.set(scale, scale, scale);
       mesh.rotation.copy(new THREE.Euler(0 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD));
       this.add(mesh);
-    })
+    });
   }
 
   loadFlower() {
@@ -111,7 +108,7 @@ class Scene3Story extends THREE.Group{
 
   addSonya() {
     this.counterLoadObj += 1;
-    loadModel('sonya', this.isShadow, null, (mesh) => {
+    loadModel(`sonya`, this.isShadow, null, (mesh) => {
       const scale = 1;
       mesh.position.set(450, 150, 300);
       mesh.scale.set(scale, scale, scale);
@@ -120,7 +117,7 @@ class Scene3Story extends THREE.Group{
       this.sonya.getObjectByName(`RightHand`).rotation.y = -1.3;
       this.sonya.getObjectByName(`LeftHand`).rotation.y = 1.3;
       this.add(mesh);
-    })
+    });
   }
 
   animations() {

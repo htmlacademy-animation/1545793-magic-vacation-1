@@ -1,10 +1,10 @@
 import * as THREE from 'three';
-import { loadModel } from '../../three/modelLoader/modelLoader.js';
-import { loadSVG } from '../../three/svgLoader/svgLoader.js';
-import { colors, reflectivity } from '../../helpers/colorsAndReflection.js';
+import {loadModel} from '../../three/modelLoader/modelLoader.js';
+import {loadSVG} from '../../three/svgLoader/svgLoader.js';
+import {colors, reflectivity} from '../../helpers/colorsAndReflection.js';
 import Saturn from '../../three/storyScene/objects/Saturn.js';
-import { isMobile } from '../IntroAndStory.js';
-import { animIntroObj, animSuitcaseIntro, animAirplaneIntro, animOpacity } from '../../helpers/animations.js';
+import {isMobile} from '../IntroAndStory.js';
+import {animIntroObj, animSuitcaseIntro, animAirplaneIntro, animOpacity} from '../../helpers/animations.js';
 
 
 class SceneIntro extends THREE.Group {
@@ -32,7 +32,7 @@ class SceneIntro extends THREE.Group {
   }
 
   setMaterial(options = {}) {
-    const { color, ...other } = options;
+    const {color, ...other} = options;
 
     return new THREE.MeshStandardMaterial({
       color: new THREE.Color(color),
@@ -50,7 +50,7 @@ class SceneIntro extends THREE.Group {
       finishRotation: [20, -50, -10],
       amp: -0.35,
       period: 0.35
-    }
+    };
 
     this.airplane.optAnim = {
       startScale: [0, 0, 0],
@@ -63,7 +63,7 @@ class SceneIntro extends THREE.Group {
       finishRotationAxis: 200,
       amp: 0.3,
       period: 0.4
-    }
+    };
 
     this.flamingo.optAnim = {
       startScale: [0, 0, 0],
@@ -72,7 +72,7 @@ class SceneIntro extends THREE.Group {
       finishPosition: [-480, 370, 100],
       amp: -0.3,
       period: 0.3
-    }
+    };
 
     this.watermelon.optAnim = {
       startScale: [0, 0, 0],
@@ -81,7 +81,7 @@ class SceneIntro extends THREE.Group {
       finishPosition: [-300, -150, 800],
       amp: -0.3,
       period: 0.3
-    }
+    };
 
     this.leaf.optAnim = {
       startScale: [0, 0, 0],
@@ -90,7 +90,7 @@ class SceneIntro extends THREE.Group {
       finishPosition: [660, 350, 150],
       amp: 0.3,
       period: 0.3
-    }
+    };
 
     this.question.optAnim = {
       startScale: [0, 0, 0],
@@ -99,7 +99,7 @@ class SceneIntro extends THREE.Group {
       finishPosition: [100, -330, 100],
       amp: -0.2,
       period: 0.3
-    }
+    };
 
     this.snowflake.optAnim = {
       startScale: [0, 0, 0],
@@ -108,7 +108,7 @@ class SceneIntro extends THREE.Group {
       finishPosition: [-450, -10, 100],
       amp: 0.3,
       period: 0.2
-    }
+    };
 
     this.saturn.optAnim = {
       startScale: [0, 0, 0],
@@ -117,13 +117,13 @@ class SceneIntro extends THREE.Group {
       finishPosition: [400, -100, 500],
       amp: -0.3,
       period: 0.3
-    }
+    };
   }
 
   addPlane() {
     this.counterLoadObj += 1;
     const plane = new THREE.PlaneGeometry(500, 500);
-    const planeMesh = new THREE.Mesh(plane, this.setMaterial({ color: colors.Purple, ...reflectivity.basic, flatShading: true }));
+    const planeMesh = new THREE.Mesh(plane, this.setMaterial({color: colors.Purple, ...reflectivity.basic, flatShading: true}));
 
     planeMesh.position.set(0, 0, -50);
     this.plane = planeMesh;
@@ -132,13 +132,13 @@ class SceneIntro extends THREE.Group {
 
   addAirplane() {
     this.counterLoadObj += 1;
-    loadModel('airplane', this.isShadow, this.setMaterial({ color: colors.White, ...reflectivity.soft }), (mesh) => {
+    loadModel(`airplane`, this.isShadow, this.setMaterial({color: colors.White, ...reflectivity.soft}), (mesh) => {
 
-      const groupScale = this.getGroup('scale', mesh);
-      const groupRotationAirplane = this.getGroup('rotationAirplane', groupScale);
-      const groupPositionYZ = this.getGroup('positionYZ', groupRotationAirplane);
-      const groupRotationAxis = this.getGroup('rotationAxis', groupPositionYZ);
-      const groupMove = this.getGroup('move', groupRotationAxis);
+      const groupScale = this.getGroup(`scale`, mesh);
+      const groupRotationAirplane = this.getGroup(`rotationAirplane`, groupScale);
+      const groupPositionYZ = this.getGroup(`positionYZ`, groupRotationAirplane);
+      const groupRotationAxis = this.getGroup(`rotationAxis`, groupPositionYZ);
+      const groupMove = this.getGroup(`move`, groupRotationAxis);
 
 
       // const scale = 1.2;
@@ -153,18 +153,18 @@ class SceneIntro extends THREE.Group {
 
       this.airplane = groupMove;
       this.add(this.airplane);
-    })
+    });
   }
 
   addSuitcase() {
     this.counterLoadObj += 1;
-    loadModel('suitcase', this.isShadow, null, (mesh) => {
+    loadModel(`suitcase`, this.isShadow, null, (mesh) => {
       mesh.rotation.copy(new THREE.Euler(0 * THREE.Math.DEG2RAD, -90 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD));
 
-      const groupScale = this.getGroup('scale', mesh);
-      const groupRotation = this.getGroup('rotation', groupScale);
-      const groupPositionXY = this.getGroup('positionXY', groupRotation);
-      const groupMove = this.getGroup('move', groupPositionXY);
+      const groupScale = this.getGroup(`scale`, mesh);
+      const groupRotation = this.getGroup(`rotation`, groupScale);
+      const groupPositionXY = this.getGroup(`positionXY`, groupRotation);
+      const groupMove = this.getGroup(`move`, groupPositionXY);
 
       const scale = 0;
       groupScale.scale.set(scale, scale, scale);
@@ -173,7 +173,7 @@ class SceneIntro extends THREE.Group {
 
       this.suitcase = groupMove;
       this.add(this.suitcase);
-    })
+    });
   }
 
   getGroup(name, child) {
@@ -185,14 +185,14 @@ class SceneIntro extends THREE.Group {
 
   addWatermelon() {
     this.counterLoadObj += 1;
-    loadModel('watermelon', this.isShadow, null, (mesh) => {
+    loadModel(`watermelon`, this.isShadow, null, (mesh) => {
       const scale = 0;
       mesh.position.set(-300, -150, 800);
       mesh.scale.set(scale, scale, scale);
       mesh.rotation.copy(new THREE.Euler(20 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD, 130 * THREE.Math.DEG2RAD));
       this.watermelon = mesh;
       this.add(mesh);
-    })
+    });
   }
 
   loadKeyhole() {
@@ -266,11 +266,11 @@ class SceneIntro extends THREE.Group {
 
   hidePlane(dur, delay) {
     setTimeout(() => {
-      animOpacity(this.plane, 0, dur)
+      animOpacity(this.plane, 0, dur);
     }, delay);
   }
 
-  showPlane(){
+  showPlane() {
     this.plane.material.opacity = 1;
   }
 
@@ -283,14 +283,14 @@ class SceneIntro extends THREE.Group {
       this.question,
       this.snowflake,
       this.saturn
-    ]
+    ];
 
     this.setOptAnimObj();
 
-    animIntroObj(this.objectsArr, duration, 'easeOutCubic');
-    animSuitcaseIntro(this.suitcase, duration, 'easeOutCubic');
+    animIntroObj(this.objectsArr, duration, `easeOutCubic`);
+    animSuitcaseIntro(this.suitcase, duration, `easeOutCubic`);
     setTimeout(() => {
-      animAirplaneIntro(this.airplane, duration, 'easeOutCubic');
+      animAirplaneIntro(this.airplane, duration, `easeOutCubic`);
     }, 500);
   }
 }

@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import {SVGLoader} from 'three/examples/jsm/loaders/SVGLoader.js';
-import SVGObject from './SVGObject.js'
+import SVGObject from './SVGObject.js';
 
 
 const createSvgGroup = (data, isShadow, settings) => {
@@ -27,7 +27,7 @@ const createSvgGroup = (data, isShadow, settings) => {
       });
       const mesh = new THREE.Mesh(geometry, material);
 
-      if(isShadow){
+      if (isShadow) {
         mesh.castShadow = settings.castShadow;
         mesh.receiveShadow = settings.receiveShadow;
       }
@@ -53,7 +53,7 @@ export const loadSVG = (nameSvg, isShadow, callback) => {
   const loader = new SVGLoader(loadManager);
 
   loader.load(svgObj.src, (data) => {
-    svg = createSvgGroup(data, isShadow, svgObj)
+    svg = createSvgGroup(data, isShadow, svgObj);
 
     callback(svg);
   });

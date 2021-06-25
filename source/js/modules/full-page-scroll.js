@@ -1,10 +1,9 @@
 import throttle from 'lodash/throttle';
 import Timer from './timer';
 import NumbersAnimation from './numbersPrizesAnimation.js';
-import {introAndStory} from '../script.js';
 
-const INTRO_PAGE_ID = 0;
-const STORY_PAGE_ID = 1;
+// const INTRO_PAGE_ID = 0;
+// const STORY_PAGE_ID = 1;
 const PRIZE_PAGE_ID = 2;
 const RULES_PAGE_ID = 3;
 const GAME_PAGE_ID = 4;
@@ -70,14 +69,6 @@ export default class FullPageScroll {
       this.screenElements[this.activeScreen].classList.remove(`screen--hidden`);
       this.screenElements[this.activeScreen].classList.add(`active`);
     };
-
-    // if (this.activeScreen === INTRO_PAGE_ID) {
-
-    // }
-
-    // if (this.activeScreen === STORY_PAGE_ID) {
-
-    // }
 
     if (this.activeScreen === PRIZE_PAGE_ID) {
       this.bgPrizeElement.classList.add(`active`);

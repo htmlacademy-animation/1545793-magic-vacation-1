@@ -1,10 +1,10 @@
 import * as THREE from 'three';
 import bubbleRawShaderMaterial from './storyScene/materials/bubbleRawShaderMaterial';
 import SVGObject from '../three/svgLoader/SVGObject.js';
-import { colors, reflectivity } from '../helpers/colorsAndReflection.js';
+import {colors, reflectivity} from '../helpers/colorsAndReflection.js';
 import ModelObject from './modelLoader/modelObject.js';
-import { loadModel } from './modelLoader/modelLoader.js';
-import { OrbitControls } from '../../../../node_modules/three/examples/jsm/controls/OrbitControls.js'
+import {loadModel} from './modelLoader/modelLoader.js';
+import {OrbitControls} from '../../../../node_modules/three/examples/jsm/controls/OrbitControls.js';
 
 class Intro {
   constructor() {
@@ -23,9 +23,9 @@ class Intro {
     this.isAnim = false;
   }
 
-  setMaterial (options = {}) {
+  setMaterial(options = {}) {
     const {color, ...other} = options;
-  
+
     return new THREE.MeshStandardMaterial({
       color: new THREE.Color(color),
       ...other
@@ -50,13 +50,13 @@ class Intro {
     return lightsGroup;
   }
 
-  init(){
+  init() {
     if (!this.initialized) {
       this.prepareScene();
       this.initialized = true;
     }
 
-    this.isAnim = true
+    this.isAnim = true;
 
     this.animationRequest = requestAnimationFrame(this.render);
   }
@@ -79,7 +79,7 @@ class Intro {
 
     this.scene = new THREE.Scene();
 
-    this.controls = new OrbitControls(this.camera, document.getElementById('top'));
+    this.controls = new OrbitControls(this.camera, document.getElementById(`top`));
     this.controls.zoomSpeed = 0.1;
 
     const loadManager = new THREE.LoadingManager();
@@ -110,7 +110,7 @@ class Intro {
     };
   }
 
-  createSvgObjs(){
+  createSvgObjs() {
     this.loadKeyhole();
     this.loadFlamingo();
     this.loadLeaf();
@@ -127,27 +127,27 @@ class Intro {
 
   addPlane() {
     const plane = new THREE.PlaneGeometry(500, 500);
-    const planeMesh = new THREE.Mesh(plane, this.setMaterial({ color: colors.Purple, ...reflectivity.basic, flatShading: true}));
+    const planeMesh = new THREE.Mesh(plane, this.setMaterial({color: colors.Purple, ...reflectivity.basic, flatShading: true}));
 
     planeMesh.position.set(0, 0, 5);
     this.scene.add(planeMesh);
   }
 
   addAirplane() {
-    const model = new ModelObject('airplane').getObject();
+    const model = new ModelObject(`airplane`).getObject();
 
-    loadModel(model, this.setMaterial({ color: model.color, ...model.reflectivity}), (mesh) => {
+    loadModel(model, this.setMaterial({color: model.color, ...model.reflectivity}), (mesh) => {
       mesh.name = model.name;
       const scale = 1.2;
       mesh.position.set(250, 130, 150);
       mesh.scale.set(scale, scale, scale);
       mesh.rotation.copy(new THREE.Euler(60 * THREE.Math.DEG2RAD, 140 * THREE.Math.DEG2RAD, -15 * THREE.Math.DEG2RAD));
       this.scene.add(mesh);
-    })
+    });
   }
 
   addSuitcase() {
-    const model = new ModelObject('suitcase').getObject();
+    const model = new ModelObject(`suitcase`).getObject();
 
     loadModel(model, null, (mesh) => {
       mesh.name = model.name;
@@ -156,11 +156,11 @@ class Intro {
       mesh.scale.set(scale, scale, scale);
       mesh.rotation.copy(new THREE.Euler(20 * THREE.Math.DEG2RAD, -140 * THREE.Math.DEG2RAD, 20 * THREE.Math.DEG2RAD));
       this.scene.add(mesh);
-    })
+    });
   }
 
   addWatermelon() {
-    const model = new ModelObject('watermelon').getObject();
+    const model = new ModelObject(`watermelon`).getObject();
 
     loadModel(model, null, (mesh) => {
       mesh.name = model.name;
@@ -169,7 +169,7 @@ class Intro {
       mesh.scale.set(scale, scale, scale);
       mesh.rotation.copy(new THREE.Euler(20 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD, 130 * THREE.Math.DEG2RAD));
       this.scene.add(mesh);
-    })
+    });
   }
 
   async loadKeyhole() {
@@ -228,8 +228,8 @@ class Intro {
     }
   }
 
-  stopAnim(){
-    this.isAnim = false
+  stopAnim() {
+    this.isAnim = false;
   }
 
   updateSize() {
@@ -248,4 +248,4 @@ class Intro {
   }
 }
 
-export default Intro
+export default Intro;

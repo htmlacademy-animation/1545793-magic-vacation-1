@@ -6,9 +6,9 @@ class CameraAndLight extends THREE.Group {
     super();
 
     this.angle = 0;
-    camera.lookAt(storyGroup.position.x, storyGroup.position.y, storyGroup.position.z)
+    camera.lookAt(storyGroup.position.x, storyGroup.position.y, storyGroup.position.z);
 
-    const directionalLight = new THREE.DirectionalLight(new THREE.Color(`rgb(255,255,255)`), 1.3); 
+    const directionalLight = new THREE.DirectionalLight(new THREE.Color(`rgb(255,255,255)`), 1.3);
     directionalLight.position.set(0, 800, 0);
     directionalLight.target = storyGroup;
 
@@ -23,11 +23,11 @@ class CameraAndLight extends THREE.Group {
       introGroup,
       storyGroup,
       cameraAndLightGroup,
-    }
+    };
   }
 
   setCameraIntro() {
-    const { camera, introGroup, storyGroup, cameraAndLightGroup } = this.activeObjects;
+    const {camera, introGroup, storyGroup, cameraAndLightGroup} = this.activeObjects;
 
     this.rotation.copy(new THREE.Euler(0, 0, 0));
     cameraAndLightGroup.position.set(0, -storyGroup.position.y, -storyGroup.position.z + 1405);
@@ -35,7 +35,7 @@ class CameraAndLight extends THREE.Group {
   }
 
   setCameraStory(finish, duration, ease, endCB = () => {}) {
-    const { camera, storyGroup, cameraAndLightGroup } = this.activeObjects;
+    const {camera, storyGroup, cameraAndLightGroup} = this.activeObjects;
 
     let progress = 0;
     let startTime = Date.now();
@@ -49,17 +49,17 @@ class CameraAndLight extends THREE.Group {
 
       const easing = _[`${ease}`](progress);
 
-      const angle = start + easing * (finish - start)
+      const angle = start + easing * (finish - start);
 
       if (progress > 1) {
         thisObj.rotation.copy(new THREE.Euler(0, finish * THREE.Math.DEG2RAD, 0));
         endCB();
-        return
+        return;
       }
 
       cameraAndLightGroup.position.set(0, 600, 1900);
 
-      camera.lookAt(storyGroup.position.x, storyGroup.position.y, storyGroup.position.z)
+      camera.lookAt(storyGroup.position.x, storyGroup.position.y, storyGroup.position.z);
       // const posX = 1900 * Math.sin(angle * THREE.Math.DEG2RAD);
       // const posZ = 1900 * Math.cos(angle * THREE.Math.DEG2RAD);
       // thisObj.position.set(storyGroup.position.x + posX, storyGroup.position.y + 600, storyGroup.position.z + posZ);
@@ -73,11 +73,11 @@ class CameraAndLight extends THREE.Group {
   }
 
   animIntroToStory(endCB) {
-    const { camera, introGroup, storyGroup, cameraAndLightGroup } = this.activeObjects;
-    const duration = 500
+    const {camera, introGroup, storyGroup, cameraAndLightGroup} = this.activeObjects;
+    const duration = 500;
 
-    this.animateLookAt(camera,[introGroup.position.x, introGroup.position.y, introGroup.position.z], [storyGroup.position.x, storyGroup.position.y, storyGroup.position.z], duration, 'easeLinear')
-    this.animateMove(cameraAndLightGroup, [0, 600, 1900], duration, 'easeLinear', endCB)
+    this.animateLookAt(camera, [introGroup.position.x, introGroup.position.y, introGroup.position.z], [storyGroup.position.x, storyGroup.position.y, storyGroup.position.z], duration, `easeLinear`);
+    this.animateMove(cameraAndLightGroup, [0, 600, 1900], duration, `easeLinear`, endCB);
   }
 
   animateMove(item, finish, duration, ease, endCB = () => { }) {
@@ -97,7 +97,7 @@ class CameraAndLight extends THREE.Group {
       if (progress > 1) {
         item.position.set(...finish);
         endCB();
-        return
+        return;
       }
 
       item.position.set(...position);
@@ -122,9 +122,9 @@ class CameraAndLight extends THREE.Group {
       const look = setParamsXYZ(start, finish, easing);
 
       if (progress > 1) {
-        item.lookAt(...finish)
+        item.lookAt(...finish);
         endCB();
-        return
+        return;
       }
 
       item.lookAt(...look);
@@ -139,15 +139,15 @@ class CameraAndLight extends THREE.Group {
     let paramsArr = [];
 
     for (let i = 0; i <= 2; i++) {
-      const param = start[i] + easing * (finish[i] - start[i])
+      const param = start[i] + easing * (finish[i] - start[i]);
       paramsArr.push(param);
     }
 
-    return paramsArr
+    return paramsArr;
   }
 
   addChild(item) {
-    this.add(item)
+    this.add(item);
   }
 }
 

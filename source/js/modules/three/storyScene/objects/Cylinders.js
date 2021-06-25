@@ -1,13 +1,13 @@
 import * as THREE from 'three';
-import { setMaterial } from '../../Story.js';
-import { colors, reflectivity } from '../../../helpers/colorsAndReflection.js';
-import { isShadow } from '../../../helpers/isShadow.js';
+import {setMaterial} from '../../Story.js';
+import {colors, reflectivity} from '../../../helpers/colorsAndReflection.js';
+import {isShadow} from '../../../helpers/isShadow.js';
 
 class Cylinders extends THREE.Group {
-  constructor(isShadow) {
+  constructor(isShadowKey) {
     super();
 
-    this.isShadow = isShadow;
+    this.isShadow = isShadowKey;
 
     this.angle = 15;
     this.step = 15;

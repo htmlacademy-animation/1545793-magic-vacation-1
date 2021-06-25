@@ -12,7 +12,7 @@ const onComplete = (obj3d, isShadow, settings, material, callback) => {
     });
   }
 
-  if(isShadow){
+  if (isShadow) {
     obj3d.traverse((child) => {
       if (child.isMesh) {
         child.castShadow = settings.castShadow;
@@ -48,7 +48,7 @@ export const loadModel = (nameObj, isShadow, material, callback) => {
     return;
   }
 
-  const modelObj = new ModelObject(nameObj).getObject()
+  const modelObj = new ModelObject(nameObj).getObject();
 
   const Loader = LoaderByType[modelObj.type];
   const loadingFn = LoadingFnByType[modelObj.type];

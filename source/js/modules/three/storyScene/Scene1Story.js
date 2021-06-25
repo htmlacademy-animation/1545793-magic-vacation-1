@@ -1,21 +1,18 @@
 import * as THREE from 'three';
 
-import { loadModel } from '../../three/modelLoader/modelLoader.js';
-import { loadSVG } from '../../three/svgLoader/svgLoader.js';
-import { colors, reflectivity } from '../../helpers/colorsAndReflection.js';
+import {loadModel} from '../../three/modelLoader/modelLoader.js';
+import {loadSVG} from '../../three/svgLoader/svgLoader.js';
+import {colors, reflectivity} from '../../helpers/colorsAndReflection.js';
 import Floor from './objects/Floor.js';
 import Pyramid from './objects/Pyramid.js';
 import Lantern from './objects/Lantern.js';
-import { isMobile } from '../IntroAndStory.js';
-import { animLeaf } from '../../helpers/animations.js';
+import {isMobile} from '../IntroAndStory.js';
+import {animLeaf} from '../../helpers/animations.js';
 
 
 class Scene1Story extends THREE.Group {
   constructor() {
     super();
-
-    this.wall;
-    this.floor;
 
     this.startTime = -1;
     this.counterLoadObj = 0;
@@ -36,7 +33,7 @@ class Scene1Story extends THREE.Group {
   }
 
   setMaterial(options = {}) {
-    const { color, side, ...other } = options;
+    const {color, side, ...other} = options;
 
     return new THREE.MeshStandardMaterial({
       color: new THREE.Color(color),
@@ -47,19 +44,19 @@ class Scene1Story extends THREE.Group {
 
   addWallCornerUnit() {
     this.counterLoadObj += 1;
-    loadModel('wallCornerUnit', this.isShadow, this.setMaterial({ color: colors.Blue, side: THREE.DoubleSide, ...reflectivity.basic }), (mesh) => {
+    loadModel(`wallCornerUnit`, this.isShadow, this.setMaterial({color: colors.Blue, side: THREE.DoubleSide, ...reflectivity.basic}), (mesh) => {
       const scale = 1;
       mesh.position.set(0, 0, 0);
       mesh.scale.set(scale, scale, scale);
       mesh.rotation.copy(new THREE.Euler(0 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD));
       this.wall = mesh;
       this.add(mesh);
-    })
+    });
   }
 
   addFloor() {
     this.counterLoadObj += 1;
-    const mesh = new Floor({ color: colors.BrightBlue, ...reflectivity.soft });
+    const mesh = new Floor({color: colors.BrightBlue, ...reflectivity.soft});
     const scale = 1;
     mesh.position.set(0, 0, 0);
     mesh.scale.set(scale, scale, scale);
@@ -69,13 +66,13 @@ class Scene1Story extends THREE.Group {
 
   addSceneStatic() {
     this.counterLoadObj += 1;
-    loadModel('scene1static', this.isShadow, null, (mesh) => {
+    loadModel(`scene1static`, this.isShadow, null, (mesh) => {
       const scale = 1;
       mesh.position.set(0, 0, 0);
       mesh.scale.set(scale, scale, scale);
       mesh.rotation.copy(new THREE.Euler(0 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD));
       this.add(mesh);
-    })
+    });
   }
 
   loadLeaf1() {
@@ -127,7 +124,7 @@ class Scene1Story extends THREE.Group {
     const pyramid = new Pyramid(this.isShadow);
     const scale = 1;
     pyramid.scale.set(scale, scale, scale);
-    pyramid.rotation.copy(new THREE.Euler(0, 45 * THREE.Math.DEG2RAD, 0, 'XYZ'));
+    pyramid.rotation.copy(new THREE.Euler(0, 45 * THREE.Math.DEG2RAD, 0, `XYZ`));
     pyramid.position.set(230, 150, 260);
 
     this.add(pyramid);
@@ -138,7 +135,7 @@ class Scene1Story extends THREE.Group {
     const lantern = new Lantern(this.isShadow);
     const scale = 1;
     lantern.scale.set(scale, scale, scale);
-    lantern.rotation.copy(new THREE.Euler(0, -25 * THREE.Math.DEG2RAD, 0, 'XYZ'));
+    lantern.rotation.copy(new THREE.Euler(0, -25 * THREE.Math.DEG2RAD, 0, `XYZ`));
     lantern.position.set(650, 50, 120);
 
     this.add(lantern);

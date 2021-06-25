@@ -1,4 +1,4 @@
-import { colors, reflectivity } from '../../helpers/colorsAndReflection.js'
+import {colors, reflectivity} from '../../helpers/colorsAndReflection.js';
 
 const svgSettings = [
   {
@@ -77,4 +77,4 @@ const svgSettings = [
   },
 ];
 
-export default svgSettings
+export default svgSettings;

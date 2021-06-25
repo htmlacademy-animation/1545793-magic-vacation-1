@@ -1,5 +1,3 @@
-import { colors, reflectivity } from '../../helpers/colorsAndReflection.js'
-
 const modelsSettings = [
   {
     name: `airplane`,
@@ -67,6 +65,6 @@ const modelsSettings = [
     path: `./3d/module-6/rooms-scenes/objects/sonya.gltf`,
     castShadow: true,
   },
-]
+];
 
-export default modelsSettings
+export default modelsSettings;

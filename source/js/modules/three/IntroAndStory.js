@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import SceneIntro from './introScene/SceneIntro.js';
 import SceneAllStory from './storyScene/StorySceneAll.js';
-import { loadModel } from '../three/modelLoader/modelLoader.js';
-import { animateScale, animateMoveY } from '../helpers/animations.js';
+import {loadModel} from '../three/modelLoader/modelLoader.js';
+import {animateScale, animateMoveY} from '../helpers/animations.js';
 import CameraAndLight from './CameraAndLight.js';
 
 export const isMobile = /android|ipad|iphone|ipod/i.test(navigator.userAgent) && !window.MSStream;
@@ -22,12 +22,8 @@ class IntroAndStory {
 
     this.isShadow = !isMobile;
 
-    this.introGroupObj;
     this.introSceneIaAnim = false;
-    this.SceneAllStory;
-    this.suitcase;
     this.suitcaseOnLoad = false;
-    this.cameraAndLight;
 
     this.render = this.render.bind(this);
     this.updateSize = this.updateSize.bind(this);
@@ -43,7 +39,7 @@ class IntroAndStory {
     this.canvas.width = this.width;
     this.canvas.height = this.height;
 
-    this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
+    this.renderer = new THREE.WebGLRenderer({canvas: this.canvas});
     this.renderer.setClearColor(0x5f458c, 1);
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(this.width, this.height);
@@ -82,7 +78,7 @@ class IntroAndStory {
     sceneIntro.scale.set(scale, scale, scale);
     sceneIntro.position.set(0, 0, 0);
     this.introGroupObj = sceneIntro;
-    this.scene.add(sceneIntro)
+    this.scene.add(sceneIntro);
   }
 
   addSceneAllStory() {
@@ -92,21 +88,21 @@ class IntroAndStory {
     sceneAllStory.position.set(0, -500, -2500);
     sceneAllStory.rotation.copy(new THREE.Euler(0 * THREE.Math.DEG2RAD, -45 * THREE.Math.DEG2RAD, 0));
     this.SceneAllStory = sceneAllStory;
-    this.scene.add(sceneAllStory)
+    this.scene.add(sceneAllStory);
   }
 
   setSuitcase() {
     const suitcaseGroup = new THREE.Group();
 
-    loadModel('suitcase', this.isShadow, null, (mesh) => {
+    loadModel(`suitcase`, this.isShadow, null, (mesh) => {
       const scale = 0;
       mesh.position.set(-300, 0, 800);
       mesh.scale.set(scale, scale, scale);
       mesh.rotation.copy(new THREE.Euler(0 * THREE.Math.DEG2RAD, -23 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD));
-      mesh.name = 'suitcase';
+      mesh.name = `suitcase`;
       this.suitcaseOnLoad = true;
       suitcaseGroup.add(mesh);
-    })
+    });
 
     return suitcaseGroup;
   }
@@ -114,12 +110,12 @@ class IntroAndStory {
   addSuitcase() {
     const suitcase = this.setSuitcase();
     this.suitcase = suitcase;
-    this.cameraAndLight.addChild(this.suitcase)
+    this.cameraAndLight.addChild(this.suitcase);
   }
 
   startAanimationsSuitcase() {
-    if (this.suitcaseOnLoad != true || this.suitcaseIaAnim != true) {
-      return
+    if (this.suitcaseOnLoad !== true || this.suitcaseIaAnim !== true) {
+      return;
     } else {
       setTimeout(() => {
         this.animationsSuitcase();
@@ -130,12 +126,12 @@ class IntroAndStory {
 
   animationsSuitcase() {
     const duration = 400;
-    const suitcase = this.suitcase.getObjectByName('suitcase');
-    animateMoveY(suitcase, 100, 0, duration, 'easeInCubic');
-    animateScale(suitcase, [0.9, 0.9, 0.9], [0.85, 0.95, 0.9], duration, 'easeOutCubic', () => {
-      animateScale(suitcase, [0.85, 0.95, 0.9], [0.9, 0.9, 1], duration / 2, 'easeOutCubic', () => {
-        animateScale(suitcase, [0.9, 0.9, 1], [0.9, 0.95, 0.85], duration / 3, 'easeOutCubic', () => {
-          animateScale(suitcase, [0.9, 0.95, 0.85], [0.9, 0.9, 0.9], duration / 3, 'easeOutCubic');
+    const suitcase = this.suitcase.getObjectByName(`suitcase`);
+    animateMoveY(suitcase, 100, 0, duration, `easeInCubic`);
+    animateScale(suitcase, [0.9, 0.9, 0.9], [0.85, 0.95, 0.9], duration, `easeOutCubic`, () => {
+      animateScale(suitcase, [0.85, 0.95, 0.9], [0.9, 0.9, 1], duration / 2, `easeOutCubic`, () => {
+        animateScale(suitcase, [0.9, 0.9, 1], [0.9, 0.95, 0.85], duration / 3, `easeOutCubic`, () => {
+          animateScale(suitcase, [0.9, 0.95, 0.85], [0.9, 0.9, 0.9], duration / 3, `easeOutCubic`);
         });
       });
     });
@@ -145,7 +141,7 @@ class IntroAndStory {
     const lightsGroup = new THREE.Group();
 
     let pointLight1 = new THREE.PointLight(new THREE.Color(`rgb(246,242,255)`), 0.1);
-    pointLight1.position.set(-500, 500, 1800)
+    pointLight1.position.set(-500, 500, 1800);
     pointLight1.castShadow = true;
     pointLight1.shadow.camera.far = 3000;
     pointLight1.shadow.mapSize.width = 1000;
@@ -183,40 +179,40 @@ class IntroAndStory {
     let angle = 0;
 
     switch (sceneID) {
-      case 'intro':
+      case `intro`:
         this.cameraAndLight.setCameraIntro();
         break;
-      case 'fromIntroToScene0':
+      case `fromIntroToScene0`:
         this.cameraAndLight.animIntroToStory(() => {
           this.introGroupObj.showPlane();
         });
         this.introGroupObj.hidePlane(300, 100);
 
         break;
-      case 'scene0':
+      case `scene0`:
         angle = 0;
-        this.cameraAndLight.setCameraStory(angle, duration, 'easeLinear')
+        this.cameraAndLight.setCameraStory(angle, duration, `easeLinear`);
         break;
-      case 'scene1':
+      case `scene1`:
         angle = 90;
-        this.cameraAndLight.setCameraStory(angle, duration, 'easeLinear')
+        this.cameraAndLight.setCameraStory(angle, duration, `easeLinear`);
         break;
-      case 'scene2':
+      case `scene2`:
         angle = 180;
-        this.cameraAndLight.setCameraStory(angle, duration, 'easeLinear')
+        this.cameraAndLight.setCameraStory(angle, duration, `easeLinear`);
         break;
-      case 'scene3':
+      case `scene3`:
         angle = 270;
-        this.cameraAndLight.setCameraStory(angle, duration, 'easeLinear')
+        this.cameraAndLight.setCameraStory(angle, duration, `easeLinear`);
         break;
     }
 
   }
 
   animIntroScene() {
-    if (this.introGroupObj.children.length != this.introGroupObj.counterLoadObj) {
-      return
-    } else if (this.introSceneIaAnim != true) {
+    if (this.introGroupObj.children.length !== this.introGroupObj.counterLoadObj) {
+      return;
+    } else if (this.introSceneIaAnim !== true) {
       this.introSceneIaAnim = true;
       this.introGroupObj.startAnimimations();
     }
@@ -251,4 +247,4 @@ class IntroAndStory {
   }
 }
 
-export default IntroAndStory
+export default IntroAndStory;
