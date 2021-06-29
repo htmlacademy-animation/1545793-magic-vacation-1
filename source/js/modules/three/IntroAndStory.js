@@ -64,6 +64,12 @@ class IntroAndStory {
     this.cameraAndLight.addChild(this.lights);
 
     this.isAnim = true;
+    document.addEventListener(`mousemove`, (e) => {
+      let mouseY = e.pageY;
+      let windowH = window.innerHeight;
+      let coef = 1 - (mouseY / (windowH * 0.5));
+      this.cameraAndLight.setCameraRotation(coef);
+    });
     this.render();
   }
 
@@ -177,6 +183,12 @@ class IntroAndStory {
     const duration = 500;
 
     let angle = 0;
+
+    if (sceneID === `intro`) {
+      this.cameraAndLight.isIntroScene = true;
+    } else {
+      this.cameraAndLight.isIntroScene = false;
+    }
 
     switch (sceneID) {
       case `intro`:
