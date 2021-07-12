@@ -6,6 +6,7 @@ import {animateScale, animateMoveY} from '../helpers/animations.js';
 import CameraAndLight from './CameraAndLight.js';
 
 export const isMobile = /android|ipad|iphone|ipod/i.test(navigator.userAgent) && !window.MSStream;
+export let isLandscape;
 
 class IntroAndStory {
   constructor() {
@@ -38,6 +39,8 @@ class IntroAndStory {
 
     this.canvas.width = this.width;
     this.canvas.height = this.height;
+
+    this.isLandscape();
 
     this.renderer = new THREE.WebGLRenderer({canvas: this.canvas});
     this.renderer.setClearColor(0x5f458c, 1);
@@ -80,6 +83,7 @@ class IntroAndStory {
 
   addSceneIntro() {
     const sceneIntro = new SceneIntro();
+    this.sceneIntro = sceneIntro;
     const scale = 1;
     sceneIntro.scale.set(scale, scale, scale);
     sceneIntro.position.set(0, 0, 0);
@@ -244,6 +248,10 @@ class IntroAndStory {
     }
   }
 
+  isLandscape() {
+    isLandscape = window.innerHeight < window.innerWidth;
+  }
+
   updateSize() {
     this.width = window.innerWidth;
     this.height = window.innerHeight;
@@ -253,9 +261,13 @@ class IntroAndStory {
 
     this.cameraAspect = this.width / this.height;
 
+    this.isLandscape();
+
     this.camera.aspect = this.cameraAspect;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(this.width, this.height);
+
+    this.sceneIntro.setPositionIntroObj();
   }
 }
 

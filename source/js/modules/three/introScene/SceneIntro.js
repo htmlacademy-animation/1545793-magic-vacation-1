@@ -4,7 +4,7 @@ import {loadSVG} from '../../three/svgLoader/svgLoader.js';
 import {colors, reflectivity} from '../../helpers/colorsAndReflection.js';
 import Saturn from '../../three/storyScene/objects/Saturn.js';
 import {isMobile} from '../IntroAndStory.js';
-import {animIntroObj, animSuitcaseIntro, animAirplaneIntro, animOpacity} from '../../helpers/animations.js';
+import {animIntroObj, animSuitcaseIntro, animAirplaneIntro, animOpacity, isFinishFirsAnimObj, setPositionIntroObj} from '../../helpers/animations.js';
 
 
 class SceneIntro extends THREE.Group {
@@ -69,7 +69,8 @@ class SceneIntro extends THREE.Group {
       startScale: [0, 0, 0],
       finishScale: [-2, -2, 2],
       startPosition: [0, 0, 100],
-      finishPosition: [-480, 370, 100],
+      finishPositionLS: [-480, 370, 100],
+      finishPositionPO: [-150, 370, 100],
       amp: -0.3,
       period: 0.3
     };
@@ -78,7 +79,8 @@ class SceneIntro extends THREE.Group {
       startScale: [0, 0, 0],
       finishScale: [1, 1, 1],
       startPosition: [0, 0, 100],
-      finishPosition: [-300, -150, 800],
+      finishPositionLS: [-300, -150, 800],
+      finishPositionPO: [-140, -150, 800],
       amp: -0.3,
       period: 0.3
     };
@@ -87,7 +89,8 @@ class SceneIntro extends THREE.Group {
       startScale: [0, 0, 0],
       finishScale: [1.4, -1.4, 1.4],
       startPosition: [0, 0, 100],
-      finishPosition: [660, 350, 150],
+      finishPositionLS: [660, 330, 150],
+      finishPositionPO: [260, 330, 150],
       amp: 0.3,
       period: 0.3
     };
@@ -96,7 +99,8 @@ class SceneIntro extends THREE.Group {
       startScale: [0, 0, 0],
       finishScale: [1.6, -1.6, 1.6],
       startPosition: [0, 0, 100],
-      finishPosition: [100, -330, 100],
+      finishPositionLS: [100, -330, 100],
+      finishPositionPO: [100, -330, 100],
       amp: -0.2,
       period: 0.3
     };
@@ -105,7 +109,8 @@ class SceneIntro extends THREE.Group {
       startScale: [0, 0, 0],
       finishScale: [1.4, 1.4, 1.4],
       startPosition: [0, 0, 100],
-      finishPosition: [-450, -10, 100],
+      finishPositionLS: [-450, -10, 100],
+      finishPositionPO: [-180, -10, 100],
       amp: 0.3,
       period: 0.2
     };
@@ -114,7 +119,8 @@ class SceneIntro extends THREE.Group {
       startScale: [0, 0, 0],
       finishScale: [0.6, 0.6, 0.6],
       startPosition: [0, 0, 100],
-      finishPosition: [400, -100, 500],
+      finishPositionLS: [400, -100, 500],
+      finishPositionPO: [130, -100, 500],
       amp: -0.3,
       period: 0.3
     };
@@ -292,6 +298,12 @@ class SceneIntro extends THREE.Group {
     setTimeout(() => {
       animAirplaneIntro(this.airplane, duration, `easeOutCubic`);
     }, 500);
+  }
+
+  setPositionIntroObj() {
+    if (isFinishFirsAnimObj) {
+      setPositionIntroObj(this.objectsArr);
+    }
   }
 }
 
