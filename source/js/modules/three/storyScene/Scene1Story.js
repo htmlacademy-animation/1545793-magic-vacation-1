@@ -57,7 +57,7 @@ class Scene1Story extends THREE.Group {
   addFloor() {
     this.counterLoadObj += 1;
     const mesh = new Floor({color: colors.BrightBlue, ...reflectivity.soft});
-    const scale = 1;
+    const scale = 1.8;
     mesh.position.set(0, 0, 0);
     mesh.scale.set(scale, scale, scale);
     mesh.rotation.copy(new THREE.Euler(0 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD));

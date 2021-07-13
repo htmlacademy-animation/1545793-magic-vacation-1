@@ -1,12 +1,19 @@
 import * as THREE from 'three';
 import _ from '../helpers/easing.js';
+import {isLandscape} from '../three/IntroAndStory.js';
+
 
 class CameraAndLight extends THREE.Group {
   constructor(camera, introGroup, storyGroup) {
+    const optPosition = {
+      ls: [0, 600, 1900],
+      po: [-70, 600, 2300],
+    };
+
     super();
 
     this.angle = 0;
-    camera.lookAt(storyGroup.position.x, storyGroup.position.y, storyGroup.position.z);
+    // camera.lookAt(storyGroup.position.x, storyGroup.position.y, storyGroup.position.z);
 
     const directionalLight = new THREE.DirectionalLight(new THREE.Color(`rgb(255,255,255)`), 1.3);
     directionalLight.position.set(0, 800, 0);
@@ -29,6 +36,7 @@ class CameraAndLight extends THREE.Group {
       storyGroup,
       cameraMouseRotationRig,
       cameraAndLightGroup,
+      optPosition,
     };
   }
 
@@ -41,13 +49,15 @@ class CameraAndLight extends THREE.Group {
   }
 
   setCameraStory(finish, duration, ease, endCB = () => {}) {
-    const {camera, storyGroup, cameraAndLightGroup} = this.activeObjects;
+    const {camera, storyGroup, cameraAndLightGroup, optPosition} = this.activeObjects;
 
     let progress = 0;
     let startTime = Date.now();
     const start = this.angle;
     this.angle = finish;
     const thisObj = this;
+    let position;
+    let lookAtY = 0;
 
     function loop() {
 
@@ -63,12 +73,17 @@ class CameraAndLight extends THREE.Group {
         return;
       }
 
-      cameraAndLightGroup.position.set(0, 600, 1900);
+      if (isLandscape) {
+        position = optPosition.ls;
+        lookAtY = 0;
+      } else {
+        position = optPosition.po;
+        lookAtY = -200;
+      }
 
-      camera.lookAt(storyGroup.position.x, storyGroup.position.y, storyGroup.position.z);
-      // const posX = 1900 * Math.sin(angle * THREE.Math.DEG2RAD);
-      // const posZ = 1900 * Math.cos(angle * THREE.Math.DEG2RAD);
-      // thisObj.position.set(storyGroup.position.x + posX, storyGroup.position.y + 600, storyGroup.position.z + posZ);
+      cameraAndLightGroup.position.set(...position);
+
+      camera.lookAt(storyGroup.position.x, storyGroup.position.y + lookAtY, storyGroup.position.z);
 
       thisObj.rotation.copy(new THREE.Euler(0, angle * THREE.Math.DEG2RAD, 0));
 
@@ -80,22 +95,39 @@ class CameraAndLight extends THREE.Group {
 
   setCameraRotation(coef) {
     const {cameraMouseRotationRig, camera, storyGroup, introGroup} = this.activeObjects;
+    let lookAtY = 0;
 
     cameraMouseRotationRig.position.y = coef * 50;
+
+    if (isLandscape) {
+      lookAtY = 0;
+    } else {
+      lookAtY = -200;
+    }
 
     if (this.isIntroScene) {
       camera.lookAt(introGroup.position.x, introGroup.position.y, introGroup.position.z);
     } else {
-      camera.lookAt(storyGroup.position.x, storyGroup.position.y, storyGroup.position.z);
+      camera.lookAt(storyGroup.position.x, storyGroup.position.y + lookAtY, storyGroup.position.z);
     }
   }
 
   animIntroToStory(endCB) {
-    const {camera, introGroup, storyGroup, cameraAndLightGroup} = this.activeObjects;
+    const {camera, introGroup, storyGroup, cameraAndLightGroup, optPosition} = this.activeObjects;
     const duration = 500;
+    let position;
+    let lookAtY = 0;
 
-    this.animateLookAt(camera, [introGroup.position.x, introGroup.position.y, introGroup.position.z], [storyGroup.position.x, storyGroup.position.y, storyGroup.position.z], duration, `easeLinear`);
-    this.animateMove(cameraAndLightGroup, [0, 600, 1900], duration, `easeLinear`, endCB);
+    if (isLandscape) {
+      position = optPosition.ls;
+      lookAtY = 0;
+    } else {
+      position = optPosition.po;
+      lookAtY = -200;
+    }
+
+    this.animateLookAt(camera, [introGroup.position.x, introGroup.position.y, introGroup.position.z], [storyGroup.position.x, storyGroup.position.y + lookAtY, storyGroup.position.z], duration, `easeLinear`);
+    this.animateMove(cameraAndLightGroup, position, duration, `easeLinear`, endCB);
   }
 
   animateMove(item, finish, duration, ease, endCB = () => { }) {
