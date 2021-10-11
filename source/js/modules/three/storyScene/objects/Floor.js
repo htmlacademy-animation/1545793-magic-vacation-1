@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import {getLatheDegrees} from '../../../helpers/latheGeometry.js';
+import { isMobile } from '../../IntroAndStory.js';
 
 class Floor extends THREE.Group {
   constructor(settings) {
@@ -18,12 +19,20 @@ class Floor extends THREE.Group {
   }
 
   setMaterial(options = {}) {
-    const {color, ...other} = options;
+    const {color, matcapMaterial, roughness, metalness} = options;
+
+    if (isMobile && matcapMaterial) {
+      const textureLoader = new THREE.TextureLoader();
+      const matcap = textureLoader.load(matcapMaterial);
+
+      return new THREE.MeshMatcapMaterial({color: new THREE.Color(color), side: THREE.DoubleSide, matcap});
+    }
 
     return new THREE.MeshStandardMaterial({
       color: new THREE.Color(color),
       side: THREE.DoubleSide,
-      ...other
+      roughness,
+      metalness,
     });
   }
 

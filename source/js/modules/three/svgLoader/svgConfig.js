@@ -66,6 +66,7 @@ const svgSettings = [
     cap: 2,
     color: colors.AdditionalPurple,
     castShadow: true,
+    reflectivity: reflectivity.basic,
   },
   {
     name: `flower-storyScene3`,
@@ -74,6 +75,7 @@ const svgSettings = [
     cap: 2,
     color: colors.ShadowedAdditionalPurple,
     castShadow: true,
+    reflectivity: reflectivity.basic,
   },
 ];
 

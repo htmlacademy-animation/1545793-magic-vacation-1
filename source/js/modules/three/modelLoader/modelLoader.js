@@ -2,12 +2,25 @@ import * as THREE from 'three';
 import {OBJLoader} from 'three/examples/jsm/loaders/OBJLoader.js';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js';
 import ModelObject from '../../three/modelLoader/modelObject.js';
+import hideObjForMobile from '../../helpers/hideObjForMobile.js';
+import {isMobile} from '../IntroAndStory.js';
+import {setMaterial} from '../../helpers/setMaterial.js';
+import {reflectivity} from '../../helpers/colorsAndReflection.js';
 
 const onComplete = (obj3d, isShadow, settings, material, callback) => {
   if (material) {
     obj3d.traverse((child) => {
       if (child.isMesh) {
         child.material = material;
+      }
+    });
+  } else if (isMobile) {
+    hideObjForMobile(obj3d);
+
+    obj3d.traverse((child) => {
+      if (child.isMesh) {
+        const {color} = child.material;
+        child.material = setMaterial({color, ...reflectivity.basic});
       }
     });
   }
@@ -19,6 +32,10 @@ const onComplete = (obj3d, isShadow, settings, material, callback) => {
         child.receiveShadow = settings.receiveShadow;
       }
     });
+  }
+
+  if (isMobile) {
+    hideObjForMobile(obj3d);
   }
 
   if (typeof callback === `function`) {

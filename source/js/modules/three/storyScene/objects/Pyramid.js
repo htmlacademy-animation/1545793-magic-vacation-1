@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {setMaterial} from '../../Story.js';
+import {setMaterial} from '../../../helpers/setMaterial';
 import {colors, reflectivity} from '../../../helpers/colorsAndReflection.js';
 import {isShadow} from '../../../helpers/isShadow.js';
 

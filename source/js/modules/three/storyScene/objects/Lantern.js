@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {setMaterial} from '../../Story.js';
+import {setMaterial} from '../../../helpers/setMaterial';
 import {colors, reflectivity} from '../../../helpers/colorsAndReflection.js';
 import {isShadow} from '../../../helpers/isShadow.js';
 
@@ -11,6 +11,8 @@ class Lantern extends THREE.Group {
     this.color2 = colors.LightBlue;
 
     this.isShadow = isShadowKey;
+
+    this.name = `Lantern`;
 
     this.constructChildren();
   }

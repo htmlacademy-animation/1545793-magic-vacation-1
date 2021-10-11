@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import _ from '../helpers/easing.js';
-import {isLandscape} from '../three/IntroAndStory.js';
+import {isLandscape, isMobile} from '../three/IntroAndStory.js';
 
 
 class CameraAndLight extends THREE.Group {
@@ -15,16 +15,20 @@ class CameraAndLight extends THREE.Group {
     this.angle = 0;
     // camera.lookAt(storyGroup.position.x, storyGroup.position.y, storyGroup.position.z);
 
-    const directionalLight = new THREE.DirectionalLight(new THREE.Color(`rgb(255,255,255)`), 1.3);
-    directionalLight.position.set(0, 800, 0);
-    directionalLight.target = storyGroup;
-
     let cameraAndLightGroup = new THREE.Group();
     let cameraMouseRotationRig = new THREE.Group();
 
     cameraMouseRotationRig.add(camera);
 
-    cameraAndLightGroup.add(cameraMouseRotationRig, directionalLight);
+    cameraAndLightGroup.add(cameraMouseRotationRig);
+
+    if (!isMobile) {
+      const directionalLight = new THREE.DirectionalLight(new THREE.Color(`rgb(255,255,255)`), 1.3);
+      directionalLight.position.set(0, 800, 0);
+      directionalLight.target = storyGroup;
+
+      cameraAndLightGroup.add(directionalLight);
+    }
 
     this.add(cameraAndLightGroup);
 

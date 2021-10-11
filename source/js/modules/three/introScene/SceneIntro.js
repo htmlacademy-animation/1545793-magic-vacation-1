@@ -32,11 +32,19 @@ class SceneIntro extends THREE.Group {
   }
 
   setMaterial(options = {}) {
-    const {color, ...other} = options;
+    const {color, matcapMaterial, roughness, metalness} = options;
+
+    if (isMobile && matcapMaterial) {
+      const textureLoader = new THREE.TextureLoader();
+      const matcap = textureLoader.load(matcapMaterial);
+
+      return new THREE.MeshMatcapMaterial({color: new THREE.Color(color), matcap});
+    }
 
     return new THREE.MeshStandardMaterial({
       color: new THREE.Color(color),
-      ...other
+      roughness,
+      metalness,
     });
   }
 
