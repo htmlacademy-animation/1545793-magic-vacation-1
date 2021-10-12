@@ -30,13 +30,16 @@ export const reflectivity = {
   soft: {
     roughness: 0.7,
     metalness: 0.1,
+    matcapMaterial: `img/module-7/matcaps/Soft-Mat.png`,
   },
   basic: {
     roughness: 0.7,
     metalness: 0.2,
+    matcapMaterial: `img/module-7/matcaps/Basic-Mat.png`,
   },
   strong: {
     roughness: 0.7,
     metalness: 0.4,
+    matcapMaterial: `img/module-7/matcaps/Strong-Mat-SnowColor.png`,
   },
 };

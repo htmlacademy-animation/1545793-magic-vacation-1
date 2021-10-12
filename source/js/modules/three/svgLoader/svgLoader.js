@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import {SVGLoader} from 'three/examples/jsm/loaders/SVGLoader.js';
+import {setMaterial} from '../../helpers/setMaterial.js';
 import SVGObject from './SVGObject.js';
 
 
@@ -10,7 +11,7 @@ const createSvgGroup = (data, isShadow, settings) => {
   for (let i = 0; i < paths.length; i++) {
     const path = paths[i];
 
-    const material = new THREE.MeshStandardMaterial({
+    const material = setMaterial({
       color: new THREE.Color(settings.color),
       ...settings.reflectivity
     });

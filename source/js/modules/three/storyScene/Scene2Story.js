@@ -32,12 +32,20 @@ class Scene2Story extends THREE.Group {
   }
 
   setMaterial(options = {}) {
-    const {color, side, ...other} = options;
+    const {color, side, matcapMaterial, roughness, metalness} = options;
+
+    if (isMobile && matcapMaterial) {
+      const textureLoader = new THREE.TextureLoader();
+      const matcap = textureLoader.load(matcapMaterial);
+
+      return new THREE.MeshMatcapMaterial({color: new THREE.Color(color), side, matcap});
+    }
 
     return new THREE.MeshStandardMaterial({
       color: new THREE.Color(color),
       side,
-      ...other
+      roughness,
+      metalness,
     });
   }
 

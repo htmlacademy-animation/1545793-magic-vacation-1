@@ -8,7 +8,7 @@ import Pyramid from './objects/Pyramid.js';
 import Lantern from './objects/Lantern.js';
 import {isMobile} from '../IntroAndStory.js';
 import {animLeaf} from '../../helpers/animations.js';
-
+import hideObjForMobile from '../../helpers/hideObjForMobile.js';
 
 class Scene1Story extends THREE.Group {
   constructor() {
@@ -30,15 +30,28 @@ class Scene1Story extends THREE.Group {
     this.loadLeaf2();
     this.addPyramid();
     this.addLantern();
+
+    if (isMobile) {
+      hideObjForMobile(this);
+    }
+
   }
 
   setMaterial(options = {}) {
-    const {color, side, ...other} = options;
+    const {color, side, matcapMaterial, roughness, metalness} = options;
+
+    if (isMobile && matcapMaterial) {
+      const textureLoader = new THREE.TextureLoader();
+      const matcap = textureLoader.load(matcapMaterial);
+
+      return new THREE.MeshMatcapMaterial({color: new THREE.Color(color), side, matcap});
+    }
 
     return new THREE.MeshStandardMaterial({
       color: new THREE.Color(color),
       side,
-      ...other
+      roughness,
+      metalness,
     });
   }
 

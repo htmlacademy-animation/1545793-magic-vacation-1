@@ -62,9 +62,11 @@ class IntroAndStory {
     this.scene.add(this.cameraAndLight);
     this.addSuitcase();
 
-    const lights = this.setLights();
-    this.lights = lights;
-    this.cameraAndLight.addChild(this.lights);
+    if (!isMobile) {
+      const lights = this.setLights();
+      this.lights = lights;
+      this.cameraAndLight.addChild(this.lights);
+    }
 
     this.isAnim = true;
     document.addEventListener(`mousemove`, (e) => {
