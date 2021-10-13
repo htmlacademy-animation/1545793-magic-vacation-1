@@ -4,6 +4,7 @@ import SceneAllStory from './storyScene/StorySceneAll.js';
 import {loadModel} from '../three/modelLoader/modelLoader.js';
 import {animateScale, animateMoveY} from '../helpers/animations.js';
 import CameraAndLight from './CameraAndLight.js';
+import startAnim from '../startAnim.js';
 
 export const isMobile = /android|ipad|iphone|ipod/i.test(navigator.userAgent) && !window.MSStream;
 export let isLandscape;
@@ -229,9 +230,11 @@ class IntroAndStory {
 
   animIntroScene() {
     if (this.introGroupObj.children.length !== this.introGroupObj.counterLoadObj) {
+      document.querySelector(`.progress-bar`).textContent = `${Math.round(this.introGroupObj.children.length / this.introGroupObj.counterLoadObj * 100) + 10} %`;
       return;
     } else if (this.introSceneIaAnim !== true) {
       this.introSceneIaAnim = true;
+      startAnim();
       this.introGroupObj.startAnimimations();
     }
   }

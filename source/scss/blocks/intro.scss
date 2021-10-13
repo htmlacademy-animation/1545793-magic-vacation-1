@@ -116,10 +116,6 @@
   p {
     margin: 0;
     opacity: 0;
-    animation-fill-mode: forwards;
-    animation-name: fadeInTop;
-    animation-duration: 0.5s;
-    animation-delay: 1s;
   }
 
   svg {
@@ -140,12 +136,20 @@
   }
 }
 
+.intro__message__textAnim {
+  animation-fill-mode: forwards;
+  animation-name: fadeInTop;
+  animation-duration: 0.5s;
+  animation-delay: 0.5s;
+}
+
 .intro__label {
   margin: 0 0 1.6rem;
   max-width: 25rem;
   text-transform: uppercase;
   font-size: 2.4rem;
   line-height: 1.2;
+  opacity: 0;
 
   @media (min-width: $stop-scaling) {
     margin: 0 0 16px;
