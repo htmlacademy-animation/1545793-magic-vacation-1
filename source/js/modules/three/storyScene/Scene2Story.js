@@ -88,7 +88,7 @@ class Scene2Story extends THREE.Group {
     const scale = 1;
 
     road.scale.set(scale, scale, scale);
-    road.position.set(0, 0, 0);
+    road.position.set(0, 3, 0);
     road.rotation.copy(new THREE.Euler(0 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD, 0));
     this.add(road);
   }

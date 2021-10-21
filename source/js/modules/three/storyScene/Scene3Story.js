@@ -100,7 +100,7 @@ class Scene3Story extends THREE.Group {
     const scale = 1;
 
     rug.scale.set(scale, scale, scale);
-    rug.position.set(0, 0, 0);
+    rug.position.set(0, 3, 0);
     rug.rotation.copy(new THREE.Euler(0 * THREE.Math.DEG2RAD, 0 * THREE.Math.DEG2RAD, 0));
     this.add(rug);
   }

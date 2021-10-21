@@ -66,9 +66,9 @@ class IntroAndStory {
     this.bubbles = [
       {
         radius: this.width * 0.1,
-        initialPosition: [this.canvasCenter.x - this.width * 0.5, this.canvasCenter.y - this.height * 1.8],
-        position: [this.canvasCenter.x - this.width * 0.5, this.canvasCenter.y - this.height * 1.8],
-        finalPosition: [this.canvasCenter.x - this.width * 0.5, this.canvasCenter.y + this.height * 1.8],
+        initialPosition: [this.canvasCenter.x - this.width * 0.25, this.canvasCenter.y - this.height * 1.8],
+        position: [this.canvasCenter.x - this.width * 0.25, this.canvasCenter.y - this.height * 1.8],
+        finalPosition: [this.canvasCenter.x - this.width * 0.25, this.canvasCenter.y + this.height * 1.8],
         amplitude: 80,
         glareOffset: this.bubbleGlareOffset,
         glareAngleStart: this.bubbleGlareStartRadianAngle,
@@ -76,9 +76,9 @@ class IntroAndStory {
       },
       {
         radius: this.width * 0.15,
-        initialPosition: [this.canvasCenter.x - this.width * 0.18, this.canvasCenter.y - this.height * 1.3],
-        position: [this.canvasCenter.x - this.width * 0.18, this.canvasCenter.y - this.height * 1.3],
-        finalPosition: [this.canvasCenter.x - this.width * 0.18, this.canvasCenter.y + this.height * 2.6],
+        initialPosition: [this.canvasCenter.x, this.canvasCenter.y - this.height * 1.3],
+        position: [this.canvasCenter.x, this.canvasCenter.y - this.height * 1.3],
+        finalPosition: [this.canvasCenter.x, this.canvasCenter.y + this.height * 2.6],
         amplitude: -100,
         glareOffset: this.bubbleGlareOffset,
         glareAngleStart: this.bubbleGlareStartRadianAngle,
@@ -86,9 +86,9 @@ class IntroAndStory {
       },
       {
         radius: this.width * 0.05,
-        initialPosition: [this.canvasCenter.x, this.canvasCenter.y - this.height * 2],
-        position: [this.canvasCenter.x, this.canvasCenter.y - this.height * 2],
-        finalPosition: [this.canvasCenter.x, this.canvasCenter.y + this.height * 1.2],
+        initialPosition: [this.canvasCenter.x + this.width * 0.1, this.canvasCenter.y - this.height * 2],
+        position: [this.canvasCenter.x + this.width * 0.1, this.canvasCenter.y - this.height * 2],
+        finalPosition: [this.canvasCenter.x + this.width * 0.1, this.canvasCenter.y + this.height * 1.2],
         amplitude: 60,
         glareOffset: this.bubbleGlareOffset,
         glareAngleStart: this.bubbleGlareStartRadianAngle,
@@ -109,7 +109,7 @@ class IntroAndStory {
 
     this.isLandscape();
 
-    this.renderer = new THREE.WebGLRenderer({canvas: this.canvas}); // logarithmicDepthBuffer: true
+    this.renderer = new THREE.WebGLRenderer({canvas: this.canvas, logarithmicDepthBuffer: true});
     this.renderer.setClearColor(0x5f458c, 1);
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(this.width, this.height);
