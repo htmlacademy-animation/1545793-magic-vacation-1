@@ -70821,9 +70821,9 @@ class IntroAndStory {
     this.bubbles = [
       {
         radius: this.width * 0.1,
-        initialPosition: [this.canvasCenter.x - this.width * 0.5, this.canvasCenter.y - this.height * 1.8],
-        position: [this.canvasCenter.x - this.width * 0.5, this.canvasCenter.y - this.height * 1.8],
-        finalPosition: [this.canvasCenter.x - this.width * 0.5, this.canvasCenter.y + this.height * 1.8],
+        initialPosition: [this.canvasCenter.x - this.width * 0.25, this.canvasCenter.y - this.height * 1.8],
+        position: [this.canvasCenter.x - this.width * 0.25, this.canvasCenter.y - this.height * 1.8],
+        finalPosition: [this.canvasCenter.x - this.width * 0.25, this.canvasCenter.y + this.height * 1.8],
         amplitude: 80,
         glareOffset: this.bubbleGlareOffset,
         glareAngleStart: this.bubbleGlareStartRadianAngle,
@@ -70831,9 +70831,9 @@ class IntroAndStory {
       },
       {
         radius: this.width * 0.15,
-        initialPosition: [this.canvasCenter.x - this.width * 0.18, this.canvasCenter.y - this.height * 1.3],
-        position: [this.canvasCenter.x - this.width * 0.18, this.canvasCenter.y - this.height * 1.3],
-        finalPosition: [this.canvasCenter.x - this.width * 0.18, this.canvasCenter.y + this.height * 2.6],
+        initialPosition: [this.canvasCenter.x, this.canvasCenter.y - this.height * 1.3],
+        position: [this.canvasCenter.x, this.canvasCenter.y - this.height * 1.3],
+        finalPosition: [this.canvasCenter.x, this.canvasCenter.y + this.height * 2.6],
         amplitude: -100,
         glareOffset: this.bubbleGlareOffset,
         glareAngleStart: this.bubbleGlareStartRadianAngle,
@@ -70841,9 +70841,9 @@ class IntroAndStory {
       },
       {
         radius: this.width * 0.05,
-        initialPosition: [this.canvasCenter.x, this.canvasCenter.y - this.height * 2],
-        position: [this.canvasCenter.x, this.canvasCenter.y - this.height * 2],
-        finalPosition: [this.canvasCenter.x, this.canvasCenter.y + this.height * 1.2],
+        initialPosition: [this.canvasCenter.x + this.width * 0.1, this.canvasCenter.y - this.height * 2],
+        position: [this.canvasCenter.x + this.width * 0.1, this.canvasCenter.y - this.height * 2],
+        finalPosition: [this.canvasCenter.x + this.width * 0.1, this.canvasCenter.y + this.height * 1.2],
         amplitude: 60,
         glareOffset: this.bubbleGlareOffset,
         glareAngleStart: this.bubbleGlareStartRadianAngle,
@@ -70864,7 +70864,7 @@ class IntroAndStory {
 
     this.isLandscape();
 
-    this.renderer = new three__WEBPACK_IMPORTED_MODULE_0__["WebGLRenderer"]({canvas: this.canvas}); // logarithmicDepthBuffer: true
+    this.renderer = new three__WEBPACK_IMPORTED_MODULE_0__["WebGLRenderer"]({canvas: this.canvas, logarithmicDepthBuffer: true});
     this.renderer.setClearColor(0x5f458c, 1);
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(this.width, this.height);
@@ -71894,7 +71894,7 @@ class Scene0Story extends three__WEBPACK_IMPORTED_MODULE_0__["Group"] {
     const rug = new _objects_Rug_js__WEBPACK_IMPORTED_MODULE_5__["default"]();
     const scale = 1;
     rug.scale.set(scale, scale, scale);
-    rug.position.set(0, 0, 0);
+    rug.position.set(0, 3, 0);
     rug.rotation.copy(new three__WEBPACK_IMPORTED_MODULE_0__["Euler"](0 * three__WEBPACK_IMPORTED_MODULE_0__["Math"].DEG2RAD, 0 * three__WEBPACK_IMPORTED_MODULE_0__["Math"].DEG2RAD, 0));
     this.add(rug);
   }
@@ -72249,7 +72249,7 @@ class Scene2Story extends three__WEBPACK_IMPORTED_MODULE_0__["Group"] {
     const scale = 1;
 
     road.scale.set(scale, scale, scale);
-    road.position.set(0, 0, 0);
+    road.position.set(0, 3, 0);
     road.rotation.copy(new three__WEBPACK_IMPORTED_MODULE_0__["Euler"](0 * three__WEBPACK_IMPORTED_MODULE_0__["Math"].DEG2RAD, 0 * three__WEBPACK_IMPORTED_MODULE_0__["Math"].DEG2RAD, 0));
     this.add(road);
   }
@@ -72421,7 +72421,7 @@ class Scene3Story extends three__WEBPACK_IMPORTED_MODULE_0__["Group"] {
     const scale = 1;
 
     rug.scale.set(scale, scale, scale);
-    rug.position.set(0, 0, 0);
+    rug.position.set(0, 3, 0);
     rug.rotation.copy(new three__WEBPACK_IMPORTED_MODULE_0__["Euler"](0 * three__WEBPACK_IMPORTED_MODULE_0__["Math"].DEG2RAD, 0 * three__WEBPACK_IMPORTED_MODULE_0__["Math"].DEG2RAD, 0));
     this.add(rug);
   }
@@ -72745,15 +72745,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ((uniforms) => ({
   uniforms,
   vertexShader: `
+  #ifdef USE_LOGDEPTHBUF
+  #define EPSILON 1e-6
+  #ifdef USE_LOGDEPTHBUF_EXT
+    varying float vFragDepth;
+  #endif
+    uniform float logDepthBufFC;
+  #endif
+
   varying vec2 vUv;
 
   void main() {
     vUv = uv;
 
     gl_Position   = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+
+    #ifdef USE_LOGDEPTHBUF
+      gl_Position.z = log2(max( EPSILON, gl_Position.w + 1.0 )) * logDepthBufFC;
+    #ifdef USE_LOGDEPTHBUF_EXT
+      vFragDepth = 1.0 + gl_Position.w;
+    #else
+      gl_Position.z = (gl_Position.z - 1.0) * gl_Position.w;
+    #endif
+    #endif
   }
   `,
   fragmentShader: `
+  #ifdef USE_LOGDEPTHBUF
+  #ifdef USE_LOGDEPTHBUF_EXT
+  #extension GL_EXT_frag_depth : enable
+  varying float vFragDepth;
+  #endif
+    uniform float logDepthBufFC;
+  #endif
+
   varying vec2 vUv;
 
   uniform vec3 baseColor;
@@ -72777,6 +72802,10 @@ __webpack_require__.r(__webpack_exports__);
     {
       gl_FragColor = vec4(baseColor, 1.0);
     }
+
+    #if defined(USE_LOGDEPTHBUF) && defined(USE_LOGDEPTHBUF_EXT)
+      gl_FragDepthEXT = log2(vFragDepth) * logDepthBufFC * 0.5;
+    #endif
   }
   `
 }));
@@ -72796,15 +72825,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ((uniforms) => ({
   uniforms,
   vertexShader: `
+  #ifdef USE_LOGDEPTHBUF
+  #define EPSILON 1e-6
+  #ifdef USE_LOGDEPTHBUF_EXT
+    varying float vFragDepth;
+  #endif
+    uniform float logDepthBufFC;
+  #endif
+
   varying vec2 vUv;
 
   void main() {
     vUv = uv;
 
     gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+
+    #ifdef USE_LOGDEPTHBUF
+      gl_Position.z = log2(max( EPSILON, gl_Position.w + 1.0 )) * logDepthBufFC;
+    #ifdef USE_LOGDEPTHBUF_EXT
+      vFragDepth = 1.0 + gl_Position.w;
+    #else
+      gl_Position.z = (gl_Position.z - 1.0) * gl_Position.w;
+    #endif
+    #endif
   }
   `,
   fragmentShader: `
+  #ifdef USE_LOGDEPTHBUF
+  #ifdef USE_LOGDEPTHBUF_EXT
+  #extension GL_EXT_frag_depth : enable
+    varying float vFragDepth;
+  #endif
+    uniform float logDepthBufFC;
+  #endif
+
   varying vec2 vUv;
 
   uniform vec3 baseColor;
@@ -72822,6 +72876,10 @@ __webpack_require__.r(__webpack_exports__);
     {
       gl_FragColor = vec4(baseColor, 1.0);
     }
+
+    #if defined(USE_LOGDEPTHBUF) && defined(USE_LOGDEPTHBUF_EXT)
+      gl_FragDepthEXT = log2(vFragDepth) * logDepthBufFC * 0.5;
+    #endif
   }
   `
 }));
