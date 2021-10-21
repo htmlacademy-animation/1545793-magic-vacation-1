@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import _ from './easing.js';
-import {activeScene} from '../three/Story.js';
-import {isLandscape} from '../three/IntroAndStory.js';
+// import {activeScene} from '../three/Story.js';
+import {isLandscape, activeScene} from '../three/IntroAndStory.js';
 
 export let isFinishFirsAnimObj = false;
 
@@ -140,8 +140,10 @@ export const animateWithFPS = (render, duration, fps, endCB = () => { }) => {
       lastFrameUpdateTime = currentTime;
       render(progress);
     }
-    if (activeScene === 1) {
+    if (activeScene === `scene1`) {
       requestAnimationFrame(loop);
+    } else {
+      render(1);
     }
   }
 
