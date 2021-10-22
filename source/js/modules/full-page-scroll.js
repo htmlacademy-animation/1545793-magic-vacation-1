@@ -1,6 +1,7 @@
 import throttle from 'lodash/throttle';
 import Timer from './timer';
 import NumbersAnimation from './numbersPrizesAnimation.js';
+import SonyaAnimation from '../modules/helpers/sonyaAnimation';
 
 // const INTRO_PAGE_ID = 0;
 // const STORY_PAGE_ID = 1;
@@ -110,11 +111,13 @@ export default class FullPageScroll {
 
     if (this.activeScreen === GAME_PAGE_ID) {
       this.ticker.startTimer();
+      SonyaAnimation.start();
     }
 
     if (this.prevActiveScreen === GAME_PAGE_ID) {
       this.ticker.resetTimer();
       this.ticker.stopTimer();
+      SonyaAnimation.end();
     }
   }
 
